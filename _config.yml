@@ -33,7 +33,10 @@ plugins:
   - jekyll-feed
 
 minima:
-  skin: dark
+  skin: auto
+
+# Don't include categories in permalink
+permalink: /:year/:month/:day/:title:output_ext
 
 # Exclude from processing.
 # The following items will not be processed, by default.
