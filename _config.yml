@@ -18,10 +18,10 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: A blog about technical stuff
+title: Ticket-driven Development Blog
 email:
 description: >- # this means to ignore newlines until "baseurl:"
-  This blog will contain technical write-ups with very varying degrees. We will try to use tags/category as much as possible to avoid mixing everything up.
+  This blog will contain technical write-ups with very varying degrees. We will try to use tags/category as much as possible to avoid mixing everything up. Usually content is about some github project we made.
 
 baseurl: "/blog" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
