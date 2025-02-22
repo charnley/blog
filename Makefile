@@ -6,7 +6,7 @@ config:
 	bundle config set --local path '${HOME}/.local/share/gem'
 
 dev:
-	bundle exec jekyll serve
+	bundle exec jekyll serve --drafts
 
 # Local env
 any:
