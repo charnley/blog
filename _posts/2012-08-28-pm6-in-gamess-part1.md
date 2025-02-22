@@ -13,7 +13,9 @@ $$\Delta H_f = E_{\rm Elect} + E_{\rm Core} - \sum_{A}^{} E_{el}^{A} + \sum_{A}^
 
 The emperical parameters from PM3 is fitted via a scaleing factor on the core-core term to fit the experimental heat of formation for the molecule. Fitting of the data and derivation of the parameters was done my Jimmy Stewart, for his program MOPAC where the methods were original implemented. The PM3 core-core repulsion term looks like this; 
 
-$$E_n(A,B) = Z_A Z_B \langle s_A s_A | s_B s_B \rangle \left ( 1 + e^{-\alpha_A R_{AB}} + e^{-\alpha_B R_{AB}} \right )$$
+```math
+E_n(A,B) = Z_A Z_B \langle s_A s_A | s_B s_B \rangle \left ( 1 + e^{-\alpha_A R_{AB}} + e^{-\alpha_B R_{AB}} \right )
+```
 
 
 which is then summed over all nuclear repulsions/interactions between any atom A and B. This core-core term needs to be substituted with the new term from PM6:

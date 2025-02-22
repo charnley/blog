@@ -1,4 +1,7 @@
 
+all:
+	bundle install
+
 # Local env
 any:
 
