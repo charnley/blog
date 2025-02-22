@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "PM6 in GAMESS, Part"
+title:  "PM6 in GAMESS, Part 1"
 date:   2012-08-28
 categories: chemistry gamess
 ---
