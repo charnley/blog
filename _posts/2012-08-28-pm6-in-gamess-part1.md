@@ -13,14 +13,16 @@ $$\Delta H_f = E_{\rm Elect} + E_{\rm Core} - \sum_{A}^{} E_{el}^{A} + \sum_{A}^
 
 The emperical parameters from PM3 is fitted via a scaleing factor on the core-core term to fit the experimental heat of formation for the molecule. Fitting of the data and derivation of the parameters was done my Jimmy Stewart, for his program MOPAC where the methods were original implemented. The PM3 core-core repulsion term looks like this; 
 
-```math
+$$
 E_n(A,B) = Z_A Z_B \langle s_A s_A | s_B s_B \rangle \left ( 1 + e^{-\alpha_A R_{AB}} + e^{-\alpha_B R_{AB}} \right )
-```
+$$
 
 
 which is then summed over all nuclear repulsions/interactions between any atom A and B. This core-core term needs to be substituted with the new term from PM6:
 
-$$E_n(A,B) = Z_A Z_B \langle s_A s_A | s_B s_B \rangle \left ( 1 + x_{AB} e^{-\alpha_{AB} (R_{AB} + 3 \cdot 10^{-4} R_{AB}^6)} \right )$$
+$$
+E_n(A,B) = Z_A Z_B \langle s_A s_A | s_B s_B \rangle \left ( 1 + x_{AB} e^{-\alpha_{AB} (R_{AB} + 3 \cdot 10^{-4} R_{AB}^6)} \right )
+$$
 
 Note that the $\alpha$ parameter is now a di-atomic parameter unlike the mono-atomic parameter is PM3. Another parameter $x$ is also introduced, but that is 'pritty much it'. (there are also a Lennard Jones Term and a van der Waals term, but that is for another blog post). The parameters are all located in the PM6 article, but Jimmy Stewart was kind of enough to send his files including his implementation of PM6 core equation and the list of all parameters. This saved me alot of pointless typing time, so thanks!
 
