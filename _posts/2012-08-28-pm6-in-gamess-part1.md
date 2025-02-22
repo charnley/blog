@@ -17,7 +17,6 @@ $$
 E_n(A,B) = Z_A Z_B \langle s_A s_A | s_B s_B \rangle \left ( 1 + e^{-\alpha_A R_{AB}} + e^{-\alpha_B R_{AB}} \right )
 $$
 
-
 which is then summed over all nuclear repulsions/interactions between any atom A and B. This core-core term needs to be substituted with the new term from PM6:
 
 $$
