@@ -96,4 +96,7 @@ display:
 </details>
 
 
+```plantuml!
+Bob -> Alice : hello world
+```
 
