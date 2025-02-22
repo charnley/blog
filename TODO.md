@@ -5,3 +5,4 @@
 - [ ] Copy content from computerandchemistry.blogspot.com to archive it
 - [ ] Make categories tags work, as to not bloat RSS. Keep tags short.
 
+- [ ] comment section

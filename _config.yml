@@ -57,3 +57,6 @@ permalink: /:year/:month/:day/:title:output_ext
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+#
+head:
+  - include: custom-head.html
