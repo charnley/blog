@@ -27,7 +27,7 @@ Note that the $\alpha$ parameter is now a di-atomic parameter unlike the mono-at
 
 Okay, so after implementing the new PM6 specific code and the corresponding parameters, I discovered that the result did not match its MOPAC equivalent. In fact nether electronic, core or the total energy fit the MOPAC value. This was happening for single point energy calculation even for very small molecules (even water). For reference I did a similar test for PM3 and AM1, and found that the already implemented methods results did not fit it's rightfull energies (MOPAC energy) with the same order of magnitude as PM6, which was quickly discovered to be size dependt. This is clearly shown in the below figure, which shows single point energy calculations on a carbon chain from 1 carbon to 20 carbons
 
-![Errors are bad]({% link /assets/images/errorbar_am1pm3pm6.png %})
+![Errors are bad]({{ site.baseurl }} link /assets/images/errorbar_am1pm3pm6.png)
 *Figure 1: Errors are looking bad*
 
 Energy difference $\Delta E$ is calculated from mopac energy minus the corresponding gamess energy.
@@ -38,7 +38,7 @@ Okay, so the problem was that the SE part of GAMESS was based on a very old vers
 
 This resulted in
 
-![Errors are better]({% link /assets/images/errorbar_new_am1pm3pm6.png %})
+![Errors are better]({{ site.baseurl }} /assets/images/errorbar_new_am1pm3pm6.png)
 *Figure 2: Errors are looking .. better*
 
 Okay, but is this better? Hell yeah! The total energy is clearly more stable compared to MOPAC energy, which is the energy that matters most. The deviation in the nuclear and electronic energy looks very much linear which hints to more constants needed to be updated. Note I have only updated the constants located in MOPAC part of GAMESS and therefor only effects the semi-empirical part of GAMESS.
@@ -54,8 +54,3 @@ Am I done? Unfortunately no. To get PM6 fully working I need to implement the d-
 **To be continued...**
 
 **tldr**; PM6, PM3 and AM1 did not work as expected, which was partially fixed by updating physical constants in the semi-empirical part of GAMESS. PM6 energy and gradient now works up to including Ne, but will need d-orbitals before it is fully operational.
-
-
-
-
-
