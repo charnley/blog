@@ -5,9 +5,8 @@ date: 2025-02-23
 categories: travel digitalnomad
 ---
 
-Traveling office, working abroad, and digital nomad setup.
-So, you want to be a digital nomad? A hacker on the go?
-I have some recommendations for you.
+Are you looking for a traveling office, working abroad, and digital nomad setup?
+As a weekend digital nomad, I have some recommendations for you.
 
 ![Home Ofice]({{ site.baseurl }}/assets/images/home_office.jpeg)
 ***Figure:** Home office with height-adjustable table*
