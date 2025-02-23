@@ -46,14 +46,12 @@ There are many options, in varying price ranges. Here are some notes to look out
 - You can use a VESA mount with two or four screws. My experience is two is enough when the screw is thick enough.
 - Note the length of the screw, as it needs to be precise. Use washers when needed.
 
-> **_WARNING_:** Do not buy a monitor with **M3 screw size** VESA mount. The screws are simply too small, and will not hold anything. I tried it, and with any weight it falls apart.
+> ⚠️ __WARNING__: Do not buy a monitor with **M3 screw size** VESA mount. The screws are simply too small, and will not hold anything. I tried it, and with any weight it falls apart.
 
 > Note: ASUS made a ZenScreen MB16QHG Portable Monitor, which seems interesting. Also because it has a tripod mount build in. But a bit expensive.
 
-
 ![VESA Monitor mount to cheese board]({{ site.baseurl }}/assets/images/nomad_setup_monitor_filter.jpg)
 ***Figure:** Travel monitor attached to a cheese board, making it tripod friendly*
-
 
 ## My personal shopping list
 
