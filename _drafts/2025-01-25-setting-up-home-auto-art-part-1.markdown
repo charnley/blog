@@ -3,8 +3,8 @@ layout: post
 title: "Setup automatic art, part 1"
 date: 2025-01-25 18:09:47 +0100
 categories: homeassistant ai art esp32 raspberry pi
+published: false
 ---
-<!-- published: false -->
 
 
 {% highlight python %}
@@ -25,6 +25,9 @@ and this is how to solder
 | Item1 | Item1 | Item1 |
 
 You will need to do a long configuration 
+
+
+From 
 
 
 <details>
