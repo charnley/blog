@@ -5,18 +5,19 @@ date: 2025-02-23
 categories: travel digitalnomad
 ---
 
-Traveling office, working abroad and digital nomad setup.
-So, you want to be a digital nomad? I have some notes for you.
+Traveling office, working abroad, and digital nomad setup.
+So, you want to be a digital nomad? A hacker on the go?
+I have some recommendations for you.
 
 ![Home Ofice]({{ site.baseurl }}/assets/images/home_office.jpeg)
 ***Figure:** Home office with high-adjustable table*
 
-I really want to optimize the way I am working when traveling,
-as I am lucky enough to do that from time to time. Hobbiest digital nomad.
-This is a small guide on how I setup a to-go workstation.
-(*And if my boss is reading this, nono, I am just working from home today. Definitely not in Portugal surfing!*).
+I want to optimize how I work when traveling,
+as I am lucky enough to do that occasionally. Hobbyist digital nomad.
+This is a small guide on how I set up a to-go workstation.
+(*If my boss is reading this, I am just working from home today. Definitely not in Portugal surfing!*).
 
-I hate working from my laptop only. My posture is shit, screen feels claustrophobic and keyboard (especially Mac) feels terrible. So I need something portable that can compete with my nice monitor-arm setup at home. The idea is to get a portable monitor and a tripod.
+I hate working from my laptop only. My posture is shit, the screen feels claustrophobic, and the keyboard (especially Mac) feels terrible. So I need something portable to compete with my nice monitor-arm setup at home. The idea is to get a portable monitor and a tripod.
 
 ![Travel friendly setup, unpacked]({{ site.baseurl }}/assets/images/nomad_setup_filter.jpg)
 ***Figure:** Setup and productive. Ready to dive into the code. My work laptop is a Mac though.*
@@ -24,34 +25,38 @@ I hate working from my laptop only. My posture is shit, screen feels claustropho
 ![Travel friendly setup, packed]({{ site.baseurl }}/assets/images/nomad_setup_packed_filter.jpg)
 ***Figure:** Setup is packed and ready to travel, for the next work-friendly adventure*
 
+Here's an interesting hack: I use the standard VESA mount on the back of my monitor to attach it to a tripod. After researching Reddit, I found the NEBULA tripod—typically used for holding projectors—provides excellent stability and sturdiness for this setup. To make the connection, I use a camera/tripod cheese plate with 75x75 M4 screws, which fits perfectly for mounting the monitor onto the tripod.
+The M4 screws didn't fit perfectly, but adding a washer made everything tight and stable.
+
+![VESA Monitor mount to cheese board]({{ site.baseurl }}/assets/images/nomad_setup_monitor_filter.jpg)
+***Figure:** Travel monitor attached to a cheese board, making it tripod friendly*
+
 ## Mouse and keyboard
 
-I am a creature of habit, and I prefer to use the same keyboard and mouse working from home, in the office and on the go. Also when I play computer, which is why my mouse and keyboard is a bit overkill.
+I am a creature of habit, and I prefer to use the same keyboard and mouse when working from home, in the office, and on the go. Also, when I play on the computer, which is why my mouse and keyboard are a bit overkill.
+I am using Logitech G915 TKL keyboard and Logitech Pro Wireless mouse.
 
 ## USB Hub
 
-I use a UNI USB-C hub that can handle USB-c charger, so I can use it as a hub and charge my laptop at the same time.
+I use a UNI USB-C hub that can handle a USB-C charger, so I can use it as a hub and charge my laptop simultaneously.
 
 ## Webcam, microphone and sound
 
-I don't need a webcam, my laptop has one. And for microphone and sound I use "Bose QuietComfort Earbuds", which is nice with noise-cancellation.
+I don't need a webcam; my laptop has one. And for the microphone and sound, I use "Bose QuietComfort Earbuds," which are nice with noise-cancellation.
 
 ## Monitor
 
 There are many options, in varying price ranges. Here are some notes to look out for.
 
-- Choose a inch size that is comfortable for you traveling with. I suggest **16-18" range**.
-- Get anything with a **1920x1080** (1080p) resolution. Usually it is the same resolution, no matter the screen physical size.
+- Choose an inch size that is comfortable for you when traveling. I suggest **16-18" range**.
+- Get anything with a **1920x1080** (1080p) resolution. Usually, it is the same resolution, no matter the screen's physical size.
 - It **needs VESA mount**, preferably with **M4 screw size**.
 - You can use a VESA mount with two or four screws. My experience is two is enough when the screw is thick enough.
-- Note the length of the screw, as it needs to be precise. Use washers when needed.
+- Note the length of the screw, as it needs to be precise. Use washers when required.
 
-> ⚠️ __WARNING__: Do not buy a monitor with **M3 screw size** VESA mount. The screws are simply too small, and will not hold anything. I tried it, and with any weight it falls apart.
+> ⚠️ __WARNING__: Do not buy a monitor with **M3 screw size** VESA mount. The screws are too small and will not hold anything. I tried it, and with any weight, it fell apart.
 
-> Note: ASUS made a ZenScreen MB16QHG Portable Monitor, which seems interesting. Also because it has a tripod mount build in. But a bit expensive.
-
-![VESA Monitor mount to cheese board]({{ site.baseurl }}/assets/images/nomad_setup_monitor_filter.jpg)
-***Figure:** Travel monitor attached to a cheese board, making it tripod friendly*
+> Note: ASUS made a ZenScreen MB16QHG Portable Monitor, which seems interesting because it has a built-in tripod mount. However, it is a bit expensive.
 
 ## My personal shopping list
 
