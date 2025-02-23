@@ -15,7 +15,6 @@ I have some recommendations for you.
 I want to optimize how I work when traveling,
 as I am lucky enough to do that occasionally. Hobbyist digital nomad.
 This is a small guide on how I set up a to-go workstation.
-(*If my boss is reading this, I am just working from home today. Definitely not in Portugal surfing!*).
 
 I hate working from my laptop only. My posture is shit, the screen feels claustrophobic, and the keyboard (especially Mac) feels terrible. So I need something portable to compete with my nice monitor-arm setup at home. The idea is to get a portable monitor and a tripod.
 
