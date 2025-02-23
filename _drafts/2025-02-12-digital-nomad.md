@@ -8,6 +8,9 @@ categories: travel digitalnomad
 Traveling office, working abroad and digital nomad setup.
 So, you want to be a digital nomad? I have some notes for you.
 
+![Home Ofice]({% link /assets/images/home_office.jpeg %})
+*Figure: Home office with high-adjustable table*
+
 I really want to optimize the way I am working when traveling,
 as I am lucky enough to do that from time to time. Hobbiest digital nomad.
 This is a small guide on how I setup a to-go workstation.

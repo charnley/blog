@@ -16,12 +16,12 @@ First part of this mission is too map the relevant subroutines in both GAMESS an
 
 The map for MOPAC is:
 
-![Subroutine map for MNDO MOPAC]({% link /assets/images/pm6_mndod_submap.png %})
+![Subroutine map for MNDO MOPAC](/blog/assets/images/pm6_mndod_submap.png)
 *Figure 1: Subroutine map of MNDO in MOPAC*
 
 And the map for GAMESS is:
 
-![Subroutine map for MNDO GAMESS]({% link /assets/images/pm6_gamess_submap.png %})
+![Subroutine map for MNDO GAMESS](/assets/images/pm6_gamess_submap.png)
 *Figure 2: Subroutine map of MNDO in MOPAC*
 
 Now I just need an idea for merging the two trees. Since Stewart based his d-integrals on code he got from Thiel it seems like most of the subroutines is collected in a single file called mndod.F90 (fitting name, lol).
