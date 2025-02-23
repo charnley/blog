@@ -10,7 +10,7 @@ So, you want to be a digital nomad? A hacker on the go?
 I have some recommendations for you.
 
 ![Home Ofice]({{ site.baseurl }}/assets/images/home_office.jpeg)
-***Figure:** Home office with high-adjustable table*
+***Figure:** Home office with height-adjustable table*
 
 I want to optimize how I work when traveling,
 as I am lucky enough to do that occasionally. Hobbyist digital nomad.
@@ -26,6 +26,7 @@ I hate working from my laptop only. My posture is shit, the screen feels claustr
 
 Here's an interesting hack: I use the standard VESA mount on the back of my monitor to attach it to a tripod. After researching Reddit, I found the NEBULA tripod—typically used for holding projectors—provides excellent stability and sturdiness for this setup. To make the connection, I use a camera/tripod cheese plate with 75x75 M4 screws, which fits perfectly for mounting the monitor onto the tripod.
 The M4 screws didn't fit perfectly, but adding a washer made everything tight and stable.
+The trick was found here, by [user/arbitraryusername10](https://www.reddit.com/user/arbitraryusername10/).
 
 ![VESA Monitor mount to cheese board]({{ site.baseurl }}/assets/images/nomad_setup_monitor_filter.jpg)
 ***Figure:** Travel monitor attached to a cheese board, making it tripod friendly*
@@ -73,7 +74,7 @@ Total price for my setup: ~250 EUR, excluding work laptop.
 
 ## References:
 
- - Inspiration source: HT arbitraryusername10
+ - Inspiration source: HT [arbitraryusername10](https://www.reddit.com/user/arbitraryusername10/)
    [https://www.reddit.com/r/digitalnomad/comments/1fv8fwx/lightweight_travel_setup_for_a_secondary_monitor/](https://www.reddit.com/r/digitalnomad/comments/1fv8fwx/lightweight_travel_setup_for_a_secondary_monitor/)
  - [https://ternsetups.com/](https://ternsetups.com/) Looks good, but I wanted bigger screen, and be able to substitute it.
  - [https://www.asus.com/ch-en/displays-desktops/monitors/zenscreen/asus-zenscreen-mb16qhg/](https://www.asus.com/ch-en/displays-desktops/monitors/zenscreen/asus-zenscreen-mb16qhg/) Interesting monitor from ASUS. Expensive.
