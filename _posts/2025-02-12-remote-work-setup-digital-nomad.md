@@ -62,8 +62,8 @@ There are many options, in varying price ranges. Here are some notes to look out
 *Disclaimer: These are amazon affiliation links. First time doing it, want to see if it makes a difference.*
 
 - Portable Monitor 18.5 Inch [https://amzn.to/4b9Nkjj](https://amzn.to/4b9Nkjj)
-- CAMVATE Cheese Plate (two-screw VESA mount) [https://amzn.to/3XCxs3t](https://amzn.to/3XCxs3t) or 
-  CAMVATE Cheese Plate with 75x75mm (four-screw VESA mount) [https://amzn.to/3X8xyiH](https://amzn.to/3X8xyiH)
+- CAMVATE Cheese Plate (two-screw VESA mount) [https://amzn.to/3XCxs3t](https://amzn.to/3XCxs3t) or
+  CAMVATE Cheese Plate with 75x75mm (four-screw VESA mount) [https://amzn.to/4kpPO1k](https://amzn.to/4kpPO1k)
 - M4 Screw pack [https://amzn.to/41sayxK](https://amzn.to/41sayxK)
 - NEBULA Capsule Tripod [https://amzn.to/41qPaJn](https://amzn.to/41qPaJn)
 - VVGAOGES Aluminium Laptop Stand [https://amzn.to/41tNLlp](https://amzn.to/41tNLlp)
