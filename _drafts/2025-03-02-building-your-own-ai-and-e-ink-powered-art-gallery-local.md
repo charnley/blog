@@ -33,7 +33,7 @@ The pigments can then be moved up or down with a electromagnet, defining the col
 [https://en.wikipedia.org/wiki/E_Ink](https://en.wikipedia.org/wiki/E_Ink)
 [https://en.wikipedia.org/wiki/Electronic_paper](https://en.wikipedia.org/wiki/Electronic_paper)
 
-The E-ink provider of choice we found (https://www.waveshare.com/)[https://www.waveshare.com/] to have fairly good documentation and prices.
+The E-ink provider of choice we found [https://www.waveshare.com/](https://www.waveshare.com/) to have fairly good documentation and prices.
 Especially, we liked the 13.3 inch black/white screen fits our needs.
 
 <!-- https://www.waveshare.com/13.3inch-e-paper-hat-k.htm -->
