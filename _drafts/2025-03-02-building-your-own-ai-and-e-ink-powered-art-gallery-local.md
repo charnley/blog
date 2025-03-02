@@ -86,6 +86,11 @@ basic example for showing a image
 
 > **Note:** To use the image downloader you need vram on your
 
+> **Note:** If your picture is getting less visible the more complicated the picture is, you are using the wrong config
+
+> **Note:** If your picture is not doing the full-refresh, please check your soldering connections
+
+
 basic example for showing image over wifi
 
 advanced example of showing esphome connection
