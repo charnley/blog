@@ -26,7 +26,7 @@ There are is two main reasons, because it looks like an drawing and uses very li
 But thirdly, it looks really good and I have yet to see anyone realise it is a screen technlogy.
 
 The reason it looks so realistic because, what you are looking at is actual ink.
-If you ever use a kindle or (Remarkable Tablet)[https://remarkable.com/] you know what I am talking about.
+If you ever use a kindle or [Remarkable Tablet](https://remarkable.com/) you know what I am talking about.
 The screen consist of small "pixel" of oil, with different pigments.
 The pigments can then be moved up or down with a electromagnet, defining the color of the pixel.
 
