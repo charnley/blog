@@ -6,3 +6,7 @@
 - [ ] Make categories tags work, as to not bloat RSS. Keep tags short.
 
 - [ ] comment section
+
+
+Jekyll theme:
+    - When switching to dark mode, add filter: invert(100%); to svg's
