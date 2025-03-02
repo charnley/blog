@@ -17,6 +17,7 @@ TODO Insert examples
 
 TODO Insert toplogy graph overview of the services and explain
 
+![Errors are bad]({{ site.baseurl }}/assets/images/ai_art_workflow/art_overview.svg)
 
 ## Why E-ink?
 
