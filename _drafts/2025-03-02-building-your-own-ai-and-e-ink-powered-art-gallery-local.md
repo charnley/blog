@@ -30,7 +30,8 @@ If you ever use a kindle or (Remarkable Tablet)[https://remarkable.com/] you kno
 The screen consist of small "pixel" of oil, with different pigments.
 The pigments can then be moved up or down with a electromagnet, defining the color of the pixel.
 
-(https://en.wikipedia.org/wiki/E_Ink)[https://en.wikipedia.org/wiki/E_Ink]
+[https://en.wikipedia.org/wiki/E_Ink](https://en.wikipedia.org/wiki/E_Ink)
+[https://en.wikipedia.org/wiki/Electronic_paper](https://en.wikipedia.org/wiki/Electronic_paper)
 
 The E-ink provider of choice we found (https://www.waveshare.com/)[https://www.waveshare.com/] to have fairly good documentation and prices.
 Especially, we liked the 13.3 inch black/white screen fits our needs.
