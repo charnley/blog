@@ -25,13 +25,13 @@ flowchart LR
     B -->|"POST [image.png]"| A
     B ---|"R/W"| C(("database<br>sqlite3"))
 
-    subgraph
+    subgraph one
     D(("ESP32")) ---> |"GET image.png"| B
     D -..->|sleep| D
     D --- E(("E-ink<br>Display"))
     end
 
-    subgraph
+    subgraph two
     B ---|"POST image.png"| F(("Raspberry Pi"))
     F --- G(("E-ink<br>Display"))
     end
