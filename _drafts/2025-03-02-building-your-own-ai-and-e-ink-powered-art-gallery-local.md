@@ -22,13 +22,17 @@ flowchart LR
     A(("Desktop<br>Computer")) --->|"GET status"| B(("Picture<br>Server"))
     B -->|"POST [image.png]"| A
     B ---|"R/W"| C(("database<br>sqlite3"))
-    
+
+    subgraph esp32
     D(("ESP32")) ---> |"GET image.png"| B
     D -..->|sleep| D
     D --- E(("E-ink<br>Display"))
-    
+    end
+
+    subgraph pi
     B ---|"POST image.png"| F(("Raspberry Pi"))
     F --- G(("E-ink<br>Display"))
+    end
     
     classDef default fill:white,stroke:black,stroke-width:2px;
 ```
