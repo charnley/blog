@@ -21,6 +21,7 @@ TODO Insert toplogy graph overview of the services and explain
 flowchart LR
 
     A(("Desktop<br>Computer")) --->|"GET status"| B(("Picture<br>Server"))
+
     B -->|"POST [image.png]"| A
     B ---|"R/W"| C(("database<br>sqlite3"))
 
