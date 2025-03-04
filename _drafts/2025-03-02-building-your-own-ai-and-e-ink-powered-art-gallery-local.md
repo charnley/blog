@@ -20,14 +20,15 @@ TODO Insert toplogy graph overview of the services and explain
 ```mermaid
 flowchart LR
 
+    subgraph zero
     A(("Desktop<br>Computer")) --->|"GET status"| B(("Picture<br>Server"))
 
     B -->|"POST [image.png]"| A
     B ---|"R/W"| C(("database<br>sqlite3"))
+    end
 
     subgraph one
     D(("ESP32")) ---> |"GET image.png"| B
-    D -..->|sleep| D
     D --- E(("E-ink<br>Display"))
     end
 
