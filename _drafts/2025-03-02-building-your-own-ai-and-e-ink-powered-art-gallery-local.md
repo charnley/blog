@@ -20,19 +20,22 @@ TODO Insert toplogy graph overview of the services and explain
 ```mermaid
 flowchart LR
 
-    subgraph zero
-    A(("Desktop<br>Computer")) --->|"GET status"| B(("Picture<br>Server"))
-
-    B -->|"POST [image.png]"| A
+    subgraph Home Assistant
+    B(("Picture<br>Server"))
     B ---|"R/W"| C(("database<br>sqlite3"))
     end
 
-    subgraph one
+    subgraph Desktop
+    A(("Desktop<br>Computer")) --->|"GET status"| B
+    B -->|"POST [image.png]"| A
+    end
+
+    subgraph ESP32 Picture
     D(("ESP32")) ---> |"GET image.png"| B
     D --- E(("E-ink<br>Display"))
     end
 
-    subgraph two
+    subgraph Raspberry Pi Picture
     B ---|"POST image.png"| F(("Raspberry Pi"))
     F --- G(("E-ink<br>Display"))
     end
