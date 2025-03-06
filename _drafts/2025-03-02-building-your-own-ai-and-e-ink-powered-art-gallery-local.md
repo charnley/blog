@@ -150,8 +150,41 @@ advanced example of showing esphome connection
 
 </details>
 
+## Battery choice
 
-## 3D printed back side?
+With a little measurement and googling, 
+
+Usage is 0.5 mAh or 2 mWh per picture turn.
+Peak is 0.128 A and lasts for about 20s
+
+Watt is equal to 1 joule per second
+
+Power consumption in Deep-sleep mode is 10 μA
+cite: https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf
+
+$$
+    Battery energy &= 1500 [mAh] * 3.7 [v] / 1000 * 3600 [J / Wh] = 19980 [Joule]
+$$
+
+$$
+    Energy per usage &= 3.7 [V] * 0.128 A * 20 [sec] = 9.472 [Joule]
+$$
+
+24h = 86400s
+
+$$
+    Sleep usage &= 3.7 v * 0.00001 A * 86400 [s] = 3.2 [Joule]
+$$
+
+$$ 
+    Battery Life &= Battery energy (J) / (sleep energy + change energy * N)
+                 &= (19980 J) / (3.2 J + 9.472 J) = 1576 days ~= 4 years
+$$
+
+
+
+
+## 3D printed backside?
 
 
 ## Bring it all together
