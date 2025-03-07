@@ -183,27 +183,10 @@ $$
 
 $$
 \[
-\text{Battery energy} = \frac{1500 \, [\text{mAh}] \times 3.7 \, [\text{V}]}{1000} \times 3600 \, [\text{J / Wh}] = 19980 \, [\text{Joule}]
-\]
-
-\[
-\text{Energy per usage} = 3.7 \, [\text{V}] \times 0.128 \, [\text{A}] \times 20 \, [\text{sec}] = 9.472 \, [\text{Joule}]
-\]
-
-\[
-\text{24 hours} = 86400 \, [\text{sec}]
-\]
-
-\[
-\text{Sleep usage} = 3.7 \, \text{V} \times 0.00001 \, \text{A} \times 86400 \, [\text{s}] = 3.2 \, \text{Joule}
-\]
-
-\[
-\text{Battery Life} = \frac{\text{Battery energy (J)}}{\text{sleep energy (J)} + \text{usage energy per cycle (J)}} 
-\]
-
-\[
-\text{Battery Life} = \frac{19980 \, \text{J}}{3.2 \, \text{J} + 9.472 \, \text{J}} = \frac{19980}{12.672} \approx 1576 \, \text{days} \approx 4 \, \text{years}
+\begin{align}
+E &= mc^2 \nonumber \\
+E^2 &= m^2p^2 + m^2c^4 \nonumber
+\end{align}
 \]
 $$
 
