@@ -163,34 +163,29 @@ Power consumption in Deep-sleep mode is 10 μA
 cite: https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf
 
 $$
-    Battery energy = 1500 [mAh] * 3.7 [v] / 1000 * 3600 [J / Wh] = 19980 [Joule]
-$$
-
-$$
-    Energy per usage = 3.7 [V] * 0.128 A * 20 [sec] = 9.472 [Joule]
+\begin{align}
+     E_\text{Battery} &= \frac{\text{[Battery mAh]} \cdot \text{[Battery Voltage]}}{1000} \cdot 3600 \text{ Joule / Wh}\\
+     &= \left (1500 \text{mAh} \cdot 3.7 \text{V} \right ) / 1000 \cdot 3600 \text{J/Wh} = 19980 \text{ Joule}
+\end{align}
 $$
 
 24h = 86400s
 
 $$
-    Sleep usage = 3.7 v * 0.00001 A * 86400 [s] = 3.2 [Joule]
+\begin{align}
+    E_\text{picture change} &= 3.7 \text{V} \cdot 0.128\text{A} \cdot 20\text{sec} = 9.5 \text{ Joule}\\
+    E_\text{daily sleep} &= 3.7 \text{V} \cdot 0.00001 \text{A} \cdot 86400 \text{sec} = 3.2 \text{ Joule}
+\end{align}
 $$
 
 $$ 
 \begin{align}
-    \text{Battery Life} &= \frac{\text{Battery energy (J)}}{(\text{energy}_\text{sleep} + \text{energy}_\text{picture} * N)} \\
-                 &= (19980 J) / (3.2 J + 9.472 J) = 1576 days ~= 4 years
+    \text{Battery Life} &= \frac{E_\text{Battery} }{(E_\text{daily sleep} + N \cdot E_\text{picture change})} \\
+                 &= \frac{19980 \text{J}}{3.2 \text{J/day} + 1 \cdot 9.5 \text{J/day}} \approx 1500 \text{ days} \approx 4 \text{ years}
 \end{align}
 $$
 
-$$
-\[
-\begin{align}
-E &= mc^2 \nonumber \\
-E^2 &= m^2p^2 + m^2c^4 \nonumber
-\end{align}
-\]
-$$
+Where $$N$$ is number of picture changes per day. In our example it is just once per night.
 
 
 ## 3D printed backside?
@@ -211,7 +206,7 @@ Result and comment
 
 ## Note on the next version
 
-- Zigbee
+- Zigbee-based update
 - The new Waveshare screen
 - Generate AI art of your friends when they visit
 
