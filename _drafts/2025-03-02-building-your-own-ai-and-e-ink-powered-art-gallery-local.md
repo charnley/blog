@@ -167,20 +167,17 @@ advanced example of showing esphome connection
 
 ## Battery choice
 
+
 With a little measurement and googling, 
 
-Usage is 0.5 mAh or 2 mWh per picture turn.
-Peak is 0.128 A and lasts for about 20s
+- 1-5% selvafladning om måneden for Litihium batterier?!
+- Usage is 0.5 mAh or 2 mWh per picture turn.
+- Peak is 0.128 A and lasts for about 20s
 
 Watt is equal to 1 joule per second
 
 Power consumption in Deep-sleep mode is 10 μA
 cite: https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf
-
-$$
-\begin{align}
-\end{align}
-$$
 
 24h = 86400s
 
