@@ -177,8 +177,10 @@ $$
 $$
 
 $$ 
-    Battery Life = Battery energy (J) / (sleep energy + change energy * N)
-                 = (19980 J) / (3.2 J + 9.472 J) = 1576 days ~= 4 years
+\begin{align}
+    \text{Battery Life} &= Battery energy (J) / (sleep energy + change energy * N)\\
+                 &= (19980 J) / (3.2 J + 9.472 J) = 1576 days ~= 4 years
+\end{align}
 $$
 
 $$
