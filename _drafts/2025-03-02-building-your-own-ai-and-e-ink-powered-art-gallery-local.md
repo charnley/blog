@@ -18,29 +18,44 @@ TODO Insert examples
 
 TODO Insert toplogy graph overview of the services and explain
 ```mermaid
-flowchart LR
+graph LR
 
-    subgraph Home Assistant
-    B(("Picture<br>Server"))
-    B ---|"R/W"| C(("database<br>sqlite3"))
+    %% start --> stop
+
+    subgraph Desktop [Desktop Computer]
+    direction RL
+    gpucron@{ shape: rounded, label: "Cron job" }
+    GPU@{ shape: rounded, label: "GPU" }
+    gpucron --> GPU
     end
 
-    subgraph Desktop
-    A(("Desktop<br>Computer")) --->|"GET status"| B
-    B -->|"POST [image.png]"| A
+    subgraph HA [Home Assistant]
+    database@{ shape: db, label: "Image\n.sqlite" }
+    canvasserver@{ shape: rounded, label: "Picture\nServer" }
+    canvasserver --> database
     end
 
-    subgraph ESP32 Picture
-    D(("ESP32")) ---> |"GET image.png"| B
-    D --- E(("E-ink<br>Display"))
+    subgraph pictures [Picture Frames]
+
+        subgraph esp32 [ESP32]
+            esp32eink@{ shape: rounded, label: "E-Ink\nDisplay" }
+        end
+        subgraph rpi [Rasperry Pi]
+            esp32pi@{ shape: rounded, label: "E-Ink\nDisplay" }
+        end
+
     end
 
-    subgraph Raspberry Pi Picture
-    B ---|"POST image.png"| F(("Raspberry Pi"))
-    F --- G(("E-ink<br>Display"))
-    end
-    
-    classDef default fill:white,stroke:black,stroke-width:2px;
+    canvasserver -- "POST image" --> rpi
+    esp32 -- GET image --> canvasserver
+
+    gpucron -- "GET status" --> canvasserver
+    gpucron -- POST image(s) --> canvasserver
+   
+    classDef default stroke-width:2px;
+    classDef default fill: transparent;
+    classDef ParentGraph fill: transparent, stroke-width:2px;
+    class pictures,HA,Desktop,esp32,rpi ParentGraph
 ```
 
 ## Why E-ink?
@@ -177,7 +192,7 @@ $$
     &= 3.7 \text{V} \cdot 0.128\text{A} \cdot 20\text{sec} = \underline{9.5 \text{ Joule}}\\
     E_\text{daily sleep} &= 3.7 \text{V} \cdot 0.00001 \text{A} \cdot 86400 \text{sec} = \underline{3.2 \text{ Joule}}\\
     \text{Battery Life} &= \frac{E_\text{Battery} }{(E_\text{daily sleep} + N \cdot E_\text{picture change})} \\
-                 &= \frac{19980 \text{J}}{3.2 \text{J/day} + 1 \cdot 9.5 \text{J/day}} \approx 1500 \text{ days} \approx 4 \text{ years}
+                 &= \frac{19980 \text{ J}}{\left (3.2 + 1 \cdot 9.5 \right ) \text{J/day}} \approx 1500 \text{ days} \approx 4 \text{ years}
 \end{align}
 $$
 
