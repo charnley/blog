@@ -164,8 +164,6 @@ cite: https://www.espressif.com/sites/default/files/documentation/esp32_datashee
 
 $$
 \begin{align}
-     E_\text{Battery} &= \frac{\text{[Battery mAh]} \cdot \text{[Battery Voltage]}}{1000} \cdot 3600 \text{ Joule / Wh}\\
-     &= \left (1500 \text{mAh} \cdot 3.7 \text{V} \right ) / 1000 \cdot 3600 \text{J/Wh} = 19980 \text{ Joule}
 \end{align}
 $$
 
@@ -173,13 +171,11 @@ $$
 
 $$
 \begin{align}
-    E_\text{picture change} &= 3.7 \text{V} \cdot 0.128\text{A} \cdot 20\text{sec} = 9.5 \text{ Joule}\\
-    E_\text{daily sleep} &= 3.7 \text{V} \cdot 0.00001 \text{A} \cdot 86400 \text{sec} = 3.2 \text{ Joule}
-\end{align}
-$$
-
-$$ 
-\begin{align}
+     E_\text{Battery} &= \frac{\text{[Battery mAh]} \cdot \text{[Battery Voltage]}}{1000} \cdot 3600 \text{ Joule / Wh}\\
+     &= \left (1500 \text{mAh} \cdot 3.7 \text{V} \right ) / 1000 \cdot 3600 \text{J/Wh} = \underline{19980 \text{ Joule}}\\
+    E_\text{picture change} &= \text{Voltage} \cdot \text{Ampere} \cdot \text{Time}\\
+    &= 3.7 \text{V} \cdot 0.128\text{A} \cdot 20\text{sec} = \underline{9.5 \text{ Joule}}\\
+    E_\text{daily sleep} &= 3.7 \text{V} \cdot 0.00001 \text{A} \cdot 86400 \text{sec} = \underline{3.2 \text{ Joule}}\\
     \text{Battery Life} &= \frac{E_\text{Battery} }{(E_\text{daily sleep} + N \cdot E_\text{picture change})} \\
                  &= \frac{19980 \text{J}}{3.2 \text{J/day} + 1 \cdot 9.5 \text{J/day}} \approx 1500 \text{ days} \approx 4 \text{ years}
 \end{align}
