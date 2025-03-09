@@ -241,6 +241,8 @@ Where $$N$$ is number of picture changes per day. In our example it is just once
 
 ## 3D printed backside?
 
+- [ ] TODO Jimmy's hot glue method
+
 
 ## Bring it all together
 
@@ -252,8 +254,14 @@ Result and comment
 
 - Zigbee-based update
 - The new Waveshare screen
-- Auto AI generated prompts based on themes
+- Auto AI generated prompts based on themes and events
 - Generate AI art of your friends when they visit
+
+## Known issues
+
+- Why do we need to revert the colors for the esphome setup?
+- Soldering could be an issue, check
+- Check which config you need to set the HAT
 
 
 ## References
@@ -261,5 +269,7 @@ Result and comment
 - Dithering references
 - AI art references
 - ESP32 references
+
+
 
 
