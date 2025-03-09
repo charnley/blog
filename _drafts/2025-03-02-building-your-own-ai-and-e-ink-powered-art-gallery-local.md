@@ -6,6 +6,8 @@ categories: AI art
 author: Jimmy & Peter
 ---
 
+![E-ink with AI art ESP32 home assistant based]({{ site.baseurl }}/assets/images/eink_art/eink_art_framed_filter.jpg)
+
 - [ ] TODO: insert images of the frame, front and back, with a gif for when it changes the image to show what it can do.
 - [ ] TODO: explain what it is before why
 - [ ] TODO: performance expectations( image fresh, battery life)
@@ -144,6 +146,8 @@ example: adventurous scifi structure, forest, swiss alps
 
 example2: += pencil sketch
 
+![Prompt results]({{ site.baseurl }}/assets/images/eink_art/prompt_example.png)
+**Figure:** Showing the results of prompting "scifi building in swiss aps", without (A) and with (B) e-ink friendly keywords, and the results after dithering.
 
 ## Choice of dithering
 
@@ -151,6 +155,9 @@ example2: += pencil sketch
 - why? because default makes it grey
 
 TODO Examples
+
+![Dithering results]({{ site.baseurl }}/assets/images/eink_art/dithering_example.png)
+**Figure:** How a AI generated picture (A), and the default dithering algorithm (B) can be improved (C).
 
 
 ## Choice of hosting model
