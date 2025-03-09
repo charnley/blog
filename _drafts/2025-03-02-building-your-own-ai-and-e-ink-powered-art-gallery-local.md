@@ -140,6 +140,10 @@ Examples that works
 
 Examples that do not work (real images)
 
+example: adventurous scifi structure, forest, swiss alps
+
+example2: += pencil sketch
+
 
 ## Choice of dithering
 
