@@ -33,7 +33,7 @@ plugins:
   - jekyll-feed
 
 minima:
-  skin: auto
+  skin: dark
 
 # Don't include categories in permalink
 permalink: /:year/:month/:day/:title:output_ext

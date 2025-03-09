@@ -21,7 +21,6 @@ I also require that the whole project is done locally on my own local network, b
 
 This is a project that we started in Feb 2024, and took some interations before we got it right.
 In the mean time many commercial products has appeared.
-TODO Insert examples
 
 ## Table of Contents
 - [Overview](#overview)
@@ -37,9 +36,10 @@ TODO Insert examples
 - [Note on the next version](#note-on-the-next-version)
 - [References](#references)
 
-## Overview
+TODO Insert result picture
 
-TODO Insert toplogy graph overview of the services and explain
+## Infrastructure overview
+
 ```mermaid
 graph LR
 
@@ -80,6 +80,13 @@ graph LR
     classDef ParentGraph fill: transparent, stroke-width:2px;
     class pictures,HA,Desktop,esp32,rpi ParentGraph
 ```
+
+The workflow is as following;
+
+- The **picture server** holds a list of prompts, with associated pictures, stored in a sqlite database. For our setup this is hosted on Home Assistant, but could be any docker hosting service.
+- Every night the **desktop computer** asks the picture server if there any prompts without a images. For all those prompts, generate new images with the GPU and send them to the picture server.
+- The picture frames run by **ESP32** will then run on a sleep schdule. Wake up, request a picture, display the picture and go back to sleep.
+- For live updates, like alarms that it is going to rain, the picture server can send a messeage to the **Raspberry Pi** and make a live update.
 
 ## Shopping List
 
@@ -239,6 +246,7 @@ Result and comment
 
 - Zigbee-based update
 - The new Waveshare screen
+- Auto AI generated prompts based on themes
 - Generate AI art of your friends when they visit
 
 

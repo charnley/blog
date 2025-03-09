@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "Making your CV easy to read"
+date:   2025-03-02
+categories: cv
+---
 
 # TODO
 
