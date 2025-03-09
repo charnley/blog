@@ -153,11 +153,23 @@ example2: += pencil sketch
 
 - why? low res
 - why? because default makes it grey
+- why? the default is implemented both on esphome and pillow
 
-TODO Examples
+Many to choose from
+
+link to wiki
+
+reasoning
+
+what?
+
 
 ![Dithering results]({{ site.baseurl }}/assets/images/eink_art/dithering_example.png)
 **Figure:** How a AI generated picture (A), and the default dithering algorithm (B) can be improved (C).
+It might be a little difficult to see, but notice how (B) is more greay than (C).
+This is a lot more visually clear when applied on an actual physical low-res e-ink screen.
+
+note on multi-color dithering
 
 
 ## Choice of hosting model
@@ -269,7 +281,8 @@ Result and comment
 - Why do we need to revert the colors for the esphome setup?
 - Soldering could be an issue, check
 - Check which config you need to set the HAT
-
+- Not on grey levels on e-ink
+- Not on the black-white-red screen
 
 ## References
 
