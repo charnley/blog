@@ -81,6 +81,10 @@ check TODO page for overview of ESP32's supported by ESPHome
 
 Estimated total cost per frame $$\approx 200 \text{ EUR}$$ + physical frame.
 
+When shopping, try to avoid Amazon.
+If you are swiss based, checkout [bastelgarage.ch](https://www.bastelgarage.ch).
+
+
 ## Infrastructure overview
 
 ```mermaid
