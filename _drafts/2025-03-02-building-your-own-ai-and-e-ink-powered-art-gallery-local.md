@@ -211,6 +211,16 @@ reasoning
 
 what?
 
+<div class="row">
+  <div class="col-md-8" markdown="1">
+  Some text.
+  </div>
+  <div class="col-md-4" markdown="1">
+  Hello
+  </div>
+</div>
+
+
 $$
 \begin{bmatrix}
          &                                          & *                                        & \frac{\displaystyle 7}{\displaystyle 16} & \ldots \\
