@@ -43,15 +43,16 @@ A Raspberry Pi Zero is preferred for the picture frame because of its dimensions
 > **IMPORTANT**: When shopping for ESP32, if you want to download images over Wi-Fi/the internet via ESPHome, you need a chipset with PSRAM, which is an external memory module allocated to one of the GPIO pins. The WiFi image downloader module needs this extra memory.
 
 
-| Item | Product Link |
-| --- | --- |
-| DFRobot FireBeetle2 ESP32S3 N16R8 8MB PSRAM [wiki](https://wiki.dfrobot.com/SKU_DFR0975_FireBeetle_2_Board_ESP32_S3) | [https://www.dfrobot.com/product-2676.html](https://www.dfrobot.com/product-2676.html)|
-| DFRobot FireBettle2 ESP32-E N16R2 2M PSRAM  [wiki](https://wiki.dfrobot.com/_SKU_DFR1139_FireBeetle_2_ESP32_E_N16R2_IoT_Microcontroller) | [https://www.dfrobot.com/product-2837.html](https://www.dfrobot.com/product-2837.html) |
-| Raspberry Pi 5 | [https://www.raspberrypi.com/products/raspberry-pi-5/](https://www.raspberrypi.com/products/raspberry-pi-5/) |
-| Raspberry Pi Zero | [https://www.raspberrypi.com/products/raspberry-pi-zero/](https://www.raspberrypi.com/products/raspberry-pi-zero/) |
-| Waveshare E-ink 13.3" K, with HAT | [https://www.waveshare.com/13.3inch-e-paper-hat-k.htm](https://www.waveshare.com/13.3inch-e-paper-hat-k.htm) |
+| Item | Product Link | Price |
+| --- | --- | --- |
+| DFRobot FireBeetle2 ESP32S3 N16R8 8MB PSRAM [wiki](https://wiki.dfrobot.com/SKU_DFR0975_FireBeetle_2_Board_ESP32_S3) | [https://www.dfrobot.com/product-2676.html](https://www.dfrobot.com/product-2676.html)| ~ 20 EUR |
+| DFRobot FireBettle2 ESP32-E N16R2 2M PSRAM  [wiki](https://wiki.dfrobot.com/_SKU_DFR1139_FireBeetle_2_ESP32_E_N16R2_IoT_Microcontroller) | [https://www.dfrobot.com/product-2837.html](https://www.dfrobot.com/product-2837.html) | ~ 15 EUR |
+| 1500-5000 mAh LiPo Battery with JST PH 2 Pin connector | | ~ 7 EUR |
+| Raspberry Pi 5 | [https://www.raspberrypi.com/products/raspberry-pi-5/](https://www.raspberrypi.com/products/raspberry-pi-5/) | ~120 EUR |
+| Raspberry Pi Zero | [https://www.raspberrypi.com/products/raspberry-pi-zero/](https://www.raspberrypi.com/products/raspberry-pi-zero/) | ~12 EUR |
+| Waveshare E-ink 13.3" K, with HAT | [https://www.waveshare.com/13.3inch-e-paper-hat-k.htm](https://www.waveshare.com/13.3inch-e-paper-hat-k.htm) | ~150 EUR |
 
-Estimated total cost per frame $$\approx 200 \text{ EUR}$$ + physical frame.
+Estimated total cost per frame $$\approx 200 \text{ EUR}$$ + physical frame, with the e-ink display being the most costly part.
 
 The choice of ESP32 was made by browsing [https://registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0](https://registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0) for compatible devices. The version is locked to 5.3.0 because, as of the time of writing, ESPHome uses `platformio=5.3.0'. However, the only main requirement is that the ESP32 needs PSRAM to download the PNG image over WiFi.
 
