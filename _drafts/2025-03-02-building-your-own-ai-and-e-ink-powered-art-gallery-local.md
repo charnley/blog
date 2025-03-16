@@ -124,10 +124,9 @@ An explanation I would happily give without prompt.
 The reason it looks so realistic because, what you are looking at is actual ink.
 If you ever use a kindle or [Remarkable Tablet](https://remarkable.com/) you know what I am talking about.
 The screen consist of small "pixel" of oil, with different pigments.
-The pigments can then be moved up or down with a electromagnet, defining the color of the pixel. What to know more? Read it on Wikipedia.
-
-- [wikipedia.org/wiki/E_Ink](https://en.wikipedia.org/wiki/E_Ink)
-- [wikipedia.org/wiki/Electronic_paper](https://en.wikipedia.org/wiki/Electronic_paper)
+The pigments can then be moved up or down with a electromagnet, defining the color of the pixel.
+What to know more?
+Read it on [wikipedia.org/wiki/E_Ink](https://en.wikipedia.org/wiki/E_Ink) and [wikipedia.org/wiki/Electronic_paper](https://en.wikipedia.org/wiki/Electronic_paper).
 
 There are quite a few provioders out there, but the E-ink provider of choice we found is [waveshare.com](https://www.waveshare.com/).
 We choose them because others have had success with them and they have fairly good documentation and prices.
@@ -196,30 +195,61 @@ Anything drawing, painting, sketch related usually translates well
 For inspiration, there are many style libraries that has been created. We found that [midlibrary.io](https://midlibrary.io/) gave a quite good selection of style and artists that works well.
 Especially the black and white section.
 
-### Note on Windows hosting and crong job
+### Hosting image generator service on windows
 
-Some notes on the prompts and references
+Since you are following this setup guide, I assume you have a graphics card, and then I will also assume that you are using it on a windows machine.
+The most easy way to setup a service is to setup Windows Subsystem Linux.
 
-High contrast
+There was some problems with speed with Windows10 and WSL2, as the read/write to desk was very slow.
+Using Windows11 with WSL2 seems way more stable. And note that you need more space than you think to have a Linux subsystem.
+However, my experience is with Win11 and WSL2, getting CUDA access to to your windows GPU from linux, is quite smooth.
+Setup guide is as following
 
-drawings
+<details markdown="1">
+<summary><b>Setup Linux subsystem linux with CUDA</b></summary>
 
+- Install cuda on windows (probably you already have that) [developer.nvidia.com/cuda-downloads](https://developer.nvidia.com/cuda-downloads)
+- Install wsl [learn.microsoft.com/en-us/windows/wsl/install](https://learn.microsoft.com/en-us/windows/wsl/install)
 
-## From gradient to binary photo (dithering)
+Open a terminal and install wsl
 
-error diffusion
+    wsl --install
 
-- why? low res
-- why? because default makes it grey
-- why? the default is implemented both on esphome and pillow
+When WSL is installed, update and setup linux
 
-Many to choose from
+    # update apt
+    sudo apt update
+    sudo apt upgrade
 
-link to wiki
+Download CUDA bridge from Select Linux, x86, WSL-Ubuntu, 2.0, deb (network)
+[developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_network](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_network)
+as of writing this means
+Which means today running the following commands in WSL Ubuntu
 
-reasoning
+    wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-keyring_1.1-1_all.deb
+    sudo dpkg -i cuda-keyring_1.1-1_all.deb
+    sudo apt update
+    sudo apt -y install cuda-toolkit-12-3
 
-what?
+and lastly setup python, either with `conda`, `uv` or `pip`.
+
+</details>
+
+And with that you should be able to use a Python environment with CUDA in a linux environment, hosted by Windows.
+
+With the linux subsystem we can setup a job for our service to run every 4am. 
+Setup a cronjob with `crontab -e` with the following syntax
+
+    30 4 * * * cd ~/path/to/project && start-service
+
+## Dithering, from a grey-scale photo to binary-black/white
+
+When translating a photo from grey-scale to black-white (meaning binary here), we need to account for the error when we cannot represent grey.
+This is called [error diffusion/dithering](https://en.wikipedia.org/wiki/Dither) and is a well known issue.
+The default dithering algorithm on most systems is [Floyd-Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering),
+which is the most numerical accucate way of doing it.
+It works by splitting the error associated with going from grey to either black or white into the neighboring pixels, moving from top left.
+So if $$*$$ is the current pixel, the error would be distributed like this;
 
 $$
 \begin{bmatrix}
@@ -227,6 +257,13 @@ $$
   \ldots & \frac{\displaystyle 3}{\displaystyle 16} & \frac{\displaystyle 5}{\displaystyle 16} & \frac{\displaystyle 1}{\displaystyle 16} & \ldots \\
 \end{bmatrix}
 $$
+
+However, in practise the numerically correct method dithers the error out in a very dense way, making the picture look very grey-ish.
+This is especially prominant in low-resolution images, in which we have.
+
+With experience we found that the algorithm used in old Macs, [Atkinson Dithering](https://en.wikipedia.org/wiki/Atkinson_dithering),
+works really well for low resolution photos.
+The difference being that instead of diffusing the full error, only partial will be diffused.
 
 $$
 \begin{bmatrix}
@@ -236,21 +273,62 @@ $$
 \end{bmatrix}
 $$
 
+The result is that the image will have more concentrated pixel areas and have a higher contrast. As seen by the following comparison.
+
 ![Dithering results]({{ site.baseurl }}/assets/images/eink_art/dithering_example.png)
-**Figure:** How a AI generated picture (A), and the default dithering algorithm (B) can be improved (C).
+**Figure:** A greyscale image (A), dithering using Floyd-Steinberg (B) and using Atkinson Dithering (C).
+
 It might be a little difficult to see, but notice how (B) is more greay than (C).
 This is a lot more visually clear when applied on an actual physical low-res e-ink screen.
 
-note on implementation
-numpy + numba
-python slow!
-C fast
-numba fast
+Now the implementation is doing a lot of for-loops, so Python is not really the best option.
+And Pillow only implemented Floyd-Steinberg. 
+But using Numba we can get something working really quick.
 
-note on multi-color dithering
+<details markdown="1">
+<summary><b>dithering_implementations.py</b></summary>
 
-- https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering
-- https://en.wikipedia.org/wiki/Atkinson_dithering
+    import numpy as np
+    from numba import jit
+    from PIL import Image
+
+    def atkinson_dither(image: Image.Image) -> Image.Image:
+        img = np.array(image.convert("L"), dtype=np.int32)
+        set_atkinson_dither_array(img)
+        return Image.fromarray(np.uint8(img))
+
+    @jit
+    def set_atkinson_dither_array(img: np.ndarray):
+        """changes img array with atkinson dithering"""
+
+        low = 0
+        heigh = 255
+
+        frac = 8  # Atkinson constant
+        neighbours = np.array([[1, 0], [2, 0], [-1, 1], [0, 1], [1, 1], [0, 2]])
+        threshold = np.zeros(256, dtype=np.int32)
+        threshold[128:] = 255
+        height, width = img.shape
+        for y in range(height):
+            for x in range(width):
+                old = img[y, x]
+                old = np.min(np.array([old, 255]))
+                new = threshold[old]
+                err = (old - new) // frac
+                img[y, x] = new
+                for dx, dy in neighbours:
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < width and 0 <= ny < height:
+                        # Make sure that img set is between 0 and 255 (negative error could surpass the value)
+                        img_yx = img[ny, nx] + err
+                        img_yx = np.minimum(heigh, np.maximum(img_yx, low))
+                        img[ny, nx] = img_yx
+
+
+</details>
+
+If you are doing multiple colors you can diffuse the error per color channel.
+
 
 ## Choice of hosting model
 
@@ -586,6 +664,8 @@ It was expensive, but worth it for the final touch.
 - Better infographics, such as weather in local area
 
 ## Known issues
+
+> **NOTE:** WSL will shutdown if no shell is running, so you need to leave a terminal open on your machine
 
 - Why do we need to revert the colors for the esphome setup?
 - Soldering could be an issue, check
