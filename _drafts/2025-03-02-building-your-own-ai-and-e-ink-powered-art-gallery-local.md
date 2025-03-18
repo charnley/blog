@@ -2,7 +2,7 @@
 layout: post
 title:  "Building Your Own AI & E-Ink Powered Art Gallery: A Local DIY Guide"
 date:   2025-03-02
-categories: AI art eink esp32 homeassistant
+categories: AI art e-ink esp32 home-assistant
 author: Jimmy & Peter
 ---
 
@@ -13,6 +13,9 @@ The content changes daily, so each day brings a completely new and random image 
 Everything is run locally on our network, ensuring the process is private and keeping everything off the cloud.
 Having dynamic, AI-generated art on your walls is straightforward without compromising privacy.
 This setup naturally extends our Home Assistant smart home setup, which hosts the image server and monitors the ESP32s.
+
+In some places we dive deep (e.i. dithering algorithms); other places, we take shortcuts (e.i. not writing C-code), 
+because [we need to finish our projects](https://www.youtube.com/watch?v=4jgTCayWlwc).
 
 ![Showing the transition of E-ink screen]({{ site.baseurl }}/assets/images/eink_art/video/output2.gif)
 
@@ -258,8 +261,8 @@ $$
 \end{bmatrix}
 $$
 
-However, in practise the numerically correct method dithers the error out in a very dense way, making the picture look very grey-ish.
-This is especially prominant in low-resolution images, in which we have.
+However, in practice, the numerically correct method dithers the error very densely, making the picture look greyish.
+This is especially prominent in our low-resolution images/displays.
 
 With experience we found that the algorithm used in old Macs, [Atkinson Dithering](https://en.wikipedia.org/wiki/Atkinson_dithering),
 works really well for low resolution photos.
@@ -329,43 +332,85 @@ But using Numba we can get something working really quick.
 
 If you are doing multiple colors you can diffuse the error per color channel.
 
+## Displaying the image
 
-## Choice of hosting model
+For displaying the image on the e-ink, we have two options. Push, with powercable, or pull with battery.
 
-RPi and ESP32. Push or pull.
+Personally, the iteration was done with a Raspberry Pi, but given that required a USB power cable it removed the immersion as a photoframe.
+Note that a white USB cable was used and only one person ever noticed it. However, we knew it was there, and that was enough.
+But if you want live updates, like a notification, this is the option you want.
 
-Start with RPi
+The second option is to use an ESP32 microprocessor, which can be battery-powered. No visible cords.
 
 ### Setting up Raspberry Pi API frame
+
+For the Raspberry Pi, the simplest setup would be to setup a FastAPI Python client to receive request and display them.
+We use an [Raspberry Pi Zero](https://www.raspberrypi.com/products/raspberry-pi-zero/) because of the small form-factor, to be hidden behind the frame.
+Waveshare provides quite good example codes for Python (And other implementations), and is easily the fastest way to get something shown on your screen.
+[github.com/waveshareteam/e-Paper](https://github.com/waveshareteam/e-Paper). 
+
+For the Raspberry Pi, [install Debian OS](https://www.raspberrypi.com/documentation/computers/getting-started.html) and `ssh` into the it. 
+
+<details markdown="1">
+<summary><b>Setting up Raspberry Pi</b></summary>
+
+    # Enable SPI
+    # Choose Interfacing Options -> SPI -> Yes
+    sudo raspi-config
+    sudo reboot
+
+    # Setup Python and dependencies
+    sudo apt install python3-pip python3-setuptools python3-venv python3-wheel libopenjp2-7
+
+    # Create a python env
+    python3 -m venv project_name
+
+    # Activate python env
+    source ./project_name/bin/activate
+
+    # Install the main dependencies with the activated env, but really, use a git repo for this
+    pip install pillow numpy RPi.GPIO spidev gpiozero spidev
+
+</details>
+
+If you have a problem creating a `venv`, because of missing pip, you can;
+
+    python3 -m venv --without-pip project_name
+    source env/bin/activate
+    wget bootstrap.pypa.io/get-pip.py
+    python get-pip.py
+
+With this setup, it should be pretty straightforward to set up a FastAPI solution.
+For inspiration, refer to Jimmy's github solution [github.com/charnley/eink_art_gallery](https://github.com/charnley/eink_art_gallery).
+
+Note, because you need to start the API every time the Raspberry Pi is booted, it is worth setting up a `crontab -e` to start you service at boot
+
+    @reboot /path/to/your_script.sh
 
 
 ### Setting up ESPHome and ESP32 frame
 
-We could not use the waveshare, as it does not have psram
+Why didn't we write it in C?
+Because A) the project needs to end at some point, and B) we both use Home Assistant, it made sense to get all the free stuff out of the box with ESPHome.
+[Choose your battles](https://www.youtube.com/watch?v=4jgTCayWlwc) and finish your projects.
 
+There are many, many, many options for ESP32s.
+Firstly, we tried the example [ESP32 development board](https://www.waveshare.com/e-paper-esp32-driver-board.htm) from Waveshare, which, of course, can display pictures. However, it was not possible to download images over the Internet with the standard ESPHome libraries. 
+Because this requires that the ESP32 has [PSRAM](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/external-ram.html).
+We iterated through a couple and found that the FireBettle2 ESP32-E and FireBettle2 ESP32S have PSRAM and are well-documented by the producer.
 
-Why not just write it in C?
-It could be done without PNG downloader, in pure binary, but we wanted fast iterations
-Choose your battles. ESPHome come with a lot of features out of the box.
+> **Note:** If your picture gets less visible (greyish), the more complicated the image is, you are using the wrong display-config. [waveshare.com/wiki/E-Paper_Driver_HAT](https://www.waveshare.com/wiki/E-Paper_Driver_HAT).
 
-idea
+> **Note:** If your picture does not refresh entirely when changing photos, you might have a loose connection. Check your soldering connections.
 
-basic example for showing a image
-
-> **Note:** To use the image downloader you need vram on your
-
-> **Note:** If your picture is getting less visible the more complicated the picture is, you are using the wrong config
-
-> **Note:** If your picture is not doing the full-refresh, please check your soldering connections
-
-
-basic example for showing image over wifi
-
-advanced example of showing esphome connection
+To connect the ESP32 to the E-Paper Driver HAT, select which GPIO pins are connected to each pin defined for the Waveshare HAT (table above).
+So, solder solder. Remember your flux.
+The configuration that worked for us was (as defined by the yaml esphome-substitutions);
 
 <details markdown="1">
 <summary><b>GPIO Configuration for FireBettle2 ESP32-E</b></summary>
 
+```yaml
     substitutions:
       device_id: "example_e"
       wifi_ssid: !secret wifi_ssid
@@ -393,12 +438,14 @@ advanced example of showing esphome connection
       friendly_name: "eink frame ${device_id}"
       platformio_options:
         build_flags: "-DBOARD_HAS_PSRAM"
+```
 
 </details>
 
 <details markdown="1">
 <summary><b>GPIO Configuration for FireBettle2 ESP3S3</b></summary>
 
+```yaml
     substitutions:
       device_id: "example_s"
       wifi_ssid: !secret wifi_ssid
@@ -420,13 +467,38 @@ advanced example of showing esphome connection
       framework:
         type: arduino
         version: recommended
+```
 
 </details>
 
+To flash it, install esphome with;
 
-For Configuration of a simple, fetching over wifi and displaying it
+```bash
+    pip install esphome
+```
 
+Setup a `secrets.yaml`
 
+```yaml
+wifi_ssid: YourWiFiSSID
+wifi_password: YourWiFiPassword
+```
+
+Then, you flash the ESP with ESPHome using the command;
+
+```bash
+    esphome run --device /dev/ttyACM0 ./configuration.yaml
+```
+
+Where the device is mounted on either `/dev/ttyACM0-2` or `/dev/ttyUSB0-2`.
+You need to define the device argument; otherwise, ESPHome will try to flash the device over the ethernet using the device ID.
+
+With the GPIO soldered and configured, we can try different ESPHome configurations.
+Prepend the above GPIO configuration to the configuration you want to flash.
+
+For Configuration of a simple, fetching image over wifi and displaying it;
+
+```yaml
     http_request:
       id: fetch_image_request
       timeout: 5s
@@ -477,7 +549,7 @@ For Configuration of a simple, fetching over wifi and displaying it
     deep_sleep:
       run_duration: 40s
       sleep_duration: 25200s # 7h
-
+```
 
 and config with ESPHome
 
@@ -673,6 +745,10 @@ It was expensive, but worth it for the final touch.
 - Not on grey levels on e-ink
 - Not on the black-white-red screen
 - Check the +/- on the lipo battery, needs to fit. You might need to change it.
+
+
+
+
 
 ## References
 
