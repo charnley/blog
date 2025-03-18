@@ -229,10 +229,12 @@ Download CUDA bridge from Select Linux, x86, WSL-Ubuntu, 2.0, deb (network)
 as of writing this means
 Which means today running the following commands in WSL Ubuntu
 
-    wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-keyring_1.1-1_all.deb
-    sudo dpkg -i cuda-keyring_1.1-1_all.deb
-    sudo apt update
-    sudo apt -y install cuda-toolkit-12-3
+```bash
+wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-keyring_1.1-1_all.deb
+sudo dpkg -i cuda-keyring_1.1-1_all.deb
+sudo apt update
+sudo apt -y install cuda-toolkit-12-3
+```
 
 and lastly setup python, either with `conda`, `uv` or `pip`.
 
@@ -243,7 +245,9 @@ And with that you should be able to use a Python environment with CUDA in a linu
 With the linux subsystem we can setup a job for our service to run every 4am. 
 Setup a cronjob with `crontab -e` with the following syntax
 
-    30 4 * * * cd ~/path/to/project && start-service
+```crontab
+30 4 * * * cd ~/path/to/project && start-service
+```
 
 ## Dithering, from a grey-scale photo to binary-black/white
 
@@ -291,42 +295,43 @@ But using Numba we can get something working really quick.
 <details markdown="1">
 <summary><b>dithering_implementations.py</b></summary>
 
-    import numpy as np
-    from numba import jit
-    from PIL import Image
+```python
+import numpy as np
+from numba import jit
+from PIL import Image
 
-    def atkinson_dither(image: Image.Image) -> Image.Image:
-        img = np.array(image.convert("L"), dtype=np.int32)
-        set_atkinson_dither_array(img)
-        return Image.fromarray(np.uint8(img))
+def atkinson_dither(image: Image.Image) -> Image.Image:
+    img = np.array(image.convert("L"), dtype=np.int32)
+    set_atkinson_dither_array(img)
+    return Image.fromarray(np.uint8(img))
 
-    @jit
-    def set_atkinson_dither_array(img: np.ndarray):
-        """changes img array with atkinson dithering"""
+@jit
+def set_atkinson_dither_array(img: np.ndarray):
+    """changes img array with atkinson dithering"""
 
-        low = 0
-        heigh = 255
+    low = 0
+    heigh = 255
 
-        frac = 8  # Atkinson constant
-        neighbours = np.array([[1, 0], [2, 0], [-1, 1], [0, 1], [1, 1], [0, 2]])
-        threshold = np.zeros(256, dtype=np.int32)
-        threshold[128:] = 255
-        height, width = img.shape
-        for y in range(height):
-            for x in range(width):
-                old = img[y, x]
-                old = np.min(np.array([old, 255]))
-                new = threshold[old]
-                err = (old - new) // frac
-                img[y, x] = new
-                for dx, dy in neighbours:
-                    nx, ny = x + dx, y + dy
-                    if 0 <= nx < width and 0 <= ny < height:
-                        # Make sure that img set is between 0 and 255 (negative error could surpass the value)
-                        img_yx = img[ny, nx] + err
-                        img_yx = np.minimum(heigh, np.maximum(img_yx, low))
-                        img[ny, nx] = img_yx
-
+    frac = 8  # Atkinson constant
+    neighbours = np.array([[1, 0], [2, 0], [-1, 1], [0, 1], [1, 1], [0, 2]])
+    threshold = np.zeros(256, dtype=np.int32)
+    threshold[128:] = 255
+    height, width = img.shape
+    for y in range(height):
+        for x in range(width):
+            old = img[y, x]
+            old = np.min(np.array([old, 255]))
+            new = threshold[old]
+            err = (old - new) // frac
+            img[y, x] = new
+            for dx, dy in neighbours:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < width and 0 <= ny < height:
+                    # Make sure that img set is between 0 and 255 (negative error could surpass the value)
+                    img_yx = img[ny, nx] + err
+                    img_yx = np.minimum(heigh, np.maximum(img_yx, low))
+                    img[ny, nx] = img_yx
+```
 
 </details>
 
@@ -354,23 +359,24 @@ For the Raspberry Pi, [install Debian OS](https://www.raspberrypi.com/documentat
 <details markdown="1">
 <summary><b>Setting up Raspberry Pi</b></summary>
 
-    # Enable SPI
-    # Choose Interfacing Options -> SPI -> Yes
-    sudo raspi-config
-    sudo reboot
+```bash
+# Enable SPI
+# Choose Interfacing Options -> SPI -> Yes
+sudo raspi-config
+sudo reboot
 
-    # Setup Python and dependencies
-    sudo apt install python3-pip python3-setuptools python3-venv python3-wheel libopenjp2-7
+# Setup Python and dependencies
+sudo apt install python3-pip python3-setuptools python3-venv python3-wheel libopenjp2-7
 
-    # Create a python env
-    python3 -m venv project_name
+# Create a python env
+python3 -m venv project_name
 
-    # Activate python env
-    source ./project_name/bin/activate
+# Activate python env
+source ./project_name/bin/activate
 
-    # Install the main dependencies with the activated env, but really, use a git repo for this
-    pip install pillow numpy RPi.GPIO spidev gpiozero spidev
-
+# Install the main dependencies with the activated env, but really, use a git repo for this
+pip install pillow numpy RPi.GPIO spidev gpiozero spidev
+```
 </details>
 
 If you have a problem creating a `venv`, because of missing pip, you can;
@@ -411,33 +417,33 @@ The configuration that worked for us was (as defined by the yaml esphome-substit
 <summary><b>GPIO Configuration for FireBettle2 ESP32-E</b></summary>
 
 ```yaml
-    substitutions:
-      device_id: "example_e"
-      wifi_ssid: !secret wifi_ssid
-      wifi_password: !secret wifi_password
-      wake_up_time: "04:00:00"
-      image_url: "http://homeassistant.local:8090/displays/queue.png"
+substitutions:
+  device_id: "example_e"
+  wifi_ssid: !secret wifi_ssid
+  wifi_password: !secret wifi_password
+  wake_up_time: "04:00:00"
+  image_url: "http://homeassistant.local:8090/displays/queue.png"
 
-      clk_pin: "GPIO18"
-      mosi_pin: "GPIO23"
-      cs_pin: "GPIO15"
-      dc_pin: "GPIO13"
-      busy_pin: "GPIO04"
-      reset_pin: "GPIO14"
+  clk_pin: "GPIO18"
+  mosi_pin: "GPIO23"
+  cs_pin: "GPIO15"
+  dc_pin: "GPIO13"
+  busy_pin: "GPIO04"
+  reset_pin: "GPIO14"
 
-      waveshare_model: "13.3in-k" # or another waveshare model
+  waveshare_model: "13.3in-k" # or another waveshare model
 
-    esp32:
-      board: esp32dev # dfrobot_firebeetle2_esp32e
-      framework:
-        type: arduino
-        version: recommended
+esp32:
+  board: esp32dev # dfrobot_firebeetle2_esp32e
+  framework:
+    type: arduino
+    version: recommended
 
-    esphome:
-      name: eink-frame-${device_id}
-      friendly_name: "eink frame ${device_id}"
-      platformio_options:
-        build_flags: "-DBOARD_HAS_PSRAM"
+esphome:
+  name: eink-frame-${device_id}
+  friendly_name: "eink frame ${device_id}"
+  platformio_options:
+    build_flags: "-DBOARD_HAS_PSRAM"
 ```
 
 </details>
@@ -446,27 +452,27 @@ The configuration that worked for us was (as defined by the yaml esphome-substit
 <summary><b>GPIO Configuration for FireBettle2 ESP3S3</b></summary>
 
 ```yaml
-    substitutions:
-      device_id: "example_s"
-      wifi_ssid: !secret wifi_ssid
-      wifi_password: !secret wifi_password
-      wake_up_time: "04:00:00"
-      image_url: "http://homeassistant.local:8090/displays/queue.png"
+substitutions:
+  device_id: "example_s"
+  wifi_ssid: !secret wifi_ssid
+  wifi_password: !secret wifi_password
+  wake_up_time: "04:00:00"
+  image_url: "http://homeassistant.local:8090/displays/queue.png"
 
-      clk_pin: "GPIO12"
-      mosi_pin: "GPIO11"
-      cs_pin: "GPIO10"
-      dc_pin: "GPIO9"
-      busy_pin: "GPIO7"
-      reset_pin: "GPIO4"
+  clk_pin: "GPIO12"
+  mosi_pin: "GPIO11"
+  cs_pin: "GPIO10"
+  dc_pin: "GPIO9"
+  busy_pin: "GPIO7"
+  reset_pin: "GPIO4"
 
-      waveshare_model: "13.3in-k" # or another waveshare model
+  waveshare_model: "13.3in-k" # or another waveshare model
 
-    esp32:
-      board: dfrobot_firebeetle2_esp32s3
-      framework:
-        type: arduino
-        version: recommended
+esp32:
+  board: dfrobot_firebeetle2_esp32s3
+  framework:
+    type: arduino
+    version: recommended
 ```
 
 </details>
@@ -474,7 +480,7 @@ The configuration that worked for us was (as defined by the yaml esphome-substit
 To flash it, install esphome with;
 
 ```bash
-    pip install esphome
+pip install esphome
 ```
 
 Setup a `secrets.yaml`
@@ -487,7 +493,7 @@ wifi_password: YourWiFiPassword
 Then, you flash the ESP with ESPHome using the command;
 
 ```bash
-    esphome run --device /dev/ttyACM0 ./configuration.yaml
+esphome run --device /dev/ttyACM0 ./configuration.yaml
 ```
 
 Where the device is mounted on either `/dev/ttyACM0-2` or `/dev/ttyUSB0-2`.
@@ -499,56 +505,56 @@ Prepend the above GPIO configuration to the configuration you want to flash.
 For Configuration of a simple, fetching image over wifi and displaying it;
 
 ```yaml
-    http_request:
-      id: fetch_image_request
-      timeout: 5s
-      useragent: esphome/example_device
-      verify_ssl: false
+http_request:
+  id: fetch_image_request
+  timeout: 5s
+  useragent: esphome/example_device
+  verify_ssl: false
 
-    wifi:
-      ssid: !secret wifi_ssid
-      password: !secret wifi_password
-      on_connect:
-        - component.update: my_image
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  on_connect:
+    - component.update: my_image
 
-    logger:
-      baud_rate: 115200
-      level: VERY_VERBOSE
+logger:
+  baud_rate: 115200
+  level: VERY_VERBOSE
 
-    online_image:
-      - url: $image_url
-        id: my_image
-        format: png
-        type: BINARY
-        on_download_finished:
-          then:
-            - component.update: my_display
-            - logger.log: "Downloaded image"
-        on_error:
-          then:
-            - logger.log: "Error downloading image"
+online_image:
+  - url: $image_url
+    id: my_image
+    format: png
+    type: BINARY
+    on_download_finished:
+      then:
+        - component.update: my_display
+        - logger.log: "Downloaded image"
+    on_error:
+      then:
+        - logger.log: "Error downloading image"
 
-    spi:
-      clk_pin: $clk_pin
-      mosi_pin: $mosi_pin
+spi:
+  clk_pin: $clk_pin
+  mosi_pin: $mosi_pin
 
-    display:
-      - platform: waveshare_epaper
-        id: my_display
-        cs_pin: $cs_pin
-        dc_pin: $dc_pin
-        busy_pin: $busy_pin
-        reset_pin: $reset_pin
-        reset_duration: 200ms
-        model: $waveshare_model
-        update_interval: never
-        lambda: |-
-          it.image(0, 0, id(my_image), Color::BLACK, Color::WHITE);
-          ESP_LOGD("display", "Image displayed successfully");
+display:
+  - platform: waveshare_epaper
+    id: my_display
+    cs_pin: $cs_pin
+    dc_pin: $dc_pin
+    busy_pin: $busy_pin
+    reset_pin: $reset_pin
+    reset_duration: 200ms
+    model: $waveshare_model
+    update_interval: never
+    lambda: |-
+      it.image(0, 0, id(my_image), Color::BLACK, Color::WHITE);
+      ESP_LOGD("display", "Image displayed successfully");
 
-    deep_sleep:
-      run_duration: 40s
-      sleep_duration: 25200s # 7h
+deep_sleep:
+  run_duration: 40s
+  sleep_duration: 25200s # 7h
 ```
 
 and config with ESPHome
