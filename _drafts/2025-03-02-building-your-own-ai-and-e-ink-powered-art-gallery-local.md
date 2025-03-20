@@ -17,13 +17,13 @@ This setup naturally extends our Home Assistant smart home setup, which hosts th
 In some places we dive deep (e.i. dithering algorithms); other places, we take shortcuts (e.i. not writing C-code), 
 because [we need to finish our projects](https://www.youtube.com/watch?v=4jgTCayWlwc).
 
-![Showing the transition of E-ink screen]({{ site.baseurl }}/assets/images/eink_art/video/output2.gif)
+![Showing the transition of E-ink screen](../assets/images/eink_art/video/output2.gif)
 
 Want to build your own? Here is the recipe.
 If you want wireless picture frames, you would want to use an ESP32 chip, which requires some soldering.
 You can build it with a Raspberry Pi Zero if you don't want to solder.
 
-![Backside of E-ink frame with ESP32 and battery]({{ site.baseurl }}/assets/images/eink_art/P_20250312_180651_filter.jpg)
+![Backside of E-ink frame with ESP32 and battery](../assets/images/eink_art/P_20250312_180651_filter.jpg)
 **Figure:** Backside of the photoframe, showing the ESP32, E-ink hat and Battery. Including a 1EUR and 2EUR for size reference.
 
 ## Hardware Requirements
