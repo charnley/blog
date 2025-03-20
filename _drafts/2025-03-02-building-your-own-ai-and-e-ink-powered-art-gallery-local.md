@@ -293,7 +293,7 @@ And Pillow only implemented Floyd-Steinberg.
 But using Numba we can get something working really quick.
 
 <details markdown="1">
-<summary><b>dithering_implementations.py</b></summary>
+<summary><b>Atkinson Dithering Python Implementations</b></summary>
 
 ```python
 import numpy as np
