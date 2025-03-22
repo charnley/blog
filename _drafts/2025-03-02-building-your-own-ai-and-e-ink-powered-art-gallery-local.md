@@ -736,7 +736,7 @@ It was expensive, but worth it for the final touch.
 - Zigbee-based update
 - The new Waveshare screen
 - Auto AI generated prompts based on themes and events
-- Generate AI art of your friends when they visit
+- Generate AI art of your friends when they visit (https://github.com/bytedance/InfiniteYou)
 - Home Assistant updates the timer and picture url from variables
 - Home Assistant can send notification, such as weather or ski
 - Better infographics, such as weather in local area
