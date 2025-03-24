@@ -405,6 +405,7 @@ Firstly, we tried the example [ESP32 development board](https://www.waveshare.co
 Because this requires that the ESP32 has [PSRAM](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/external-ram.html).
 We iterated through a couple and found that the FireBettle2 ESP32-E and FireBettle2 ESP32S have PSRAM and are well-documented by the producer.
 
+
 > **Note:** If your picture gets less visible (greyish), the more complicated the image is, you are using the wrong display-config. [waveshare.com/wiki/E-Paper_Driver_HAT](https://www.waveshare.com/wiki/E-Paper_Driver_HAT).
 
 > **Note:** If your picture does not refresh entirely when changing photos, you might have a loose connection. Check your soldering connections.
@@ -778,3 +779,4 @@ Kristoffer for proofreading.
 - [ ] TODO: tools to get it done, need to have, and nice to have category
 - [ ] TODO: skill required on the hardware side
 - [ ] TODO: skill required on the software side
+- [ ] TODO: esphome support for 13.3in-k ( https://github.com/esphome/esphome/pull/6443) 
