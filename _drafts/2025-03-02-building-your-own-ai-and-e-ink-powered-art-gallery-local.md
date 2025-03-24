@@ -734,7 +734,7 @@ It was expensive, but worth it for the final touch.
 ## Note on the next version
 
 - Zigbee-based update
-- The new Waveshare screen
+- The new Waveshare screen https://www.waveshare.com/product/displays/e-paper/epaper-1/13.3inch-e-paper-hat-plus-e.htm
 - Auto AI generated prompts based on themes and events
 - Generate AI art of your friends when they visit (https://github.com/bytedance/InfiniteYou)
 - Home Assistant updates the timer and picture url from variables
