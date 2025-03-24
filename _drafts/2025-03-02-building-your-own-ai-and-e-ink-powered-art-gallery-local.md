@@ -192,7 +192,7 @@ You will need to add something like "pencil sketch" or "ink droplet style" to th
 nice on the screen.
 Anything drawing, painting, sketch related usually translates well
 
-![Prompt results]({{ site.baseurl }}/assets/images/eink_art/prompt_example.png)
+![Prompt results](../assets/images/eink_art/prompt_example.png)
 **Figure:** Showing the results of prompting "scifi building in swiss aps", without (A) and with (B) e-ink friendly keywords, and the results after dithering.
 
 For inspiration, there are many style libraries that has been created. We found that [midlibrary.io](https://midlibrary.io/) gave a quite good selection of style and artists that works well.
@@ -282,7 +282,7 @@ $$
 
 The result is that the image will have more concentrated pixel areas and have a higher contrast. As seen by the following comparison.
 
-![Dithering results]({{ site.baseurl }}/assets/images/eink_art/dithering_example.png)
+![Dithering results](../assets/images/eink_art/dithering_example.png)
 **Figure:** A greyscale image (A), dithering using Floyd-Steinberg (B) and using Atkinson Dithering (C).
 
 It might be a little difficult to see, but notice how (B) is more greay than (C).
