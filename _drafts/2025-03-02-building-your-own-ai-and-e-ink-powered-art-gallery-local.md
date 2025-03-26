@@ -414,6 +414,20 @@ To connect the ESP32 to the E-Paper Driver HAT, select which GPIO pins are conne
 So, solder solder. Remember your flux.
 The configuration that worked for us was (as defined by the yaml esphome-substitutions);
 
+
+| HAT PIN  | ESP32E PIN | Description |
+| ---  | ---     |--- |
+| PWR  | 3v3     | Power on/off control |
+| BUSY | 4/D12   | Busy status output pin (indicating busy) |
+| RST  | 14/D6   | Reset, low active |
+| DC   | 13/D7   | Data/Command, low for command, high for data |
+| CS   | 15/A4   | Chip selection, low active |
+| CLK  | 18/SCK  | SPI's CLK, clock signal input |
+| DIN  | 23/MOSI | SPI's MOSI, data input |
+| GND  | gnd     | Ground |
+| VCC  | 3v3     | Power positive (3.3V power supply input) |
+
+
 <details markdown="1">
 <summary><b>GPIO Configuration for FireBettle2 ESP32-E</b></summary>
 
@@ -425,12 +439,13 @@ substitutions:
   wake_up_time: "04:00:00"
   image_url: "http://homeassistant.local:8090/displays/queue.png"
 
-  clk_pin: "GPIO18"
-  mosi_pin: "GPIO23"
-  cs_pin: "GPIO15"
-  dc_pin: "GPIO13"
-  busy_pin: "GPIO04"
-  reset_pin: "GPIO14"
+
+  busy_pin: "GPIO04" # 4/D12
+  reset_pin: "GPIO14" # 14/D6
+  dc_pin: "GPIO13" # 13/D7
+  cs_pin: "GPIO15" # 15/A4
+  clk_pin: "GPIO18" #  18/SCK
+  mosi_pin: "GPIO23" # 23/MOSI
 
   waveshare_model: "13.3in-k" # or another waveshare model
 
