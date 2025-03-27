@@ -238,6 +238,8 @@ sudo apt -y install cuda-toolkit-12-3
 
 and lastly setup python, either with `conda`, `uv` or `pip`.
 
+> **NOTE:** WSL will shutdown if no shell is running, so you need to leave a terminal open on your machine.
+
 </details>
 
 And with that you should be able to use a Python environment with CUDA in a linux environment, hosted by Windows.
@@ -399,23 +401,23 @@ Note, because you need to start the API every time the Raspberry Pi is booted, i
 Why didn't we write it in C?
 Because A) the project needs to end at some point, and B) we both use Home Assistant, it made sense to get all the free stuff out of the box with ESPHome.
 [Choose your battles](https://www.youtube.com/watch?v=4jgTCayWlwc) and finish your projects.
+ESPHome is a `yaml`-based configuration that creates the binaries to actually flash your devices.
+So for the devices you don't write code, but you set it up using modules in yaml format.
+Like lego for your ESP32-devices.
 
-There are many, many, many options for ESP32s.
+The ESPHome eco-system has drivers for most of the WaveShare E-ink displays, but it seems for the 13.3 black-white display we wanted to use, it was not yet implemented.
+So Peter wrote the drivers to support this, as seen in [https://github.com/esphome/esphome/pull/6443](https://github.com/esphome/esphome/pull/6443)
+
+For device choice, there are many, many, many options for ESP32s.
 Firstly, we tried the example [ESP32 development board](https://www.waveshare.com/e-paper-esp32-driver-board.htm) from Waveshare, which, of course, can display pictures. However, it was not possible to download images over the Internet with the standard ESPHome libraries. 
 Because this requires that the ESP32 has [PSRAM](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/external-ram.html).
 We iterated through a couple and found that the FireBettle2 ESP32-E and FireBettle2 ESP32S have PSRAM and are well-documented by the producer.
 
-
-> **Note:** If your picture gets less visible (greyish), the more complicated the image is, you are using the wrong display-config. [waveshare.com/wiki/E-Paper_Driver_HAT](https://www.waveshare.com/wiki/E-Paper_Driver_HAT).
-
-> **Note:** If your picture does not refresh entirely when changing photos, you might have a loose connection. Check your soldering connections.
-
 To connect the ESP32 to the E-Paper Driver HAT, select which GPIO pins are connected to each pin defined for the Waveshare HAT (table above).
 So, solder solder. Remember your flux.
-The configuration that worked for us was (as defined by the yaml esphome-substitutions);
+Example configuration for the FireBettle 2 ESP32-E GPIO to Waveshare HAT GPIO soldering is seen in the table;
 
-
-| HAT PIN  | ESP32E PIN | Description |
+| WS HAT PIN  | ESP32-E PIN | Description |
 | ---  | ---     |--- |
 | PWR  | 3v3     | Power on/off control |
 | BUSY | 4/D12   | Busy status output pin (indicating busy) |
@@ -427,6 +429,9 @@ The configuration that worked for us was (as defined by the yaml esphome-substit
 | GND  | gnd     | Ground |
 | VCC  | 3v3     | Power positive (3.3V power supply input) |
 
+The configuration that worked for us for the two FireBettles were (as defined by the ESPHome substitutions in the yaml). Note that the GPIO pin's have multiple names, and to find out which physical ESP32 GPIO is named you will have to read the documentation of the manufactor. In this case FireBettle provides good wiki's to read up on.
+
+The below example assumes that you've setup a addOn/docker service in HomeAssistant, however, the url can be anything on your local network. As long as the payload is a PNG image with the correct resolution. For the 13.3 K model, this is 680x920 pixels.
 
 <details markdown="1">
 <summary><b>GPIO Configuration for FireBettle2 ESP32-E</b></summary>
@@ -438,7 +443,6 @@ substitutions:
   wifi_password: !secret wifi_password
   wake_up_time: "04:00:00"
   image_url: "http://homeassistant.local:8090/displays/queue.png"
-
 
   busy_pin: "GPIO04" # 4/D12
   reset_pin: "GPIO14" # 14/D6
@@ -493,32 +497,38 @@ esp32:
 
 </details>
 
-To flash it, install esphome with;
+After soldering the ESP32 with connectors, we can bring it to life with flashing it using ESPHome.
+To setup ESPHome, use a Python environment and install it via `pip`.
 
 ```bash
 pip install esphome
 ```
 
-Setup a `secrets.yaml`
+Then setup a `secrets.yaml` with your wifi name and password.
 
 ```yaml
 wifi_ssid: YourWiFiSSID
 wifi_password: YourWiFiPassword
 ```
 
-Then, you flash the ESP with ESPHome using the command;
+Then you flash the ESP with ESPHome using the command;
 
 ```bash
-esphome run --device /dev/ttyACM0 ./configuration.yaml
+esphome run --device /dev/ttyACM0 ./path/to/configuration.yaml
 ```
 
-Where the device is mounted on either `/dev/ttyACM0-2` or `/dev/ttyUSB0-2`.
-You need to define the device argument; otherwise, ESPHome will try to flash the device over the ethernet using the device ID.
+Where the device is mounted on either `/dev/ttyACM0` or `/dev/ttyUSB0`, and 0 is in the range 0-2.
+You need to define the device argument when flashing a device with a device name; otherwise, ESPHome will try to flash the device over the ethernet using the device name.
 
 With the GPIO soldered and configured, we can try different ESPHome configurations.
-Prepend the above GPIO configuration to the configuration you want to flash.
+Combine the above device-specific substitutions configuration, with the below functionality.
+We have made two example configuration that helped us debug along the way.
+If you want more examples to get started, visit our github project.
 
-For Configuration of a simple, fetching image over wifi and displaying it;
+> **NOTE:** The image you are downloading should be in PNG-format (only format supported by ESPHome), and be the exact image size, which in our case is 680x960.
+
+A simple configuration for, connecting to wifi, download a image and displaying it, goes to sleep for 24h, will look like the following `yaml`.
+Note the variables below are defined as substitutions above.
 
 ```yaml
 http_request:
@@ -573,225 +583,238 @@ deep_sleep:
   sleep_duration: 25200s # 7h
 ```
 
-and config with ESPHome
+and for a more advanced configuration that
+
+- Wakes up at 4am
+- Connectes to wifi
+- Tries to download image
+- Shows X on image download failure
+- Shows image on success
+- Sends an estimate of the battery level to Home Assistant
+
+will look like the following `yaml`.
 
 <details markdown="1">
-<summary><b>ESPHome configuration for; wake-up 4am, fetch image, failure-fallback, send battery status, and sleep</b></summary>
+<summary><b>Advanced ESPHome configuration</b></summary>
 
-    deep_sleep:
-      id: deep_sleep_control
-      run_duration: 40sec
+```yaml
+deep_sleep:
+  id: deep_sleep_control
+  run_duration: 40sec
 
-    time:
-      - platform: homeassistant
-        id: homeassistant_time
+time:
+  - platform: homeassistant
+    id: homeassistant_time
 
-    logger:
-      baud_rate: 115200
-      level: DEBUG
+logger:
+  baud_rate: 115200
+  level: DEBUG
 
-    wifi:
-      ssid: !secret wifi_ssid
-      password: !secret wifi_password
-      power_save_mode: light
-      on_connect:
-        - logger.log: WiFi is connected!
-        - logger.log: "Trying to download ${image_url}"
-        - component.update: my_image
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  power_save_mode: light
+  on_connect:
+    - logger.log: WiFi is connected!
+    - logger.log: "Trying to download ${image_url}"
+    - component.update: my_image
 
-    captive_portal:
+captive_portal:
 
-    online_image:
-      - url: $image_url
-        id: my_image
-        format: png
-        type: BINARY
-        on_download_finished:
-          then:
-            - logger.log: "Downloaded image, updating display"
-            - display.page.show: page1
-            - component.update: my_display
-            - delay: 7s
-            - deep_sleep.enter:
-                id: deep_sleep_control
-                until: "${wake_up_time}"
-                time_id: homeassistant_time
-        on_error:
-          then:
-            - logger.log: "Error downloading image $(image_url)"
-            - display.page.show: page2
-            - component.update: my_display
-            - delay: 7s
-            - deep_sleep.enter:
-                id: deep_sleep_control
-                until: "${wake_up_time}"
-                time_id: homeassistant_time
+online_image:
+  - url: $image_url
+    id: my_image
+    format: png
+    type: BINARY
+    on_download_finished:
+      then:
+        - logger.log: "Downloaded image, updating display"
+        - display.page.show: page1
+        - component.update: my_display
+        - delay: 7s
+        - deep_sleep.enter:
+            id: deep_sleep_control
+            until: "${wake_up_time}"
+            time_id: homeassistant_time
+    on_error:
+      then:
+        - logger.log: "Error downloading image $(image_url)"
+        - display.page.show: page2
+        - component.update: my_display
+        - delay: 7s
+        - deep_sleep.enter:
+            id: deep_sleep_control
+            until: "${wake_up_time}"
+            time_id: homeassistant_time
 
-    spi:
-      clk_pin: $clk_pin
-      mosi_pin: $mosi_pin
+spi:
+  clk_pin: $clk_pin
+  mosi_pin: $mosi_pin
 
-    display:
-      - platform: waveshare_epaper
-        id: my_display
-        cs_pin: $cs_pin
-        dc_pin: $dc_pin
-        busy_pin: $busy_pin
-        reset_pin: $reset_pin
-        reset_duration: 200ms
-        model: $waveshare_model
-        update_interval: never
-        pages:
-          - id: page1
-            lambda: |-
-              it.image(0, 0, id(my_image), Color::BLACK, Color::WHITE);
-              ESP_LOGD("display", "Image displayed successfully");
-          - id: page2
-            lambda: |-
-              it.line(0, 0, 50, 50);
-              it.line(0, 50, 50, 0);
-              ESP_LOGD("display", "Error Image displayed successfully");
+display:
+  - platform: waveshare_epaper
+    id: my_display
+    cs_pin: $cs_pin
+    dc_pin: $dc_pin
+    busy_pin: $busy_pin
+    reset_pin: $reset_pin
+    reset_duration: 200ms
+    model: $waveshare_model
+    update_interval: never
+    pages:
+      - id: page1
+        lambda: |-
+          it.image(0, 0, id(my_image), Color::BLACK, Color::WHITE);
+          ESP_LOGD("display", "Image displayed successfully");
+      - id: page2
+        lambda: |-
+          it.line(0, 0, 50, 50);
+          it.line(0, 50, 50, 0);
+          ESP_LOGD("display", "Error Image displayed successfully");
 
-    api:
-       on_client_connected:
-         then:
-           - sensor.template.publish:
-               id: battery_level
-               state: !lambda "return id(battery_level).state;"
-           - sensor.template.publish:
-               id: battery_voltage
-               state: !lambda "return id(battery_voltage).state;"
+api:
+   on_client_connected:
+     then:
+       - sensor.template.publish:
+           id: battery_level
+           state: !lambda "return id(battery_level).state;"
+       - sensor.template.publish:
+           id: battery_voltage
+           state: !lambda "return id(battery_voltage).state;"
 
-    ota:
-      - platform: esphome
+ota:
+  - platform: esphome
 
-     sensor:
-       - platform: adc
-         pin: VDD
-         name: "Battery Voltage"
-         id: battery_voltage
-         update_interval: 60s
-         attenuation: auto
-         unit_of_measurement: "V"
-         accuracy_decimals: 2
+ sensor:
+   - platform: adc
+     pin: VDD
+     name: "Battery Voltage"
+     id: battery_voltage
+     update_interval: 60s
+     attenuation: auto
+     unit_of_measurement: "V"
+     accuracy_decimals: 2
 
-       - platform: template
-         name: "Battery Level"
-         id: battery_level
-         unit_of_measurement: "%"
-         accuracy_decimals: 0
-         lambda: |-
-           float voltage = id(battery_voltage).state;
-           if (voltage < 3.0) return 0;
-           if (voltage > 4.2) return 100;
-           return (voltage - 3.0) / (4.2 - 3.0) * 100.0;
+   - platform: template
+     name: "Battery Level"
+     id: battery_level
+     unit_of_measurement: "%"
+     accuracy_decimals: 0
+     lambda: |-
+       float voltage = id(battery_voltage).state;
+       if (voltage < 3.0) return 0;
+       if (voltage > 4.2) return 100;
+       return (voltage - 3.0) / (4.2 - 3.0) * 100.0;
 
-    binary_sensor:
-      - platform: status
-        name: "${device_id} Status"
-        id: device_status
-
+binary_sensor:
+  - platform: status
+    name: "${device_id} Status"
+    id: device_status
+```
 </details>
+
+> **Note:** If your picture gets less visible (greyish), the more complicated the image is, you are using the wrong display-config. [waveshare.com/wiki/E-Paper_Driver_HAT](https://www.waveshare.com/wiki/E-Paper_Driver_HAT).
+
+> **Note:** If your picture does not refresh entirely when changing photos, you might have a loose connection. Re-check your soldering connections.
 
 ## Battery choice
 
+Now all there is left for the project is to find a nice battery. The critiera is we didn't want to take the frame down and re-charge too often, and the battery needs to have a slim form-factor so it fits behind the photo frame.
 
-With a little measurement and googling, 
+To figure out how much mAh we need in a LiPo battery we need to calculate how much power our project is consuming per-day.
+We split it into two consumptions, deep-sleep power consumption and a per-image switch.
+For the image switch consumption we bought a USB-C amphere measuring, noteing down the peak for simplicity. A better way would be to setup a Voltmeter between in chain with the battery and the device.
+However, we were lazy.
 
-- 1-5% selvafladning om måneden for Litihium batterier?!
-- Usage is 0.5 mAh or 2 mWh per picture turn.
-- Peak is 0.128 A and lasts for about 20s
+The peak during a picture change we measured to be $$0.128 \text{Ampere}$$.
 
-Watt is equal to 1 joule per second
+For the deep-sleep consumption, the usage was so small that we could not measure it with out amphere meter.
+However, googling we found the ESP32 has a very efficient deep-sleep of only $$10 \mu \text{Ampere}$$ usage.
+Accordding to the [Espressif source](https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf).
 
-Power consumption in Deep-sleep mode is 10 μA
-cite: https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf
-
-24h = 86400s
+As a reminder, for the following calculations, Watt is equal to 1 joule per second and 24h is equal to 24h = 86400s.
 
 $$
 \begin{align}
      E_\text{Battery} &= \frac{\text{[Battery mAh]} \cdot \text{[Battery Voltage]}}{1000} \cdot 3600 \text{ Joule / Wh}\\
-     &= \left (1500 \text{mAh} \cdot 3.7 \text{V} \right ) / 1000 \cdot 3600 \text{J/Wh} = \underline{19980 \text{ Joule}}\\
+     &= \left (1500 \text{mAh} \cdot 3.3 \text{V} \right ) / 1000 \cdot 3600 \text{J/Wh} = \underline{17820 \text{ Joule}}\\
     E_\text{picture change} &= \text{Voltage} \cdot \text{Ampere} \cdot \text{Time}\\
-    &= 3.7 \text{V} \cdot 0.128\text{A} \cdot 20\text{sec} = \underline{9.5 \text{ Joule}}\\
-    E_\text{daily sleep} &= 3.7 \text{V} \cdot 0.00001 \text{A} \cdot 86400 \text{sec} = \underline{3.2 \text{ Joule}}\\
+    &= 3.3 \text{V} \cdot 0.128\text{A} \cdot 20\text{sec} = \underline{8.4 \text{ Joule}}\\
+    E_\text{daily sleep} &= 3.3 \text{V} \cdot 0.00001 \text{A} \cdot 86400 \text{sec} = \underline{2.85 \text{ Joule}}\\
     \text{Battery Life} &= \frac{E_\text{Battery} }{(E_\text{daily sleep} + N \cdot E_\text{picture change})} \\
                  &= \frac{19980 \text{ J}}{\left (3.2 + 1 \cdot 9.5 \right ) \text{J/day}} \approx 1500 \text{ days} \approx 4 \text{ years}
 \end{align}
 $$
 
-Where $$N$$ is number of picture changes per day. In our example it is just once per night.
+Where $$N$$ is number of picture changes per day.
+In our example it is just once per night.
+Which leads us to if only one change per day, the battery should last us 4 years.... which seems unrealistic.
+Note that LiPo batteries has a natural de-charge of 1-5% per month [cite needed].
 
+Here is a Python function for the lazy.
+
+<details markdown="1">
+<summary><b>battery_lifetime.py</b></summary>
+
+```python
+def battery_lifetime(
+    battery_mah: int, # mAh
+    switch_per_day: int,
+    switch_ampere: float = 0.128, # ampere
+    switch_time: float = 20, # sec
+):
+    battery_voltage = 3.3
+    sleep_ampere = 0.00001
+    daily_seconds = 86400
+    e_battery = (battery_mah * battery_voltage)/1000 * 3600
+    e_picture_change = battery_voltage * switch_ampere * switch_time
+    e_daily_sleep = battery_voltage * sleep_ampere * daily_seconds
+    days = (e_battery)/(e_daily_sleep + switch_per_day*e_picture_change)
+    return days
+```
+
+</details>
+
+> **NOTE:** The battery you buy will most likely not arrive in the correct +/- configuration, or even the correct JST connector size. When switching the cables, *do not* let the +/- ends touch eachother unless you want to order a new battery.
 
 ## Mounting on the frame
 
-Peter's 3D printing
+Mounting the project on the back side of your frame, you have some options.
+If you want to go full-overkill, do as Peter, which is create a custom 3D printed mount to be glued on the backside.
 
-- [ ] TODO Jimmy's hot glue method, with M2 screw and spacers
+TODO Insert Peter picture
 
-m2 x5mm screws
-m2 x5mm spacer
-hot glue
-place the spacer and screw onto the device. hot glue to the backside of the picture frame
+Or if you don't have a 3D printer, do as Jimmy, which is to use M2 screws and M2 x5mm spacers, hot glued on the backside. Screw in the screws and spacers on the device, then place them on the backside with hotglue.
 
-## Bring it all together
+TODO Insert Jimmy Picture
 
-Result and comment
+Both options will make it possible to screw the devices off for debugging/maintenance.
+Others on the internet has been seen to hot-glue the device directly to backside of the frame, which is insane... don't do that.
 
-Frame notes
-passepartout
-passe-partout
+To make it look proffesional, use a passepartout (the white thing around the display).
+They usually come with frames.
+However, note that the default 30x40cm passepartout Jimmy could get locally, was just showing the black outline of the screen.
+In the end Jimmy has to get a custom cut to fit the display, which was very expensive, but gave the final touch to eleminate all possible signs that it was not a real painting.
 
-The default 30x40cm passe-partout I could get locally, was just showing the black outline of the screen, so I went to a local book binder and had custom made.
-It was expensive, but worth it for the final touch.
+## The result
+
+TODO Insert image gallery
 
 
 ## Note on the next version
 
-- Zigbee-based update
-- The new Waveshare screen https://www.waveshare.com/product/displays/e-paper/epaper-1/13.3inch-e-paper-hat-plus-e.htm
-- Auto AI generated prompts based on themes and events
-- Generate AI art of your friends when they visit (https://github.com/bytedance/InfiniteYou)
-- Home Assistant updates the timer and picture url from variables
-- Home Assistant can send notification, such as weather or ski
-- Better infographics, such as weather in local area
+It was hard to finish, because there is always more to do.
+It was to say stop.
+For the next version, we wanted to explore
 
-## Known issues
-
-> **NOTE:** WSL will shutdown if no shell is running, so you need to leave a terminal open on your machine
-
-- Why do we need to revert the colors for the esphome setup?
-- Soldering could be an issue, check
-- Check which config you need to set the HAT
-- Not on grey levels on e-ink
-- Not on the black-white-red screen
-- Check the +/- on the lipo battery, needs to fit. You might need to change it.
-
-
-
-
-
-## References
-
-- Dithering references
-- AI art references
-- ESP32 references
+- We want to use `olama` model to generate the prompts for the picture generation, based on themes. For example if we have a Mexican-themed party, all the prompts would be based in Mexican native art.
+- ESP32 and ZigBee-based live update, using ZigBee to do a wake-on-demand. Making the ESP32 push-friendly.
+- The is a new Waveshare screen [waveshare.com/product/displays/e-paper/epaper-1/13.3inch-e-paper-hat-plus-e.htm](https://www.waveshare.com/product/displays/e-paper/epaper-1/13.3inch-e-paper-hat-plus-e.htm) wich is 13.3 inches, higher resolution and full of colours. This would be a very cool upgrade. Requires some deep-dive into making ESPHome work with another interface.
+- Either with a webcam, or with pre-defined pictures, generate picture of the guests who are coming to visit you, similar (github.com/bytedance/InfiniteYou)[(https://github.com/bytedance/InfiniteYou)]
+- Have better infographics and integration to local weather. For example knowing when there is new snow, and integrate with Home Assistant to let one know when and where to go ski.
 
 ## Thanks
 
 Ananda for providing answers when stuck.
-Kristoffer for proofreading.
-
-
-
-- [ ] TODO: insert images of the frame, front and back, with a gif for when it changes the image to show what it can do.
-- [ ] TODO: explain what it is before why
-- [ ] TODO: performance expectations( image fresh, battery life)
-- [ ] TODO: cost
-- [ ] TODO: Hardware for the product
-- [ ] TODO: software for the product
-- [ ] TODO: tools to get it done, need to have, and nice to have category
-- [ ] TODO: skill required on the hardware side
-- [ ] TODO: skill required on the software side
-- [ ] TODO: esphome support for 13.3in-k ( https://github.com/esphome/esphome/pull/6443) 
+Kristoffer for proof-reading.
+Patrick for soldering.
