@@ -6,22 +6,25 @@ categories: AI art e-ink esp32 home-assistant
 author: Jimmy & Peter
 ---
 
-![E-ink with AI art ESP32 home assistant based](../assets/images/eink_art/P_20250312_180421_filter.jpg)
+TODO Insert gallery photo
+
+![Showing the transition of E-ink screen](../assets/images/eink_art/video/output2.gif)
 
 We built an **e-ink picture frame** using an **ESP32** microprocessor that shows a new daily piece of artwork created by a **local AI diffusion model**.
 Each day brings a random and unique image to enjoy. Everything runs on our local network, keeping everything private and off the cloud. It’s simple to have dynamic, AI-generated art on your walls without compromising privacy. Plus, the whole setup fits into our Home Assistant smart home system, which handles the image server and keeps track of the ESP32s.
 
+TODO Better front + back photos
 
-In some areas, we go all in (like with dithering algorithms), while in others, we take shortcuts (like skipping C-code). After all, [we need to finish our projects](https://www.youtube.com/watch?v=4jgTCayWlwc).
+| ![E-ink with AI art ESP32 home assistant based](../assets/images/eink_art/P_20250312_180421_filter.jpg) | ![Backside of E-ink frame with ESP32 and battery](../assets/images/eink_art/P_20250312_180651_filter.jpg) |
 
-![Showing the transition of E-ink screen](../assets/images/eink_art/video/output2.gif)
+**Figure:** Backside of the photoframe, showing the ESP32, E-ink hat and Battery. Include a 1EUR and 2EUR for size reference.
 
 Want to build your own? Here’s how.
 If you’re aiming for wireless picture frames, the ESP32 chip is the way to go, though it does require some soldering.
 If you’d rather avoid the soldering, you can always use a Raspberry Pi Zero, leaving you with a cable coming out of your frame.
 
-![Backside of E-ink frame with ESP32 and battery](../assets/images/eink_art/P_20250312_180651_filter.jpg)
-**Figure:** Backside of the photoframe, showing the ESP32, E-ink hat and Battery. Include a 1EUR and 2EUR for size reference.
+In some areas, we go all in (like with dithering algorithms), while in others, we take shortcuts (like writing yaml instead of C-code).
+After all, [we need to finish our projects](https://www.youtube.com/watch?v=4jgTCayWlwc).
 
 ## Hardware Requirements
 
@@ -40,9 +43,7 @@ And you should be comfortable with:
 - Soldering
 
 While a Raspberry Pi Zero is the best choice for the picture frame due to its size, any Raspberry Pi model will work just fine.
-
-> **NOTE:** When selecting an ESP32, make sure it has PSRAM if you plan to download images over Wi-Fi via ESPHome. PSRAM is an external memory module that connects to one of the GPIO pins, and it’s required for the Wi-Fi image downloader to work.
-
+Specifiably, the items we got were;
 
 | Item | Product Link | Price |
 | --- | --- | --- |
@@ -56,7 +57,7 @@ While a Raspberry Pi Zero is the best choice for the picture frame due to its si
 The estimated total cost per frame is around 180 EUR, plus the cost of the physical frame, with the e-ink display being the most expensive component.
 
 We chose ESP32 after browsing this list of compatible devices on PlatformIO.
-[https://registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0](https://registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0).
+[registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0](https://registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0).
 The version is locked to 5.3.0 because, at the time of writing, ESPHome uses `platformio=5.3.0`.
 The key requirement is that the ESP32 needs PSRAM to download the PNG image over Wi-Fi.
 
@@ -69,7 +70,7 @@ Unfortunately, we couldn’t find a supplier for the Waveshare 13.3" black/white
 
 To keep everything organized and make the workflow easy to manage, we divided the tasks into three main sections: generating images, storing images, and displaying images.
 We use our desktop computer with a graphics card to generate images on the fly or through a scheduled job.
-We both created different versions of the workflow. You can check out Jimmy’s version at [github.com/charnley/eink-art-gallery](github.com/charnley/eink-art-gallery) and Peter’s at [github.com/pgericson/eink-hub](https://github.com/pgericson/eink-hub).
+We both created different versions of the workflow. You can check out Jimmy’s version at [github.com/charnley/eink-art-gallery](https://github.com/charnley/eink-art-gallery) and Peter’s at [github.com/pgericson/eink-hub](https://github.com/pgericson/eink-hub).
 
 
 ```mermaid
@@ -152,6 +153,8 @@ The screen operates via GPIO pins and binary commands. For the Raspberry Pi, it'
 For the soldering configuration, you can choose which pins go where, but of course, VCC and GND are fixed. The PWR pin is a recent addition to the HAT and controls the power for the E-ink screen. The easiest way to configure this is by soldering it directly to a 3.3 V endpoint on the ESP32.
 
 Another reason we chose this brand of e-ink display is that ESPHome drivers are available, making it much quicker to get everything up and running. Plus, plenty of examples are out there to help you get started. Mind you, most of these examples are for the 7.5-inch model.
+
+> **NOTE:** We also explored the Black-White-Red E-ink display from Waveshare ([13.3" E-Paper HAT-B](https://www.waveshare.com/13.3inch-e-paper-hat-b.htm)), but it required more effort to get it working with ESPHome. Additionally, it takes about 30 seconds to switch pictures, compared to just 3 seconds with the black-and-white version.
 
 ## Hosting an AI art model
 
@@ -775,7 +778,7 @@ TODO Insert Peter picture
 
 Or if you don't have a 3D printer, do as Jimmy, which is to use M2 screws and M2 x5mm spacers, hot glued on the backside. Screw in the screws and spacers on the device, then place them on the backside with hotglue.
 
-TODO Insert Jimmy Picture
+![Backside of E-ink frame with ESP32, spacers, and glue]({{site.baseurl}}/assets/images/eink_art/eink_backside_glue_filter.jpg)
 
 Both options will make it possible to screw the devices off for debugging/maintenance.
 Others on the internet has been seen to hot-glue the device directly to backside of the frame, which is insane... don't do that.
