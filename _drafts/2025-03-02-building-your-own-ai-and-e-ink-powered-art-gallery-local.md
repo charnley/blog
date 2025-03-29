@@ -125,7 +125,7 @@ Good separation of concern makes it easier to debug.
 
 ## Why and what E-ink?
 
-There are two main reasons we chose e-ink: it looks like a drawing and consumes very little power. But beyond that, it just looks amazing—and I’ve yet to meet anyone who realizes it's screen technology without an explanation. And honestly, I’m always happy to provide that explanation.
+There are two main reasons we chose e-ink: it looks like a drawing and consumes very little power. But beyond that, it just looks amazing and I’ve yet to meet anyone who realizes it's screen technology without an explanation. And honestly, I’m always happy to provide that explanation.
 
 What makes it look so realistic is that it’s using ink. You'll know exactly what I mean if you’ve ever used a Kindle or a Remarkable Tablet. The screen comprises tiny "pixels" filled with oil and pigments. The pigments are moved up or down using an electromagnet, which determines the color of each pixel.
 
@@ -409,24 +409,19 @@ Note, because you need to start the API every time the Raspberry Pi is booted, i
 
 ### Setting up ESPHome and ESP32 frame
 
-Why didn't we write it in C?
-Because A) the project needs to end at some point, and B) we both use Home Assistant, it made sense to get all the free stuff out of the box with ESPHome.
-[Choose your battles](https://www.youtube.com/watch?v=4jgTCayWlwc) and finish your projects.
-ESPHome is a `yaml`-based configuration that creates the binaries to actually flash your devices.
-So for the devices you don't write code, but you set it up using modules in yaml format.
-Like lego for your ESP32-devices.
+Why Use YAML Instead of C? When starting a project, getting caught up in the details is easy. But at some point, the project needs to end. With that in mind, we opted for ESPHome YAML instead of writing the code in C. Why? We both use Home Assistant, and it made sense to leverage the convenience of ESPHome to get all the free features right out of the box. Sometimes, it’s best to choose your battles and focus on completing the project.
 
-The ESPHome eco-system has drivers for most of the WaveShare E-ink displays, but it seems for the 13.3 black-white display we wanted to use, it was not yet implemented.
-So Peter wrote the drivers to support this, as seen in [https://github.com/esphome/esphome/pull/6443](https://github.com/esphome/esphome/pull/6443)
+ESPHome is a YAML-based configuration that generates the binaries needed to flash devices. Rather than writing custom code, you configure devices by setting up modules in YAML format. It’s a bit like building with Lego blocks for your ESP32 devices.
+While the ESPHome ecosystem includes drivers for most WaveShare E-Ink displays, we encountered a gap. Specifically, the driver for the 13.3" black-and-white display we wanted to use wasn’t available. So, Peter took the initiative and wrote the necessary drivers, which you can find in
+[github.com/esphome/esphome/pull/6443](https://github.com/esphome/esphome/pull/6443)
 
-For device choice, there are many, many, many options for ESP32s.
-Firstly, we tried the example [ESP32 development board](https://www.waveshare.com/e-paper-esp32-driver-board.htm) from Waveshare, which, of course, can display pictures. However, it was not possible to download images over the Internet with the standard ESPHome libraries. 
-Because this requires that the ESP32 has [PSRAM](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/external-ram.html).
-We iterated through a couple and found that the FireBettle2 ESP32-E and FireBettle2 ESP32S have PSRAM and are well-documented by the producer.
+There are an overwhelming number of ESP32 options. Initially, we tried the Waveshare ESP32 development board, which can display images.
+(waveshare.com/e-paper-esp32-driver-board.htm)[https://www.waveshare.com/e-paper-esp32-driver-board.htm]
+However, we ran into an issue: the standard ESPHome libraries couldn’t download images over the Internet. This functionality requires [PSRAM](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/external-ram.html). on the ESP32.
 
-To connect the ESP32 to the E-Paper Driver HAT, select which GPIO pins are connected to each pin defined for the Waveshare HAT (table above).
-So, solder solder. Remember your flux.
-Example configuration for the FireBettle 2 ESP32-E GPIO to Waveshare HAT GPIO soldering is seen in the table;
+After testing a few options, we found that the FireBettle2 ESP32-E and FireBettle2 ESP32S feature PSRAM and are well-documented by the manufacturer. These models turned out to be reliable choices for our project.
+
+To connect the ESP32 to the E-Paper Driver HAT, you’ll need to map the GPIO pins on the ESP32 to those defined by the Waveshare HAT. The soldering process is straightforward. For your reference, we’ve provided an example configuration for the FireBettle 2 ESP32-E GPIO-to-Waveshare HAT GPIO pin mapping in the table below:
 
 | WS HAT PIN  | ESP32-E PIN | Description |
 | ---  | ---     |--- |
@@ -440,9 +435,9 @@ Example configuration for the FireBettle 2 ESP32-E GPIO to Waveshare HAT GPIO so
 | GND  | gnd     | Ground |
 | VCC  | 3v3     | Power positive (3.3V power supply input) |
 
-The configuration that worked for us for the two FireBettles were (as defined by the ESPHome substitutions in the yaml). Note that the GPIO pin's have multiple names, and to find out which physical ESP32 GPIO is named you will have to read the documentation of the manufactor. In this case FireBettle provides good wiki's to read up on.
+The configuration that worked for us with the FireBettle2 ESP32-E and FireBettle2 ESP32S boards is as follows (as defined by the ESPHome substitutions in the YAML file). Keep in mind that GPIO pins often have multiple names. To identify the physical GPIO pin on the ESP32, you'll need to consult the manufacturer’s documentation. In this case, FireBettle provides detailed wikis, which are great resources for getting the pin mappings correct.
 
-The below example assumes that you've setup a addOn/docker service in HomeAssistant, however, the url can be anything on your local network. As long as the payload is a PNG image with the correct resolution. For the 13.3 K model, this is 680x920 pixels.
+The example below assumes you've set up an add-on/docker service within Home Assistant. However, the URL can be anything accessible on your local network, as long as the payload is a PNG image with the correct resolution. For the 13.3" K model, the required resolution is 680x920 pixels.
 
 <details markdown="1">
 <summary><b>GPIO Configuration for FireBettle2 ESP32-E</b></summary>
@@ -508,38 +503,33 @@ esp32:
 
 </details>
 
-After soldering the ESP32 with connectors, we can bring it to life with flashing it using ESPHome.
-To setup ESPHome, use a Python environment and install it via `pip`.
+Once you’ve soldered the ESP32 with connectors, it’s time to bring it to life by flashing it with ESPHome. To set up ESPHome, you’ll need a Python environment. Install ESPHome via pip to get started.
 
 ```bash
 pip install esphome
 ```
 
-Then setup a `secrets.yaml` with your wifi name and password.
+Next, set up a `secrets.yaml` file with your Wi-Fi name and password.
 
 ```yaml
 wifi_ssid: YourWiFiSSID
 wifi_password: YourWiFiPassword
 ```
 
-Then you flash the ESP with ESPHome using the command;
+Once the setup is complete, flash the ESP32 with ESPHome using the following command:
 
 ```bash
 esphome run --device /dev/ttyACM0 ./path/to/configuration.yaml
 ```
 
-Where the device is mounted on either `/dev/ttyACM0` or `/dev/ttyUSB0`, and 0 is in the range 0-2.
-You need to define the device argument when flashing a device with a device name; otherwise, ESPHome will try to flash the device over the ethernet using the device name.
+The device will be mounted on `/dev/ttyACM0` or `/dev/ttyUSB0`, with the number (0-2) indicating the specific device.
+Be sure to define the device argument when flashing; otherwise, ESPHome will attempt to flash over Ethernet using the device name.
 
-With the GPIO soldered and configured, we can try different ESPHome configurations.
-Combine the above device-specific substitutions configuration, with the below functionality.
-We have made two example configuration that helped us debug along the way.
-If you want more examples to get started, visit our github project.
+With the GPIO soldered and configured, you can now experiment with different ESPHome configurations.
+Combine the device-specific substitutions above with the following functionality.
+We’ve included two example configurations that helped us debug. For more, check out our GitHub project.
 
-> **NOTE:** The image you are downloading should be in PNG-format (only format supported by ESPHome), and be the exact image size, which in our case is 680x960.
-
-A simple configuration for, connecting to wifi, download a image and displaying it, goes to sleep for 24h, will look like the following `yaml`.
-Note the variables below are defined as substitutions above.
+Here’s a simple yaml configuration to connect to Wi-Fi, download an image, display it, and sleep for 24 hours. The variables are defined as substitutions above.
 
 ```yaml
 http_request:
@@ -594,16 +584,16 @@ deep_sleep:
   sleep_duration: 25200s # 7h
 ```
 
-and for a more advanced configuration that
+For a more advanced configuration that:
 
-- Wakes up at 4am
-- Connectes to wifi
-- Tries to download image
-- Shows X on image download failure
-- Shows image on success
-- Sends an estimate of the battery level to Home Assistant
+- Wakes up at 4 am
+- Connects to Wi-Fi
+- Attempts to download an image
+- Displays an "X" if the image download fails
+- Displays the image on success
+- Send an estimate of the battery level to Home Assistant
 
-will look like the following `yaml`.
+The configuration would look like the following yaml.
 
 <details markdown="1">
 <summary><b>Advanced ESPHome configuration</b></summary>
@@ -724,9 +714,12 @@ binary_sensor:
 ```
 </details>
 
-> **Note:** If your picture gets less visible (greyish), the more complicated the image is, you are using the wrong display-config. [waveshare.com/wiki/E-Paper_Driver_HAT](https://www.waveshare.com/wiki/E-Paper_Driver_HAT).
+> **NOTE:** The image you are downloading must be in PNG format (the only format supported by ESPHome) and should match the exact image size—680x960 in our case.
 
-> **Note:** If your picture does not refresh entirely when changing photos, you might have a loose connection. Re-check your soldering connections.
+> **Note:** If your image appears greyish or less visible, especially with more complex images, you may be using the wrong display configuration. For troubleshooting, refer to the Waveshare E-Paper Driver HAT guide.
+> [waveshare.com/wiki/E-Paper_Driver_HAT](https://www.waveshare.com/wiki/E-Paper_Driver_HAT).
+
+> **Note:** If your image doesn’t refresh completely when switching photos, check your soldering connections. A loose connection could be the cause.
 
 ## Battery choice
 
