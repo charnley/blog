@@ -158,68 +158,85 @@ Another reason we chose this brand of e-ink display is that ESPHome drivers are 
 
 ## Hosting an AI art model
 
-To fill the local image library we created a Python environment on our desktop computer with access to a graphicscard/GPU.
-To have a super powerfull graphics card is not so important, unless you want live prompts.
-For a nightly cronjob, it doesn't matter that image generation takes 20 mins or more.
+To populate our local image library, we set up a Python environment on our desktop computer, which has access to a graphics card/GPU.
+While having an extremely powerful graphics card isn’t crucial, it does make a difference if you want to generate live prompts.
+However, for a nightly cron job, it doesn’t matter if image generation takes 20 minutes or more.
 
 ### Selecting an AI model
 
-You can really choose whatever you want here.
-We iterated through many models, always trying out the newest during 2024, but in the end for this project, it didn't really matter.
-In the end we selected
-[Stable Diffusion 3.5](https://stability.ai/news/introducing-stable-diffusion-3-5),
-because of easy of setup and what our hardware could handle.
-For 1080p graphicscard, it takes about 15mins per image, and with a 4090 it takes ... 3s.
-We used Huggingface to setup the model, which requires you to register to get access to the model.
+You can choose any AI model you like here. We tried out many models throughout 2024, always experimenting with the latest ones, but in the end, it didn’t make a significant difference for this project.
 
-### Note on prompts
+We ultimately settled on 
+[Stable Diffusion 3.5](https://stability.ai/news/introducing-stable-diffusion-3-5), because it was easy to set up and compatible with our hardware. On a 1080p graphics card, it takes about 15 minutes per image, while with a 4090, it only takes about 3 seconds. We used Huggingface to set up the model, which requires registration to access Stable Difussion 3.
 
-For prompts, there are som lessons learned. The biggest lesson is, if you want the art to look nice on the black/white e-ink screen,
-you need to use styles that fit that format. E.i. high contrast, grey-scaled and preferably prompt with a e-ink friendly style.
+### Image Prompts for Best Results
 
-For example, when prompting for a 
-"adventurous scifi structure, forest, swiss alps"
-the diffusion model will most likely default to a picture/realistic style, which does not translate well to e-ink.
-You will need to add something like "pencil sketch" or "ink droplet style" to the prompt to guide the style towards something that looks 
-nice on the screen.
-Anything drawing, painting, sketch related usually translates well
+We've learned a few lessons about prompts.
+The most important one is that if you want the art to look good on a black-and-white E-ink screen, you need to choose styles that work well in that format—think high contrast, grayscale, and, ideally, prompts with an artistic format (like paintings and drawings).
+
+For example, if you prompt for something like "adventurous sci-fi structure, forest, Swiss Alps," the diffusion model will likely default to a photorealistic style, which doesn’t translate well to e-ink. To get better results, you’ll need to add something like "pencil sketch" or "ink droplet style" to guide the model toward a look that fits the e-ink display. Anything related to drawing, painting, or sketching tends to work well.
 
 ![Prompt results](../assets/images/eink_art/prompt_example.png)
+
 **Figure:** Showing the results of prompting "scifi building in swiss aps", without (A) and with (B) e-ink friendly keywords, and the results after dithering.
 
-For inspiration, there are many style libraries that has been created. We found that [midlibrary.io](https://midlibrary.io/) gave a quite good selection of style and artists that works well.
-Especially the black and white section.
+Several style libraries are available for inspiration. We found [midlibrary.io](https://midlibrary.io/) to offer a great selection of styles and artists that work well, especially in the black-and-white section. Some styles are more ethical than others, but as a non-commercial home project, we leave you to make your own lines.
 
-### Hosting image generator service on windows
+Below are some styles that work well with a motif, such as "simplistic line art, skier in Swiss Alps."
 
-Since you are following this setup guide, I assume you have a graphics card, and then I will also assume that you are using it on a windows machine.
-The most easy way to setup a service is to setup Windows Subsystem Linux.
+<details markdown="1">
+<summary><b>Image prompt styles that work well on e-ink formats</b></summary>
 
-There was some problems with speed with Windows10 and WSL2, as the read/write to desk was very slow.
-Using Windows11 with WSL2 seems way more stable. And note that you need more space than you think to have a Linux subsystem.
-However, my experience is with Win11 and WSL2, getting CUDA access to to your windows GPU from linux, is quite smooth.
-Setup guide is as following
+    simplistic line art
+    assembly drawing
+    brush pen drawing, white background
+    circut diagram
+    coloring book page, white background
+    coloring-in sheet, white background
+    elevation drawing
+    ink drawing, white background
+    one line art
+    one line, black and white, drawing
+    parametric drawing
+    pen drawing, white background
+    schematics
+    silhouette
+    stippling
+    sumi-e drawing, white background
+    wireframe
+
+</details>
+
+### Hosting Image Generator Service on Windows
+
+Since you're following this setup guide, it’s assumed that you have a graphics card and are using a Windows machine.
+The easiest way to set up the service is using Windows Subsystem for Linux (WSL).
+There were some speed issues with Windows 10 and WSL2, mainly due to the disk's slow read/write speeds.
+However, using Windows 11 with WSL2 seems much more stable.
+So that you know, you'll need more space than you might expect to set up the Linux subsystem.
+
+With Windows 11 and WSL2, getting CUDA access to the Windows GPU from Linux is relatively smooth.
+Here’s a setup guide to get started:
 
 <details markdown="1">
 <summary><b>Setup Linux subsystem linux with CUDA</b></summary>
 
-- Install cuda on windows (probably you already have that) [developer.nvidia.com/cuda-downloads](https://developer.nvidia.com/cuda-downloads)
-- Install wsl [learn.microsoft.com/en-us/windows/wsl/install](https://learn.microsoft.com/en-us/windows/wsl/install)
+- Install CUDA on Windows (you probably already have that) [developer.nvidia.com/cuda-downloads](https://developer.nvidia.com/cuda-downloads)
+- Install WSL [learn.microsoft.com/en-us/windows/wsl/install](https://learn.microsoft.com/en-us/windows/wsl/install)
 
 Open a terminal and install wsl
 
     wsl --install
 
-When WSL is installed, update and setup linux
+When WSL is installed, update and set up Linux.
 
     # update apt
     sudo apt update
     sudo apt upgrade
 
-Download CUDA bridge from Select Linux, x86, WSL-Ubuntu, 2.0, deb (network)
+Download CUDA bridge from
 [developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_network](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_network)
-as of writing this means
-Which means today running the following commands in WSL Ubuntu
+and select; Linux, x86, WSL-Ubuntu, 2.0, deb (network). As of writing, this means the following wget
 
 ```bash
 wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-keyring_1.1-1_all.deb
@@ -228,29 +245,32 @@ sudo apt update
 sudo apt -y install cuda-toolkit-12-3
 ```
 
-and lastly setup python, either with `conda`, `uv` or `pip`.
-
-> **NOTE:** WSL will shutdown if no shell is running, so you need to leave a terminal open on your machine.
+Lastly, set up Python with `conda`, `uv`, or `pip`. We will assume you know how to do that. Then, you can set up any Python-based Huggingface model. The choice is yours.
 
 </details>
 
-And with that you should be able to use a Python environment with CUDA in a linux environment, hosted by Windows.
-
-With the linux subsystem we can setup a job for our service to run every 4am. 
-Setup a cronjob with `crontab -e` with the following syntax
+This setup allows you to run a Python environment with CUDA in a Linux subsystem on Windows.
+Once the Linux subsystem is set up, you can configure a job to run your service daily at 4 am.
+To do this, use `crontab -e`on WSL and add the following syntax:
 
 ```crontab
 30 4 * * * cd ~/path/to/project && start-service
 ```
 
-## Dithering, from a grey-scale photo to binary-black/white
+> **NOTE:** WSL2 will shut down if no shell is running, so you’ll need to leave a terminal open on your machine.
 
-When translating a photo from grey-scale to black-white (meaning binary here), we need to account for the error when we cannot represent grey.
-This is called [error diffusion/dithering](https://en.wikipedia.org/wiki/Dither) and is a well known issue.
-The default dithering algorithm on most systems is [Floyd-Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering),
-which is the most numerical accucate way of doing it.
-It works by splitting the error associated with going from grey to either black or white into the neighboring pixels, moving from top left.
-So if $$*$$ is the current pixel, the error would be distributed like this;
+## Dithering: Converting Grayscale Images to Black-and-White
+
+When converting a grayscale image to black-and-white (binary), we lose subtle gray shades.
+To handle this, dithering (or error diffusion) is used.
+This technique helps simulate grayscale by spreading the error from converting a pixel to black or white across nearby pixels.
+More details can be found [en.wikipedia.org/wiki/Dither](https://en.wikipedia.org/wiki/Dither).
+
+The most common dithering method is [Floyd-Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering).
+It works by calculating each pixel's error (the difference between its gray value and black/white) and distributing it to surrounding pixels.
+This creates the illusion of more shades and smoother transitions, even in a binary image.
+
+Starting from the top-left corner and moving through each pixel, the error is diffused to neighboring pixels. If $$*$$ represents the current pixel, the error is spread out like this:
 
 $$
 \begin{bmatrix}
@@ -259,12 +279,12 @@ $$
 \end{bmatrix}
 $$
 
-However, in practice, the numerically correct method dithers the error very densely, making the picture look greyish.
-This is especially prominent in our low-resolution images/displays.
+However, in practice, the numerically correct method often produces an image that looks overly "grayish" because it creates dense black-and-white pixel patterns. While this is technically accurate, it doesn't look as clean or sharp, especially on low-resolution displays.
 
-With experience we found that the algorithm used in old Macs, [Atkinson Dithering](https://en.wikipedia.org/wiki/Atkinson_dithering),
-works really well for low resolution photos.
-The difference being that instead of diffusing the full error, only partial will be diffused.
+Through experience, we found that the Atkinson Dithering](https://en.wikipedia.org/wiki/Atkinson_dithering) works much better for low-resolution images.
+The difference is that Atkinson diffuses only part of the error, which helps avoid the harsh black-and-white patterns and leads to a cleaner, more visually pleasing result.
+
+If $$*$$ represents the current pixel, the error is spread out like this:
 
 $$
 \begin{bmatrix}
@@ -274,17 +294,16 @@ $$
 \end{bmatrix}
 $$
 
-The result is that the image will have more concentrated pixel areas and have a higher contrast. As seen by the following comparison.
+The result is that the image will have more concentrated pixel areas and higher contrast. This is evident in the following comparison:
 
 ![Dithering results](../assets/images/eink_art/dithering_example.png)
-**Figure:** A greyscale image (A), dithering using Floyd-Steinberg (B) and using Atkinson Dithering (C).
 
-It might be a little difficult to see, but notice how (B) is more greay than (C).
-This is a lot more visually clear when applied on an actual physical low-res e-ink screen.
+**Figure:** A grayscale image (A), dithering using Floyd-Steinberg (B), and using Atkinson Dithering (C).
 
-Now the implementation is doing a lot of for-loops, so Python is not really the best option.
-And Pillow only implemented Floyd-Steinberg. 
-But using Numba we can get something working really quick.
+It might be subtle, but notice how (B) appears more grayish than (C).
+This difference is much more noticeable on an actual, physical, low-res e-ink screen.
+
+Atkinson dithering isn't implemented in Pillow (yet), which only supports Floyd-Steinberg. Since the process involves many for-loops, Python isn't the most efficient choice for this task. However, by using Numba, we can speed things up and quickly get a working solution. As seen in;
 
 <details markdown="1">
 <summary><b>Atkinson Dithering Python Implementations</b></summary>
@@ -329,7 +348,7 @@ def set_atkinson_dither_array(img: np.ndarray):
 
 </details>
 
-If you are doing multiple colors you can diffuse the error per color channel.
+> **NOTE:** If you're working with multiple colors, you can diffuse the error for each color channel. You can also extend error diffusion to handle multiple levels of gray, not just black and white.
 
 ## Displaying the image
 
