@@ -787,7 +787,9 @@ def battery_lifetime(
 You have a few options when mounting the project on the back of your frame.
 For those who want to go full overkill, follow Peter’s lead and create a custom 3D-printed mount to be glued to the backside.
 
-TODO Insert Peter picture
+![3D printed enclosure closed](/assets/images/eink_art/eink-3dprint.1.png)
+
+![3d Printed enclosure open](/assets/images/eink_art/eink-3dprint.2.png)
 
 If you don’t have a 3D printer, you can do what Jimmy did: use M2 screws and M2 x5mm spacers, hot-glued to the backside. Screw in the screws and spacers onto the device, then secure it to the frame using hot glue.
 
