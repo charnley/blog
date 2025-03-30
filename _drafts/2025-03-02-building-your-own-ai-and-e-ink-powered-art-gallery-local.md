@@ -718,7 +718,7 @@ binary_sensor:
 ```
 </details>
 
-> **NOTE:** The image you are downloading must be in PNG format (the only format supported by ESPHome online_image conponent) and should match the exact image size—960x680 in our case.
+> **NOTE:** The image you are downloading must be in PNG format (the only format supported by ESPHome online_image component) and should match the exact image size — 960x680 in our case.
 
 > **Note:** If your image appears greyish or less visible, especially with more complex images, you may use the wrong display configuration. For troubleshooting, refer to the Waveshare E-Paper Driver HAT guide.
 > [waveshare.com/wiki/E-Paper_Driver_HAT](https://www.waveshare.com/wiki/E-Paper_Driver_HAT).
