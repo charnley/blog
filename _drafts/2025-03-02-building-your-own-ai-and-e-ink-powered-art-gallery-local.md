@@ -780,22 +780,21 @@ def battery_lifetime(
 
 ## Mounting on the frame
 
-Mounting the project on the back side of your frame, you have some options.
-If you want to go full-overkill, do as Peter, which is create a custom 3D printed mount to be glued on the backside.
+You have a few options when mounting the project on the back of your frame.
+For those who want to go full overkill, follow Peter’s lead and create a custom 3D-printed mount to be glued to the backside.
 
 TODO Insert Peter picture
 
-Or if you don't have a 3D printer, do as Jimmy, which is to use M2 screws and M2 x5mm spacers, hot glued on the backside. Screw in the screws and spacers on the device, then place them on the backside with hotglue.
+If you don’t have a 3D printer, you can do what Jimmy did: use M2 screws and M2 x5mm spacers, hot-glued to the backside. Screw in the screws and spacers onto the device, then secure it to the frame using hot glue.
 
-![Backside of E-ink frame with ESP32, spacers, and glue]({{site.baseurl}}/assets/images/eink_art/eink_backside_glue_filter.jpg)
+TODO Insert Jimmy picture
 
-Both options will make it possible to screw the devices off for debugging/maintenance.
-Others on the internet has been seen to hot-glue the device directly to backside of the frame, which is insane... don't do that.
+Both methods allow you to remove the device easily for debugging or maintenance. Some people online have been seen hot-gluing the device directly to the back of the frame, which is a bit extreme… don’t do that.
 
-To make it look proffesional, use a passepartout (the white thing around the display).
-They usually come with frames.
-However, note that the default 30x40cm passepartout Jimmy could get locally, was just showing the black outline of the screen.
-In the end Jimmy has to get a custom cut to fit the display, which was very expensive, but gave the final touch to eleminate all possible signs that it was not a real painting.
+Use a passepartout (the white border around the display) to give your setup a more professional look.
+These typically come with frames, but be aware that the default 30x40cm passepartout we found locally only showed the black outline of the screen.
+Ultimately, we had to get a custom-cut passepartout, which could be expensive but gave the setup the final touch, making it look like an actual painting.
+
 
 ## The result
 
@@ -804,18 +803,18 @@ TODO Insert image gallery
 
 ## Note on the next version
 
-It was hard to finish, because there is always more to do.
-It was to say stop.
-For the next version, we wanted to explore
+Finishing this project was challenging, as there's always more to do.
+Eventually, we had to say, "Stop." But for the next version, we’re excited to explore several new ideas:
 
-- We want to use `olama` model to generate the prompts for the picture generation, based on themes. For example if we have a Mexican-themed party, all the prompts would be based in Mexican native art.
-- ESP32 and ZigBee-based live update, using ZigBee to do a wake-on-demand. Making the ESP32 push-friendly.
-- The is a new Waveshare screen [waveshare.com/product/displays/e-paper/epaper-1/13.3inch-e-paper-hat-plus-e.htm](https://www.waveshare.com/product/displays/e-paper/epaper-1/13.3inch-e-paper-hat-plus-e.htm) wich is 13.3 inches, higher resolution and full of colours. This would be a very cool upgrade. Requires some deep-dive into making ESPHome work with another interface.
-- Either with a webcam, or with pre-defined pictures, generate picture of the guests who are coming to visit you, similar (github.com/bytedance/InfiniteYou)[(https://github.com/bytedance/InfiniteYou)]
-- Have better infographics and integration to local weather. For example knowing when there is new snow, and integrate with Home Assistant to let one know when and where to go ski.
+- **Using the `olama` model to generate prompts** for picture generation based on themes. For example, if we’re celebrating a birthday, the prompts could focus on party-themed art, birthday cakes, balloons, and other festive elements.
+- **ESP32 and ZigBee-based live updates**, utilizing ZigBee for wake-on-demand, making the ESP32 push-friendly, while still having a cable-free setup.
+- The new Waveshare 13.3-inch e-paper screen has a **higher resolution and supports full color**. This would be a fantastic upgrade, but it requires diving deeper into making ESPHome work with this new interface. [waveshare.com/product/displays/e-paper/epaper-1/13.3inch-e-paper-hat-plus-e.htm](https://www.waveshare.com/product/displays/e-paper/epaper-1/13.3inch-e-paper-hat-plus-e.htm).
+- Using a webcam or pre-defined pictures to **generate images of guests visiting**, similar to the concept in InfiniteYou. (github.com/bytedance/InfiniteYou)[(https://github.com/bytedance/InfiniteYou)].
+- Enhancing the system with **better `matplotlib` infographics** and local weather integration, for example, knowing when it’s snowing and integrating with Home Assistant to recommend when and where to go skiing.
+
 
 ## Thanks
 
-Ananda for providing answers when stuck.
-Kristoffer for proof-reading.
-Patrick for soldering.
+Ananda, for offering valuable answers when we hit technical roadblocks.
+Kristoffer, for proofreading this page.
+Patrick, for handling the soldering.
