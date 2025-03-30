@@ -8,14 +8,14 @@ author: Jimmy & Peter
 
 TODO Insert gallery photo
 
-![Showing the transition of E-ink screen](../assets/images/eink_art/video/output2.gif)
+![Showing the transition of E-ink screen](/assets/images/eink_art/video/output2.gif)
 
 We built an **e-ink picture frame** using an **ESP32** microprocessor that shows a new daily piece of artwork created by a **local AI diffusion model**.
 Each day brings a random and unique image to enjoy. Everything runs on our local network, keeping everything private and off the cloud. It’s simple to have dynamic, AI-generated art on your walls without compromising privacy. Plus, the whole setup fits into our Home Assistant smart home system, which handles the image server and keeps track of the ESP32s.
 
 TODO Better front + back photos
 
-| ![E-ink with AI art ESP32 home assistant based](../assets/images/eink_art/P_20250312_180421_filter.jpg) | ![Backside of E-ink frame with ESP32 and battery](../assets/images/eink_art/P_20250312_180651_filter.jpg) |
+| ![E-ink with AI art ESP32 home assistant based](/assets/images/eink_art/P_20250312_180421_filter.jpg) | ![Backside of E-ink frame with ESP32 and battery](/assets/images/eink_art/P_20250312_180651_filter.jpg) |
 
 **Figure:** Backside of the photoframe, showing the ESP32, E-ink hat and Battery. Include a 1EUR and 2EUR for size reference.
 
@@ -47,7 +47,7 @@ Specifiably, the items we got were;
 
 | Item | Product Link | Price |
 | --- | --- | --- |
-| DFRobot FireBeetle2 ESP32S3 N16R8 8MB PSRAM [wiki](https://wiki.dfrobot.com/SKU_DFR0975_FireBeetle_2_Board_ESP32_S3) | [https://www.dfrobot.com/product-2676.html](https://www.dfrobot.com/product-2676.html)| ~ 20 EUR |
+| DFRobot FireBeetle2 ESP32-S3 N16R8 8MB PSRAM [wiki](https://wiki.dfrobot.com/SKU_DFR0975_FireBeetle_2_Board_ESP32_S3) | [https://www.dfrobot.com/product-2676.html](https://www.dfrobot.com/product-2676.html)| ~ 20 EUR |
 | DFRobot FireBettle2 ESP32-E N16R2 2M PSRAM  [wiki](https://wiki.dfrobot.com/_SKU_DFR1139_FireBeetle_2_ESP32_E_N16R2_IoT_Microcontroller) | [https://www.dfrobot.com/product-2837.html](https://www.dfrobot.com/product-2837.html) | ~ 15 EUR |
 | 1500-5000 mAh LiPo Battery with JST PH 2 Pin connector | | ~ 7 EUR |
 | Raspberry Pi 5 | [https://www.raspberrypi.com/products/raspberry-pi-5/](https://www.raspberrypi.com/products/raspberry-pi-5/) | ~120 EUR |
@@ -59,16 +59,19 @@ The estimated total cost per frame is around 180 EUR, plus the cost of the physi
 We chose ESP32 after browsing this list of compatible devices on PlatformIO.
 [registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0](https://registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0).
 The version is locked to 5.3.0 because, at the time of writing, ESPHome uses `platformio=5.3.0`.
-The key requirement is that the ESP32 needs PSRAM to download the PNG image over Wi-Fi.
+The key requirement is that the ESPHome [`online_image`](https://esphome.io/components/online_image.html) component needs PSRAM to download the PNG image over Wi-Fi.
 
-We recommend avoiding Amazon when shopping for components.
 If you're based in Switzerland, check out [bastelgarage.ch](https://www.bastelgarage.ch).
 Otherwise, a small local shop in your country will likely carry most of the parts.
 Unfortunately, we couldn’t find a supplier for the Waveshare 13.3" black/white e-ink display ([Waveshare 13.3" black/white e-ink display](https://amzn.to/4im9Wjj)), so we ordered it from Amazon.
 
 ## Software/Service Overview
 
-To keep everything organized and make the workflow easy to manage, we divided the tasks into three main sections: generating images, storing images, and displaying images.
+To keep everything organized and make the workflow easy to manage, we divided the tasks into three main sections:
+- generating images
+- storing images
+- displaying images
+
 We use our desktop computer with a graphics card to generate images on the fly or through a scheduled job.
 We both created different versions of the workflow. You can check out Jimmy’s version at [github.com/charnley/eink-art-gallery](https://github.com/charnley/eink-art-gallery) and Peter’s at [github.com/pgericson/eink-hub](https://github.com/pgericson/eink-hub).
 
@@ -77,16 +80,16 @@ We both created different versions of the workflow. You can check out Jimmy’s 
 graph LR
 
     subgraph Desktop [Desktop Computer]
-    direction RL
-    gpucron@{ shape: rounded, label: "Cron job" }
-    GPU@{ shape: rounded, label: "GPU" }
-    gpucron --> GPU
+      direction RL
+      gpucron@{ shape: rounded, label: "Cron job" }
+      GPU@{ shape: rounded, label: "GPU" }
+      gpucron --> GPU
     end
 
     subgraph HA [Home Assistant]
-    database@{ shape: db, label: "Image\n.sqlite" }
-    canvasserver@{ shape: rounded, label: "Picture\nServer" }
-    canvasserver --> database
+      database@{ shape: db, label: "Image\n.sqlite" }
+      canvasserver@{ shape: rounded, label: "Picture\nServer" }
+      canvasserver --> database
     end
 
     subgraph pictures [Picture Frames]
@@ -94,8 +97,8 @@ graph LR
         subgraph esp32 [ESP32]
             esp32eink@{ shape: rounded, label: "E-Ink\nDisplay" }
         end
-        subgraph rpi [Rasperry Pi]
-            esp32pi@{ shape: rounded, label: "E-Ink\nDisplay" }
+        subgraph rpi [Raspberry Pi]
+            rpieink@{ shape: rounded, label: "E-Ink\nDisplay" }
         end
 
     end
@@ -114,7 +117,7 @@ graph LR
 
 The workflow works like this:
 
-- The **picture server** holds a list of AI prompts, each with its associated images, stored in a SQLite database. For our setup, this is hosted on Home Assistant, but it could easily run on any Docker hosting service.
+- The **picture server** holds a list of AI prompts, each with its associated images, stored in a SQLite database. For our setup, this is hosted on Home Assistant as an Add-on, but it could easily run on any Docker hosting service.
 - Every night, the **desktop computer** checks the picture server for prompts that need images. For all of those prompts, the desktop computer generates new images and sends them to the server.
 - The **ESP32-powered picture frame(s)** follow a sleep schedule, staying off for 24 hours and waking up at 4 am. When it wakes up, it requests a picture, displays it, and then goes back to sleep.
 - The **Raspberry Pi-powered picture frame(s)** host an API for displaying images, so you can send live notifications or images directly to the frame.
@@ -153,7 +156,7 @@ The screen operates via GPIO pins and binary commands. For the Raspberry Pi, it'
 You can choose which pins go where for the soldering configuration, but of course, VCC and GND are fixed.
 The PWR pin is a recent addition to the HAT and controls the power for the E-ink screen. The easiest way to configure this is by soldering it directly to a 3.3 V endpoint on the ESP32.
 
-Another reason we chose this brand of e-ink display because ESPHome drivers are available, making it much quicker to get everything up and running. Plus, plenty of examples are out there to help you get started. Mind you, most of these examples are for the 7.5-inch model.
+Another reason we chose this brand of e-ink display because ESPHome drivers are now available, making it much quicker to get everything up and running. Plus, plenty of examples are out there to help you get started. Mind you, most of these examples are for the 7.5-inch model.
 
 > **NOTE:** We also explored the Black-White-Red E-ink display from Waveshare ([13.3" E-Paper HAT-B](https://www.waveshare.com/13.3inch-e-paper-hat-b.htm)), but it required more effort to get it working with ESPHome. Additionally, it takes about 30 seconds to switch pictures, compared to just 3 seconds with the black-and-white version.
 
@@ -173,15 +176,15 @@ We ultimately settled on
 ### Image Prompts for Best Results
 
 We've learned a few lessons about prompts.
-The most important one is that if you want the art to look good on a black-and-white E-ink screen, you need to choose styles that work well in that format—think high contrast, grayscale, and, ideally, prompts with an artistic format (like paintings and drawings).
+The most important one is that if you want the art to look good on a black-and-white E-ink screen, you need to choose styles that work well in that format — think high contrast, grayscale, and, ideally, prompts with an artistic format (like paintings and drawings).
 
 For example, if you prompt for something like "adventurous sci-fi structure, forest, Swiss Alps," the diffusion model will likely default to a photorealistic style, which doesn’t translate well to e-ink. To get better results, you’ll need to add something like "pencil sketch" or "ink droplet style" to guide the model toward a look that fits the e-ink display. Anything related to drawing, painting, or sketching tends to work well.
 
-![Prompt results](../assets/images/eink_art/prompt_example.png)
+![Prompt results](/assets/images/eink_art/prompt_example.png)
 
 **Figure:** Showing the results of prompting "scifi building in swiss aps", without (A) and with (B) e-ink friendly keywords, and the results after dithering.
 
-Several style libraries are available for inspiration. We found [midlibrary.io](https://midlibrary.io/) to offer a great selection of styles and artists that work well, especially in the black-and-white section. Some styles are more ethical than others, but as a non-commercial home project, we leave you to make your own lines.
+Several style libraries are available for inspiration. We found [midlibrary.io](https://midlibrary.io/) to offer a great selection of styles and artists that work well, especially in the black-and-white section. Some styles are more ethical than others, but as a non-commercial home project, we leave you to draw your own lines in the sand.
 
 Below are some styles that work well with a motif, such as "simplistic line art, skier in Swiss Alps."
 
@@ -297,7 +300,7 @@ $$
 
 The result is that the image will have more concentrated pixel areas and higher contrast. This is evident in the following comparison:
 
-![Dithering results](../assets/images/eink_art/dithering_example.png)
+![Dithering results](/assets/images/eink_art/dithering_example.png)
 
 **Figure:** A grayscale image (A), dithering using Floyd-Steinberg (B), and using Atkinson Dithering (C).
 
@@ -410,7 +413,7 @@ Note, because you need to start the API every time the Raspberry Pi is booted, i
 
 ### Setting up ESPHome and ESP32 frame
 
-Why Use YAML Instead of C? When starting a project, getting caught up in the details is easy. But at some point, the project needs to end. With that in mind, we opted for ESPHome YAML instead of writing the code in C. Why? We both use Home Assistant, and it made sense to leverage the convenience of ESPHome to get all the free features right out of the box. Sometimes, it’s best to choose your battles and focus on completing the project.
+Why use YAML instead of C? When starting a project, getting caught up in the details is easy. But at some point, the project needs to end. With that in mind, we opted for ESPHome YAML instead of writing the code in C. Why? We both use Home Assistant, and it made sense to leverage the convenience of ESPHome to get all the free features right out of the box. Sometimes, it’s best to choose your battles and focus on completing the project.
 
 ESPHome is a YAML-based configuration that generates the binaries needed to flash devices. Rather than writing custom code, you configure devices by setting up modules in YAML format. It’s a bit like building with Lego blocks for your ESP32 devices.
 While the ESPHome ecosystem includes drivers for most WaveShare E-Ink displays, we encountered a gap. Specifically, the driver for the 13.3" black-and-white display we wanted to use wasn’t available. So, Peter took the initiative and wrote the necessary drivers, which you can find in
@@ -418,11 +421,11 @@ While the ESPHome ecosystem includes drivers for most WaveShare E-Ink displays, 
 
 There are an overwhelming number of ESP32 options. Initially, we tried the Waveshare ESP32 development board, which can display images.
 (waveshare.com/e-paper-esp32-driver-board.htm)[https://www.waveshare.com/e-paper-esp32-driver-board.htm]
-However, we ran into an issue: the standard ESPHome libraries couldn’t download images over the Internet. This functionality requires [PSRAM](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/external-ram.html). on the ESP32.
+However, we ran into an issue: the standard ESPHome [component](https://esphome.io/components/online_image.html) couldn’t download images over the Internet. This functionality requires [PSRAM](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/external-ram.html) on the ESP32.
 
-After testing a few options, we found that the FireBettle2 ESP32-E and FireBettle2 ESP32S feature PSRAM and are well-documented by the manufacturer. These models turned out to be reliable choices for our project.
+After testing a few options, we found that the [FireBettle2 ESP32-E](https://wiki.dfrobot.com/_SKU_DFR1139_FireBeetle_2_ESP32_E_N16R2_IoT_Microcontroller) and [FireBettle2 ESP32-S3](https://wiki.dfrobot.com/SKU_DFR0975_FireBeetle_2_Board_ESP32_S3) feature PSRAM and are well-documented by the manufacturer. These models turned out to be reliable choices for our project.
 
-To connect the ESP32 to the E-Paper Driver HAT, you’ll need to map the GPIO pins on the ESP32 to those defined by the Waveshare HAT. The soldering process is straightforward. For your reference, we’ve provided an example configuration for the FireBettle 2 ESP32-E GPIO-to-Waveshare HAT GPIO pin mapping in the table below:
+To connect the ESP32 to the [E-Paper Driver HAT](https://www.waveshare.com/wiki/E-Paper_Driver_HAT), you’ll need to map the GPIO pins on the ESP32 to those defined by the Waveshare HAT. The soldering process is straightforward. For your reference, we’ve provided an example configuration for the FireBettle 2 ESP32-E GPIO-to-Waveshare HAT GPIO pin mapping in the table below:
 
 | WS HAT PIN  | ESP32-E PIN | Description |
 | ---  | ---     |--- |
@@ -433,12 +436,12 @@ To connect the ESP32 to the E-Paper Driver HAT, you’ll need to map the GPIO pi
 | CS   | 15/A4   | Chip selection, low active |
 | CLK  | 18/SCK  | SPI's CLK, clock signal input |
 | DIN  | 23/MOSI | SPI's MOSI, data input |
-| GND  | gnd     | Ground |
+| GND  | GND     | Ground |
 | VCC  | 3v3     | Power positive (3.3V power supply input) |
 
-The configuration that worked for us with the FireBettle2 ESP32-E and FireBettle2 ESP32S boards is as follows (as defined by the ESPHome substitutions in the YAML file). Keep in mind that GPIO pins often have multiple names. To identify the physical GPIO pin on the ESP32, you'll need to consult the manufacturer’s documentation. In this case, FireBettle provides detailed wikis, which are great resources for getting the pin mappings correct.
+The configuration that worked for us with the FireBettle2 ESP32-E and FireBettle2 ESP32-S3 boards is as follows (as defined by the ESPHome substitutions in the YAML file). Keep in mind that GPIO pins often have multiple names. To identify the physical GPIO pin on the ESP32, you'll need to consult the manufacturer’s documentation. In this case, FireBettle provides detailed wikis, which are great resources for getting the pin mappings correct.
 
-The example below assumes you've set up an add-on/docker service within Home Assistant. However, the URL can be anything accessible on your local network, as long as the payload is a PNG image with the correct resolution. For the 13.3" K model, the required resolution is 680x920 pixels.
+The example below assumes you've set up an add-on/docker service within Home Assistant. However, the URL can be anything accessible on your local network, as long as the payload is a PNG image with the correct resolution. For the 13.3" K model, the required resolution is 960x680 pixels.
 
 <details markdown="1">
 <summary><b>GPIO Configuration for FireBettle2 ESP32-E</b></summary>
@@ -715,7 +718,7 @@ binary_sensor:
 ```
 </details>
 
-> **NOTE:** The image you are downloading must be in PNG format (the only format supported by ESPHome) and should match the exact image size—680x960 in our case.
+> **NOTE:** The image you are downloading must be in PNG format (the only format supported by ESPHome online_image conponent) and should match the exact image size—960x680 in our case.
 
 > **Note:** If your image appears greyish or less visible, especially with more complex images, you may use the wrong display configuration. For troubleshooting, refer to the Waveshare E-Paper Driver HAT guide.
 > [waveshare.com/wiki/E-Paper_Driver_HAT](https://www.waveshare.com/wiki/E-Paper_Driver_HAT).
@@ -807,8 +810,8 @@ TODO Insert image gallery
 Finishing this project was challenging, as there's always more to do.
 Eventually, we had to say, "Stop." But for the next version, we’re excited to explore several new ideas:
 
-- **Using the `olama` model to generate prompts** for picture generation based on themes. For example, if we’re celebrating a birthday, the prompts could focus on party-themed art, birthday cakes, balloons, and other festive elements.
-- **ESP32 and ZigBee-based live updates**, utilizing ZigBee for wake-on-demand, making the ESP32 push-friendly, while still having a cable-free setup.
+- **Using the `ollama` models to generate prompts** for picture generation based on themes. For example, if we’re celebrating a birthday, the prompts could focus on party-themed art, birthday cakes, balloons, and other festive elements.
+- **ESP32 and ZigBee-based live updates**, utilizing ZigBee for wake-on-demand, making the ESP32 push-friendly, while still having a cable-free setup and long battery life.
 - The new Waveshare 13.3-inch e-paper screen has a **higher resolution and supports full color**. This would be a fantastic upgrade, but it requires diving deeper into making ESPHome work with this new interface. [waveshare.com/product/displays/e-paper/epaper-1/13.3inch-e-paper-hat-plus-e.htm](https://www.waveshare.com/product/displays/e-paper/epaper-1/13.3inch-e-paper-hat-plus-e.htm).
 - Using a webcam or pre-defined pictures to **generate images of guests visiting**, similar to the concept in InfiniteYou. [github.com/bytedance/InfiniteYou](https://github.com/bytedance/InfiniteYou).
 - Enhancing the system with **better `matplotlib` infographics** and local weather integration, for example, knowing when it’s snowing and integrating with Home Assistant to recommend when and where to go skiing.
