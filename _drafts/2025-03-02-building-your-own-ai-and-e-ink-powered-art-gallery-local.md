@@ -150,17 +150,18 @@ The screen operates via GPIO pins and binary commands. For the Raspberry Pi, it'
 | BUSY | Busy status output pin (indicating busy) |
 | PWR | Power on/off control |
 
-For the soldering configuration, you can choose which pins go where, but of course, VCC and GND are fixed. The PWR pin is a recent addition to the HAT and controls the power for the E-ink screen. The easiest way to configure this is by soldering it directly to a 3.3 V endpoint on the ESP32.
+You can choose which pins go where for the soldering configuration, but of course, VCC and GND are fixed.
+The PWR pin is a recent addition to the HAT and controls the power for the E-ink screen. The easiest way to configure this is by soldering it directly to a 3.3 V endpoint on the ESP32.
 
-Another reason we chose this brand of e-ink display is that ESPHome drivers are available, making it much quicker to get everything up and running. Plus, plenty of examples are out there to help you get started. Mind you, most of these examples are for the 7.5-inch model.
+Another reason we chose this brand of e-ink display because ESPHome drivers are available, making it much quicker to get everything up and running. Plus, plenty of examples are out there to help you get started. Mind you, most of these examples are for the 7.5-inch model.
 
 > **NOTE:** We also explored the Black-White-Red E-ink display from Waveshare ([13.3" E-Paper HAT-B](https://www.waveshare.com/13.3inch-e-paper-hat-b.htm)), but it required more effort to get it working with ESPHome. Additionally, it takes about 30 seconds to switch pictures, compared to just 3 seconds with the black-and-white version.
 
 ## Hosting an AI art model
 
-To populate our local image library, we set up a Python environment on our desktop computer, which has access to a graphics card/GPU.
-While having an extremely powerful graphics card isn’t crucial, it does make a difference if you want to generate live prompts.
-However, for a nightly cron job, it doesn’t matter if image generation takes 20 minutes or more.
+To populate our local image library, we set up a Python environment on our desktop computer to access a graphics card/GPU.
+While having a powerful graphics card isn’t crucial, it does make a difference if you want to generate live prompts.
+However, it doesn’t matter if image generation takes 20 minutes or more for a nightly cron job.
 
 ### Selecting an AI model
 
@@ -213,7 +214,7 @@ Since you're following this setup guide, it’s assumed that you have a graphics
 The easiest way to set up the service is using Windows Subsystem for Linux (WSL).
 There were some speed issues with Windows 10 and WSL2, mainly due to the disk's slow read/write speeds.
 However, using Windows 11 with WSL2 seems much more stable.
-So that you know, you'll need more space than you might expect to set up the Linux subsystem.
+Just so you know, you'll need more space than you might expect to set up the Linux subsystem.
 
 With Windows 11 and WSL2, getting CUDA access to the Windows GPU from Linux is relatively smooth.
 Here’s a setup guide to get started:
@@ -267,7 +268,7 @@ This technique helps simulate grayscale by spreading the error from converting a
 More details can be found [en.wikipedia.org/wiki/Dither](https://en.wikipedia.org/wiki/Dither).
 
 The most common dithering method is [Floyd-Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering).
-It works by calculating each pixel's error (the difference between its gray value and black/white) and distributing it to surrounding pixels.
+It calculates each pixel's error (the difference between its gray value and black/white) and distributes it to surrounding pixels.
 This creates the illusion of more shades and smoother transitions, even in a binary image.
 
 Starting from the top-left corner and moving through each pixel, the error is diffused to neighboring pixels. If $$*$$ represents the current pixel, the error is spread out like this:
@@ -281,7 +282,7 @@ $$
 
 However, in practice, the numerically correct method often produces an image that looks overly "grayish" because it creates dense black-and-white pixel patterns. While this is technically accurate, it doesn't look as clean or sharp, especially on low-resolution displays.
 
-Through experience, we found that the Atkinson Dithering](https://en.wikipedia.org/wiki/Atkinson_dithering) works much better for low-resolution images.
+Through experience, we found that the [Atkinson Dithering](https://en.wikipedia.org/wiki/Atkinson_dithering) works much better for low-resolution images.
 The difference is that Atkinson diffuses only part of the error, which helps avoid the harsh black-and-white patterns and leads to a cleaner, more visually pleasing result.
 
 If $$*$$ represents the current pixel, the error is spread out like this:
@@ -809,7 +810,7 @@ Eventually, we had to say, "Stop." But for the next version, we’re excited to 
 - **Using the `olama` model to generate prompts** for picture generation based on themes. For example, if we’re celebrating a birthday, the prompts could focus on party-themed art, birthday cakes, balloons, and other festive elements.
 - **ESP32 and ZigBee-based live updates**, utilizing ZigBee for wake-on-demand, making the ESP32 push-friendly, while still having a cable-free setup.
 - The new Waveshare 13.3-inch e-paper screen has a **higher resolution and supports full color**. This would be a fantastic upgrade, but it requires diving deeper into making ESPHome work with this new interface. [waveshare.com/product/displays/e-paper/epaper-1/13.3inch-e-paper-hat-plus-e.htm](https://www.waveshare.com/product/displays/e-paper/epaper-1/13.3inch-e-paper-hat-plus-e.htm).
-- Using a webcam or pre-defined pictures to **generate images of guests visiting**, similar to the concept in InfiniteYou. (github.com/bytedance/InfiniteYou)[(https://github.com/bytedance/InfiniteYou)].
+- Using a webcam or pre-defined pictures to **generate images of guests visiting**, similar to the concept in InfiniteYou. [github.com/bytedance/InfiniteYou](https://github.com/bytedance/InfiniteYou).
 - Enhancing the system with **better `matplotlib` infographics** and local weather integration, for example, knowing when it’s snowing and integrating with Home Assistant to recommend when and where to go skiing.
 
 
