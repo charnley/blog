@@ -352,13 +352,13 @@ def set_atkinson_dither_array(img: np.ndarray):
 
 ## Displaying the image
 
-For displaying the image on the e-ink, we have two options. Push, with powercable, or pull with battery.
+We have two options for displaying the image on the e-ink: push with a power cable or pull with a battery.
 
-Personally, the iteration was done with a Raspberry Pi, but given that required a USB power cable it removed the immersion as a photoframe.
-Note that a white USB cable was used and only one person ever noticed it. However, we knew it was there, and that was enough.
-But if you want live updates, like a notification, this is the option you want.
+The iteration was done with a Raspberry Pi, but because it required a USB power cable, it removed the immersion as a photo frame.
+Note that a white USB cable was used, and only one person ever noticed it. However, we knew it was there, and that was enough.
+But if you want live updates, like notifications, this is the option you want.
 
-The second option is to use an ESP32 microprocessor, which can be battery-powered. No visible cords.
+The second option is using an ESP32 microprocessor, which can be battery-powered with no visible cords.
 
 ### Setting up Raspberry Pi API frame
 
@@ -716,27 +716,25 @@ binary_sensor:
 
 > **NOTE:** The image you are downloading must be in PNG format (the only format supported by ESPHome) and should match the exact image size—680x960 in our case.
 
-> **Note:** If your image appears greyish or less visible, especially with more complex images, you may be using the wrong display configuration. For troubleshooting, refer to the Waveshare E-Paper Driver HAT guide.
+> **Note:** If your image appears greyish or less visible, especially with more complex images, you may use the wrong display configuration. For troubleshooting, refer to the Waveshare E-Paper Driver HAT guide.
 > [waveshare.com/wiki/E-Paper_Driver_HAT](https://www.waveshare.com/wiki/E-Paper_Driver_HAT).
 
 > **Note:** If your image doesn’t refresh completely when switching photos, check your soldering connections. A loose connection could be the cause.
 
 ## Battery choice
 
-Now all there is left for the project is to find a nice battery. The critiera is we didn't want to take the frame down and re-charge too often, and the battery needs to have a slim form-factor so it fits behind the photo frame.
+The final step for our project is choosing a suitable battery. The key criteria were: we didn’t want to take the frame down to recharge frequently, and the battery needed a slim form factor to fit behind the photo frame.
 
-To figure out how much mAh we need in a LiPo battery we need to calculate how much power our project is consuming per-day.
-We split it into two consumptions, deep-sleep power consumption and a per-image switch.
-For the image switch consumption we bought a USB-C amphere measuring, noteing down the peak for simplicity. A better way would be to setup a Voltmeter between in chain with the battery and the device.
-However, we were lazy.
+To determine the necessary mAh for a LiPo battery, we first calculated the daily power consumption, which we divided into two parts: deep-sleep power consumption and per-image switch consumption.
 
-The peak during a picture change we measured to be $$0.128 \text{Ampere}$$.
+We used a USB-C ammeter to measure the peak current for the image switch consumption. To simplify, we noted the peak, though a better approach would be to place a voltmeter in the chain between the battery and the device. But, as with many things, we took the easier route.
 
-For the deep-sleep consumption, the usage was so small that we could not measure it with out amphere meter.
-However, googling we found the ESP32 has a very efficient deep-sleep of only $$10 \mu \text{Ampere}$$ usage.
-Accordding to the [Espressif source](https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf).
+The peak current during a picture change was measured to be 0.128 Ampere.
 
-As a reminder, for the following calculations, Watt is equal to 1 joule per second and 24h is equal to 24h = 86400s.
+For the deep-sleep consumption, the usage was so low that we couldn’t measure it with our ammeter. However, after some research, we found that the ESP32 consumes only 10 µA during deep sleep, according to Espressif’s datasheet.
+[espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf](https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf).
+
+As a reminder, for the calculations below, Watt equals 1 joule per second, and 24 hours equals 86,400 seconds.
 
 $$
 \begin{align}
@@ -750,12 +748,11 @@ $$
 \end{align}
 $$
 
-Where $$N$$ is number of picture changes per day.
-In our example it is just once per night.
-Which leads us to if only one change per day, the battery should last us 4 years.... which seems unrealistic.
-Note that LiPo batteries has a natural de-charge of 1-5% per month [cite needed].
+Where $$N$$ is the number of picture changes per day, in our case, it’s just once per night.
 
-Here is a Python function for the lazy.
+This leads to the conclusion that, with only one picture change per day, the battery should theoretically last 4 years, which, as we know, seems unrealistic. Keep in mind that LiPo batteries have a natural self-discharge rate of 1-5% per month (citation needed).
+
+For the lazy, here’s a Python function to help with the calculation:
 
 <details markdown="1">
 <summary><b>battery_lifetime.py</b></summary>
@@ -779,7 +776,7 @@ def battery_lifetime(
 
 </details>
 
-> **NOTE:** The battery you buy will most likely not arrive in the correct +/- configuration, or even the correct JST connector size. When switching the cables, *do not* let the +/- ends touch eachother unless you want to order a new battery.
+> **NOTE:** The battery you purchase will likely not arrive with the correct +/- configuration or JST connector size. Do not let the +/- ends touch each other when switching the cables unless you’re prepared to order a new battery.
 
 ## Mounting on the frame
 
