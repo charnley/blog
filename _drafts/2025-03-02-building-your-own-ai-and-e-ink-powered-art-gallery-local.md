@@ -15,7 +15,10 @@ Each day brings a random and unique image to enjoy. Everything runs on our local
 
 TODO Better front + back photos
 
+| | |
+| --- | --- |
 | ![E-ink with AI art ESP32 home assistant based](/assets/images/eink_art/P_20250312_180421_filter.jpg) | ![Backside of E-ink frame with ESP32 and battery](/assets/images/eink_art/P_20250312_180651_filter.jpg) |
+| front | Backside |
 
 **Figure:** Backside of the photoframe, showing the ESP32, E-ink hat and Battery. Include a 1EUR and 2EUR for size reference.
 
