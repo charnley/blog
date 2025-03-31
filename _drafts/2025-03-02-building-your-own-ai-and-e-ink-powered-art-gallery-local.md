@@ -22,7 +22,7 @@ TODO Better front + back photos
 
 **Figure:** Backside of the photoframe, showing the ESP32, E-ink hat and Battery. Include a 1EUR and 2EUR for size reference.
 
-Want to build your own? Here’s how.
+### Want to build your own? Here’s how.
 If you’re aiming for wireless picture frames, the ESP32 chip is the way to go, though it does require some soldering.
 If you’d rather avoid the soldering, you can always use a Raspberry Pi Zero, leaving you with a cable coming out of your frame.
 
@@ -46,7 +46,7 @@ And you should be comfortable with:
 - Soldering
 
 While a Raspberry Pi Zero is the best choice for the picture frame due to its size, any Raspberry Pi model will work just fine.
-Specifiably, the items we got were;
+Specifiably, the items we got were:
 
 | Item | Product Link | Price |
 | --- | --- | --- |
@@ -65,7 +65,7 @@ The version is locked to 5.3.0 because, at the time of writing, ESPHome uses `pl
 The key requirement is that the ESPHome [`online_image`](https://esphome.io/components/online_image.html) component needs PSRAM to download the PNG image over Wi-Fi.
 
 If you're based in Switzerland, check out [bastelgarage.ch](https://www.bastelgarage.ch).
-Otherwise, a small local shop in your country will likely carry most of the parts.
+Otherwise, a local hobby electronics store in your country will likely carry most of the parts.
 Unfortunately, we couldn’t find a supplier for the Waveshare 13.3" black/white e-ink display ([Waveshare 13.3" black/white e-ink display](https://amzn.to/4im9Wjj)), so we ordered it from Amazon.
 
 ## Software/Service Overview
@@ -140,7 +140,7 @@ Want to learn more? Check out this Wikipedia page on E-Ink [wikipedia.org/wiki/E
 Several providers are out there, but the E-ink supplier we’ve gone with is Waveshare. We chose them because others have had good experiences with their products, they offer solid documentation, and their prices are reasonable. In particular, we found the 13.3-inch black-and-white screen to be the perfect fit for our needs, especially when you consider the price versus size. You can check it out here
 [waveshare.com/13.3inch-e-paper-hat-k.htm](https://www.waveshare.com/13.3inch-e-paper-hat-k.htm).
 
-The prices can rise quickly as the screen size increases, but we didn’t want to go with the standard 7.5-inch screen—it would look way too small on the wall. We preferred to compromise and go with a larger, though lower-resolution, black-and-white screen. Even with its lower resolution, the 13.3-inch screen fits perfectly and blends seamlessly into our living room.
+The prices can rise quickly as the screen size increases, but we didn’t want to go with the standard 7.5-inch screen—it would look way too small on the wall. We preferred to compromise and go with a larger, though lower-resolution, black-and-white screen. Even with its lower resolution, the 13.3-inch screen fits perfectly and blends seamlessly into our living rooms.
 
 The screen operates via GPIO pins and binary commands. For the Raspberry Pi, it's pretty much plug-and-play. For the ESP32, however, you'll need to solder each pin and set up the GPIO configuration.
 
@@ -231,7 +231,7 @@ Here’s a setup guide to get started:
 - Install CUDA on Windows (you probably already have that) [developer.nvidia.com/cuda-downloads](https://developer.nvidia.com/cuda-downloads)
 - Install WSL [learn.microsoft.com/en-us/windows/wsl/install](https://learn.microsoft.com/en-us/windows/wsl/install)
 
-Open a terminal and install wsl
+Open PowerShell or Windows Command Prompt in **administrator** mode and install wsl
 
     wsl --install
 
@@ -310,7 +310,7 @@ The result is that the image will have more concentrated pixel areas and higher 
 It might be subtle, but notice how (B) appears more grayish than (C).
 This difference is much more noticeable on an actual, physical, low-res e-ink screen.
 
-Atkinson dithering isn't implemented in Pillow (yet), which only supports Floyd-Steinberg. Since the process involves many for-loops, Python isn't the most efficient choice for this task. However, by using Numba, we can speed things up and quickly get a working solution. As seen in;
+Atkinson dithering isn't implemented in Pillow (yet), which only supports Floyd-Steinberg. Since the process involves many for-loops, Python isn't the most efficient choice for this task. However, by using Numba, we can speed things up and quickly get a working solution. As seen in:
 
 <details markdown="1">
 <summary><b>Atkinson Dithering Python Implementations</b></summary>
@@ -361,7 +361,7 @@ def set_atkinson_dither_array(img: np.ndarray):
 
 We have two options for displaying the image on the e-ink: push with a power cable or pull with a battery.
 
-The iteration was done with a Raspberry Pi, but because it required a USB power cable, it removed the immersion as a photo frame.
+The first iteration was done with a Raspberry Pi, but because it required a USB power cable, it removed the immersion as a photo frame.
 Note that a white USB cable was used, and only one person ever noticed it. However, we knew it was there, and that was enough.
 But if you want live updates, like notifications, this is the option you want.
 
@@ -444,7 +444,7 @@ To connect the ESP32 to the [E-Paper Driver HAT](https://www.waveshare.com/wiki/
 
 The configuration that worked for us with the FireBettle2 ESP32-E and FireBettle2 ESP32-S3 boards is as follows (as defined by the ESPHome substitutions in the YAML file). Keep in mind that GPIO pins often have multiple names. To identify the physical GPIO pin on the ESP32, you'll need to consult the manufacturer’s documentation. In this case, FireBettle provides detailed wikis, which are great resources for getting the pin mappings correct.
 
-The example below assumes you've set up an add-on/docker service within Home Assistant. However, the URL can be anything accessible on your local network, as long as the payload is a PNG image with the correct resolution. For the 13.3" K model, the required resolution is 960x680 pixels.
+The example below assumes you've set up an add-on/Docker service within Home Assistant. However, the URL can be anything accessible on your local network, as long as the payload is a PNG image with the correct resolution. For the 13.3" K model, the required resolution is 960x680 pixels.
 
 <details markdown="1">
 <summary><b>GPIO Configuration for FireBettle2 ESP32-E</b></summary>
