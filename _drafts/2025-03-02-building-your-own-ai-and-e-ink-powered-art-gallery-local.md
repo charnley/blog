@@ -6,21 +6,20 @@ categories: AI art e-ink esp32 home-assistant
 author: Jimmy & Peter
 ---
 
-TODO Insert gallery photo
-
-![Showing the transition of E-ink screen](/assets/images/eink_art/video/output2.gif)
+![]({{site.baseurl}}/assets/images/eink_art/photos/front_double_landscapes.jpg)
 
 We built an **e-ink picture frame** using an **ESP32** microprocessor that shows a new daily piece of artwork created by a **local AI diffusion model**.
 Each day brings a random and unique image to enjoy. Everything runs on our local network, keeping everything private and off the cloud. It’s simple to have dynamic, AI-generated art on your walls without compromising privacy. Plus, the whole setup fits into our Home Assistant smart home system, which handles the image server and keeps track of the ESP32s.
 
-TODO Better front + back photos
+![Showing the transition of E-ink screen]({{site.baseurl}}/assets/images/eink_art/video/output2.gif)
 
-| | |
+**Figure:** The transition of e-ink screen, lasting around 3sec.
+
+| a | b |
 | --- | --- |
-| ![E-ink with AI art ESP32 home assistant based](/assets/images/eink_art/P_20250312_180421_filter.jpg) | ![Backside of E-ink frame with ESP32 and battery](/assets/images/eink_art/P_20250312_180651_filter.jpg) |
-| front | Backside |
+| ![]({{site.baseurl}}/assets/images/eink_art/photos/front_fem.jpg) | ![]({{site.baseurl}}/assets/images/eink_art/photos/backside_tape.jpg) |
 
-**Figure:** Backside of the photoframe, showing the ESP32, E-ink hat and Battery. Include a 1EUR and 2EUR for size reference.
+**Figure a:** Art gallery with 5 e-ink screen synced with the same AI model and prompt. **Figure b:** The back side of the setup with ESP32 and battery.
 
 ### Want to build your own? Here’s how.
 If you’re aiming for wireless picture frames, the ESP32 chip is the way to go, though it does require some soldering.
@@ -183,9 +182,9 @@ The most important one is that if you want the art to look good on a black-and-w
 
 For example, if you prompt for something like "adventurous sci-fi structure, forest, Swiss Alps," the diffusion model will likely default to a photorealistic style, which doesn’t translate well to e-ink. To get better results, you’ll need to add something like "pencil sketch" or "ink droplet style" to guide the model toward a look that fits the e-ink display. Anything related to drawing, painting, or sketching tends to work well.
 
-![Prompt results](/assets/images/eink_art/prompt_example.png)
+![Prompt results]({{site.baseurl}}/assets/images/eink_art/prompt_example.png)
 
-**Figure:** Showing the results of prompting "scifi building in swiss aps", without (A) and with (B) e-ink friendly keywords, and the results after dithering.
+**Figure:** Showing the results of prompting "winter forest in alps", without (a) and with (b) e-ink friendly keywords, and the results after dithering (c and d).
 
 Several style libraries are available for inspiration. We found [midlibrary.io](https://midlibrary.io/) to offer a great selection of styles and artists that work well, especially in the black-and-white section. Some styles are more ethical than others, but as a non-commercial home project, we leave you to draw your own lines in the sand.
 
@@ -307,11 +306,11 @@ $$
 
 The result is that the image will have more concentrated pixel areas and higher contrast. This is evident in the following comparison:
 
-![Dithering results](/assets/images/eink_art/dithering_example.png)
+![Dithering results]({{site.baseurl}}/assets/images/eink_art/dithering_example.png)
 
-**Figure:** A grayscale image (A), dithering using Floyd-Steinberg (B), and using Atkinson Dithering (C).
+**Figure:** a) A grayscale image, b) dithering using Floyd-Steinberg, and c) using Atkinson Dithering.
 
-It might be subtle, but notice how (B) appears more grayish than (C).
+It might be subtle, but notice how (b) appears more grayish than (c).
 This difference is much more noticeable on an actual, physical, low-res e-ink screen.
 
 Atkinson dithering isn't implemented in Pillow (yet), which only supports Floyd-Steinberg. Since the process involves many for-loops, Python isn't the most efficient choice. However, using Numba (JIT), we can speed things up and quickly get a working solution. As seen in:
@@ -794,13 +793,13 @@ def battery_lifetime(
 You have a few options when mounting the project on the back of your frame.
 For those who want to go full overkill, follow Peter’s lead and create a custom 3D-printed mount to be glued to the backside.
 
-![3D printed enclosure closed](/assets/images/eink_art/eink-3dprint.1.png)
-
-![3d Printed enclosure open](/assets/images/eink_art/eink-3dprint.2.png)
+| a | b |
+| ![3D printed enclosure closed]({{site.baseurl}}/assets/images/eink_art/photos/backside_3dprint_open.png) | ![3D printed enclosure closed]({{site.baseurl}}/assets/images/eink_art/photos/backside_3dprint_closed.png) |
 
 If you don’t have a 3D printer, you can do what Jimmy did: use M2 screws and M2 x5mm spacers, hot-glued to the backside. Screw in the screws and spacers onto the device, then secure it to the frame using hot glue.
 
-TODO Insert Jimmy picture
+| a | b |
+| ![]({{site.baseurl}}/assets/images/eink_art/photos/backside_hotglue.jpg) | ![]({{site.baseurl}}/assets/images/eink_art/photos/backside_tape.jpg) |
 
 Both methods allow you to remove the device easily for debugging or maintenance. Some people online have been seen hot-gluing the device directly to the back of the frame, which is a bit extreme… don’t do that.
 
@@ -811,8 +810,18 @@ Ultimately, we had to get a custom-cut passepartout, which could be expensive bu
 
 ## The result
 
-TODO Insert image gallery
 
+![]({{site.baseurl}}/assets/images/eink_art/photos/example_rpi_red.jpg)
+
+**Figure:** Setup using Raspberry Pi (with power cable), and the black/white/red WaveShare e-ink screen.
+
+![]({{site.baseurl}}/assets/images/eink_art/photos/front_404.jpg)
+
+**Figure:** Setup when the image queue is out of images.
+
+![]({{site.baseurl}}/assets/images/eink_art/photos/front_triple.jpg)
+
+**Figure:** Setup of synced prompts.
 
 ## Note on the next version
 

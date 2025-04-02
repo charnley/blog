@@ -23,3 +23,9 @@ details {
   /* max-width: 1012px; // Same as github */
   max-width: 900px; // Same as github
 }
+
+
+// If pictures are small, center them
+.post-content p:has(img:only-child) {
+  text-align:center;
+}
