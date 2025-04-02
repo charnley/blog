@@ -75,7 +75,7 @@ To keep everything organized and make the workflow easy to manage, we divided th
 - displaying images
 
 We use our desktop computer with a graphics card to generate images on the fly or through a scheduled job.
-We both created different versions of the workflow. You can check out Jimmy’s version at [github.com/charnley/eink-art-gallery](https://github.com/charnley/eink-art-gallery) and Peter’s at [github.com/pgericson/eink-hub](https://github.com/pgericson/eink-hub).
+We both created different versions of the workflow. You can check out Jimmy’s version at [github.com/charnley/eink-art-gallery](https://github.com/charnley/eink-art-gallery).
 
 
 ```mermaid
