@@ -410,7 +410,7 @@ If you have a problem creating a `venv`, because of missing pip, you can;
     python get-pip.py
 
 With this setup, setting up a FastAPI solution to display images should be straightforward.
-For inspiration, you can refer to Jimmy's github solution [github.com/charnley/eink_art_gallery](https://github.com/charnley/eink_art_gallery).
+For inspiration, you can refer to Jimmy's github solution [github.com/charnley/eink-art-gallery](https://github.com/charnley/eink-art-gallery).
 
 Note, because you need to start the API every time the Raspberry Pi is booted, it is worth setting up a `crontab -e` to start you service at boot
 
