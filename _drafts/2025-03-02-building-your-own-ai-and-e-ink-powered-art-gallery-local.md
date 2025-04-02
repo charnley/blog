@@ -419,14 +419,14 @@ Note, because you need to start the API every time the Raspberry Pi is booted, i
 
 ### Setting up ESPHome and ESP32 frame
 
-Why use YAML instead of C? When starting a project, getting caught up in the details is easy. But at some point, the project needs to end. With that in mind, we opted for ESPHome YAML instead of writing the code in C. Why? We both use Home Assistant, and it made sense to leverage the convenience of ESPHome to get all the free features right out of the box. Sometimes, it’s best to choose your battles and focus on completing the project.
+Why use `YAML` instead of `C`? At some point, the project needs to end. We opted for ESPHome `YAML` , as we both use Home Assistant, and it made sense to leverage the convenience of ESPHome to get all the free features right out of the box. Sometimes, it’s best to choose your battles and focus on completing the project.
 
-ESPHome is a YAML-based configuration that generates the binaries needed to flash devices. Rather than writing custom code, you configure devices by setting up modules in YAML format. It’s a bit like building with Lego blocks for your ESP32 devices.
+ESPHome is a YAML-based configuration that generates the binaries needed to flash devices. Rather than writing  code, you configure devices by setting up modules in YAML format. It’s a bit like building with Lego blocks for your ESP32 devices.
 While the ESPHome ecosystem includes drivers for most WaveShare E-Ink displays, we encountered a gap. Specifically, the driver for the 13.3" black-and-white display we wanted to use wasn’t available. So, Peter took the initiative and wrote the necessary drivers, which you can find in
 [github.com/esphome/esphome/pull/6443](https://github.com/esphome/esphome/pull/6443)
 
 There are an overwhelming number of ESP32 options. Initially, we tried the Waveshare ESP32 development board, which can display images.
-(waveshare.com/e-paper-esp32-driver-board.htm)[https://www.waveshare.com/e-paper-esp32-driver-board.htm]
+[waveshare.com/e-paper-esp32-driver-board.htm](https://www.waveshare.com/e-paper-esp32-driver-board.htm).
 However, we ran into an issue: the standard ESPHome [component](https://esphome.io/components/online_image.html) couldn’t download images over the Internet. This functionality requires [PSRAM](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/external-ram.html) on the ESP32.
 
 After testing a few options, we found that the [FireBettle2 ESP32-E](https://wiki.dfrobot.com/_SKU_DFR1139_FireBeetle_2_ESP32_E_N16R2_IoT_Microcontroller) and [FireBettle2 ESP32-S3](https://wiki.dfrobot.com/SKU_DFR0975_FireBeetle_2_Board_ESP32_S3) feature PSRAM and are well-documented by the manufacturer. These models turned out to be reliable choices for our project.
