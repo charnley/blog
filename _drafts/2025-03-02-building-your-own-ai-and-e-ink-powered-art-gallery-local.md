@@ -56,7 +56,7 @@ Specifiably, the items we got were:
 | Raspberry Pi Zero | [https://www.raspberrypi.com/products/raspberry-pi-zero/](https://www.raspberrypi.com/products/raspberry-pi-zero/) | ~12 EUR |
 | Waveshare E-ink 13.3" K, with HAT | [https://www.waveshare.com/13.3inch-e-paper-hat-k.htm](https://www.waveshare.com/13.3inch-e-paper-hat-k.htm) | ~150 EUR |
 
-The estimated total cost per frame is around 180 EUR (why not adding eInk display in this price?), plus the cost of the physical frame, with the e-ink display being the most expensive component.
+The estimated total cost per ESP32-based frame is around 180 EUR, excluding the cost of the physical frame. The e-ink display is the most expensive component.
 
 We chose ESP32 after browsing this list of compatible devices on PlatformIO.
 [registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0](https://registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0).
@@ -358,7 +358,7 @@ def set_atkinson_dither_array(img: np.ndarray):
 
 </details>
 
-> **NOTE:** If you're working with multiple colors, you can diffuse the error for each color channel. You can also extend error diffusion to handle multiple levels of gray, not just black and white. (do you have example in your paper repo?)
+> **NOTE:** If you're working with multiple colors, you can diffuse the error for each color channel. You can also extend error diffusion to handle multiple levels of gray, not just black and white. Examples can be found in the GitHub repo.
 
 ## Displaying the image
 
