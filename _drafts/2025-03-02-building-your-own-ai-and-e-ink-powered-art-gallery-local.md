@@ -156,16 +156,16 @@ The screen operates via GPIO pins and binary commands. For the Raspberry Pi, it'
 | BUSY | Busy status output pin (indicating busy) |
 | PWR | Power on/off control |
 
-You can choose which pins go where for the soldering configuration, but of course, VCC and GND are fixed.
+You can choose which pins go where in the soldering configuration, but VCC and GND are fixed.
 The PWR pin is a recent addition to the HAT and controls the power for the E-ink screen. The easiest way to configure this is by soldering it directly to a 3.3 V endpoint on the ESP32.
 
-Another reason we chose this brand of e-ink display because ESPHome drivers are now available, making it much quicker to get everything up and running. Plus, plenty of examples are out there to help you get started. Mind you, most of these examples are for the 7.5-inch model.
+Another reason we chose this brand of e-ink display is that ESPHome drivers are now available, making it much quicker to get everything up and running. Plus, plenty of examples are out there to help you get started. Mind you, most of these examples are for the 7.5-inch model.
 
 > **NOTE:** We also explored the Black-White-Red E-ink display from Waveshare ([13.3" E-Paper HAT-B](https://www.waveshare.com/13.3inch-e-paper-hat-b.htm)), but it required more effort to get it working with ESPHome. Additionally, it takes about 30 seconds to switch pictures, compared to just 3 seconds with the black-and-white version.
 
 ## Hosting an AI art model
 
-To populate our local image library, we set up a Python environment on our desktop computer to access a graphics card/GPU.
+We set up a Python environment on our desktop computer to populate our local image library to access a graphics card/GPU.
 While having a powerful graphics card isn’t crucial, it does make a difference if you want to generate live prompts.
 However, it doesn’t matter if image generation takes 20 minutes or more for a nightly cron job.
 
@@ -174,7 +174,7 @@ However, it doesn’t matter if image generation takes 20 minutes or more for a 
 You can choose any AI model you like here. We tried out many models throughout 2024, always experimenting with the latest ones, but in the end, it didn’t make a significant difference for this project.
 
 We ultimately settled on 
-[Stable Diffusion 3.5](https://stability.ai/news/introducing-stable-diffusion-3-5), because it was easy to set up and compatible with our hardware. On a 1080p graphics card, it takes about 15 minutes per image, while with a 4090, it only takes about 3 seconds. We used Huggingface to set up the model, which requires registration to access Stable Difussion 3.
+[Stable Diffusion 3.5](https://stability.ai/news/introducing-stable-diffusion-3-5), because it was easy to set up and compatible with our hardware. On a NVIDIA GTX 1080p graphics card, it takes about 15 minutes per image, while with a NVIDIA GTX 4090, it only takes about 3 seconds. We used Huggingface to set up the model, which requires registration to access Stable Diffusion 3.
 
 ### Image Prompts for Best Results
 
@@ -235,7 +235,11 @@ Open PowerShell or Windows Command Prompt in **administrator** mode and install 
 
     wsl --install
 
-When WSL is installed, update and set up Linux.
+When WSL is installed, update and set up Linux (following the guide will install Ubuntu). You enter the Linux subsystem by
+
+    wsl
+
+Then you can use Bash in Linux. First update your system;
 
     # update apt
     sudo apt update
@@ -310,7 +314,7 @@ The result is that the image will have more concentrated pixel areas and higher 
 It might be subtle, but notice how (B) appears more grayish than (C).
 This difference is much more noticeable on an actual, physical, low-res e-ink screen.
 
-Atkinson dithering isn't implemented in Pillow (yet), which only supports Floyd-Steinberg. Since the process involves many for-loops, Python isn't the most efficient choice for this task. However, by using Numba, we can speed things up and quickly get a working solution. As seen in:
+Atkinson dithering isn't implemented in Pillow (yet), which only supports Floyd-Steinberg. Since the process involves many for-loops, Python isn't the most efficient choice. However, using Numba (JIT), we can speed things up and quickly get a working solution. As seen in:
 
 <details markdown="1">
 <summary><b>Atkinson Dithering Python Implementations</b></summary>
@@ -365,16 +369,16 @@ The first iteration was done with a Raspberry Pi, but because it required a USB 
 Note that a white USB cable was used, and only one person ever noticed it. However, we knew it was there, and that was enough.
 But if you want live updates, like notifications, this is the option you want.
 
-The second option is using an ESP32 microprocessor, which can be battery-powered with no visible cords.
+The second option uses an ESP32 microprocessor, which can be battery-powered with no visible cords.
 
 ### Setting up Raspberry Pi API frame
 
-For the Raspberry Pi, the simplest setup would be to setup a FastAPI Python client to receive request and display them.
-We use an [Raspberry Pi Zero](https://www.raspberrypi.com/products/raspberry-pi-zero/) because of the small form-factor, to be hidden behind the frame.
-Waveshare provides quite good example codes for Python (And other implementations), and is easily the fastest way to get something shown on your screen.
+For the Raspberry Pi, the simplest setup would be to set up a FastAPI Python client to receive requests and display them.
+We use an [Raspberry Pi Zero](https://www.raspberrypi.com/products/raspberry-pi-zero/) because of the small form factor to be hidden behind the frame.
+Waveshare provides quite good example codes for Python (and other implementations) and is easily the fastest way to get something displayed on your screen.
 [github.com/waveshareteam/e-Paper](https://github.com/waveshareteam/e-Paper). 
 
-For the Raspberry Pi, [install Debian OS](https://www.raspberrypi.com/documentation/computers/getting-started.html) and `ssh` into the it. 
+For the Raspberry Pi, [install Debian OS](https://www.raspberrypi.com/documentation/computers/getting-started.html) and `ssh` into it. 
 
 <details markdown="1">
 <summary><b>Setting up Raspberry Pi</b></summary>
@@ -406,8 +410,8 @@ If you have a problem creating a `venv`, because of missing pip, you can;
     wget bootstrap.pypa.io/get-pip.py
     python get-pip.py
 
-With this setup, it should be pretty straightforward to set up a FastAPI solution.
-For inspiration, refer to Jimmy's github solution [github.com/charnley/eink_art_gallery](https://github.com/charnley/eink_art_gallery).
+With this setup, setting up a FastAPI solution to display images should be straightforward.
+For inspiration, you can refer to Jimmy's github solution [github.com/charnley/eink_art_gallery](https://github.com/charnley/eink_art_gallery).
 
 Note, because you need to start the API every time the Raspberry Pi is booted, it is worth setting up a `crontab -e` to start you service at boot
 
@@ -442,7 +446,7 @@ To connect the ESP32 to the [E-Paper Driver HAT](https://www.waveshare.com/wiki/
 | GND  | GND     | Ground |
 | VCC  | 3v3     | Power positive (3.3V power supply input) |
 
-The configuration that worked for us with the FireBettle2 ESP32-E and FireBettle2 ESP32-S3 boards is as follows (as defined by the ESPHome substitutions in the YAML file). Keep in mind that GPIO pins often have multiple names. To identify the physical GPIO pin on the ESP32, you'll need to consult the manufacturer’s documentation. In this case, FireBettle provides detailed wikis, which are great resources for getting the pin mappings correct.
+The configuration that worked for us with the FireBettle2 ESP32-E and FireBettle2 ESP32-S3 boards is as follows (as defined by the ESPHome substitutions in the YAML file). Keep in mind that GPIO pins often have multiple names. You'll need to consult the manufacturer's documentation to identify the physical GPIO pin on the ESP32. In this case, FireBettle provides detailed wikis, which are great resources for getting the pin mappings correct.
 
 The example below assumes you've set up an add-on/Docker service within Home Assistant. However, the URL can be anything accessible on your local network, as long as the payload is a PNG image with the correct resolution. For the 13.3" K model, the required resolution is 960x680 pixels.
 
