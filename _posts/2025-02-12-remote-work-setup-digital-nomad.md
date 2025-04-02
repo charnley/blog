@@ -9,6 +9,7 @@ Are you looking for a traveling office, working abroad, and digital nomad setup?
 As a weekend digital nomad, I have some recommendations for you.
 
 ![Home Ofice]({{ site.baseurl }}/assets/images/home_office.jpeg)
+
 ***Figure:** Home office with height-adjustable table*
 
 I want to optimize how I work when traveling,
@@ -18,9 +19,11 @@ This is a small guide on how I set up a to-go workstation.
 I hate working from my laptop only. My posture is shit, the screen feels claustrophobic, and the keyboard (especially Mac) feels terrible. So I need something portable to compete with my nice monitor-arm setup at home. The idea is to get a portable monitor and a tripod.
 
 ![Travel friendly setup, unpacked]({{ site.baseurl }}/assets/images/nomad_setup_filter.jpg)
+
 ***Figure:** Setup and productive. Ready to dive into the code. My work laptop is a Mac though.*
 
 ![Travel friendly setup, packed]({{ site.baseurl }}/assets/images/nomad_setup_packed_filter.jpg)
+
 ***Figure:** Setup is packed and ready to travel, for the next work-friendly adventure*
 
 Here's an interesting hack: I use the standard VESA mount on the back of my monitor to attach it to a tripod. After researching Reddit, I found the NEBULA tripod—typically used for holding projectors—provides excellent stability and sturdiness for this setup. To make the connection, I use a camera/tripod cheese plate with 75x75 M4 screws, which fits perfectly for mounting the monitor onto the tripod.
@@ -28,6 +31,7 @@ The M4 screws didn't fit perfectly, but adding a washer made everything tight an
 The trick was found here, by [user/arbitraryusername10](https://www.reddit.com/user/arbitraryusername10/).
 
 ![VESA Monitor mount to cheese board]({{ site.baseurl }}/assets/images/nomad_setup_monitor_filter.jpg)
+
 ***Figure:** Travel monitor attached to a cheese board, making it tripod friendly*
 
 ## Mouse and keyboard
