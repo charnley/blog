@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Building Your Own AI & E-Ink Powered Art Gallery: A Local DIY Guide"
-date:   2025-03-02
+date:   2025-05-02
 categories: AI art e-ink esp32 home-assistant
 author: Jimmy & Peter
 ---
