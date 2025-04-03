@@ -77,8 +77,7 @@ Specifiably, the items we got were:
 
 The estimated total cost per ESP32-based frame is around 180 EUR, excluding the cost of the physical frame. The e-ink display is the most expensive component.
 
-We chose ESP32 after browsing this list of compatible devices on PlatformIO.
-[registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0](https://registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0).
+We chose ESP32 after browsing [this list of compatible devices on PlatformIO](https://registry.platformio.org/platforms/platformio/espressif32/boards?version=5.3.0).
 The version is locked to 5.3.0 because, at the time of writing, ESPHome uses `platformio=5.3.0`.
 The key requirement is that the ESPHome [`online_image`](https://esphome.io/components/online_image.html) component needs PSRAM to download the PNG image over Wi-Fi.
 
