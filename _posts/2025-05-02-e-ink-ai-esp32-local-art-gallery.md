@@ -21,6 +21,25 @@ Each day brings a random and unique image to enjoy. Everything runs on our local
 
 **Figure a:** Art gallery with 5 e-ink screen synced with the same AI model and prompt. **Figure b:** The back side of the setup with ESP32 and battery.
 
+## Table of Contents
+- [Want to build your own?](#want-to-build-your-own-heres-how)
+- [Hardware Requirements](#hardware-requirements)
+- [Software/Service Overview](#softwareservice-overview)
+- [Why and what E-ink?](#why-and-what-e-ink)
+- [Hosting an AI art model](#hosting-an-ai-art-model)
+  - [Selecting an AI model](#selecting-an-ai-model)
+  - [Image Prompts for Best Results](#image-prompts-for-best-results)
+  - [Hosting Image Generator Service on Windows](#hosting-image-generator-service-on-windows)
+- [Dithering: Converting Grayscale Images to Black-and-White](#dithering-converting-grayscale-images-to-black-and-white)
+- [Displaying the image](#displaying-the-image)
+  - [Setting up Raspberry Pi API frame](#setting-up-raspberry-pi-api-frame)
+  - [Setting up ESPHome and ESP32 frame](#setting-up-esphome-and-esp32-frame)
+- [Battery choice](#battery-choice)
+- [Mounting on the frame](#mounting-on-the-frame)
+- [The result](#the-result)
+- [Note on the next version](#note-on-the-next-version)
+- [Thanks](#thanks)
+
 ### Want to build your own? Here’s how.
 If you’re aiming for wireless picture frames, the ESP32 chip is the way to go, though it does require some soldering.
 If you’d rather avoid the soldering, you can always use a Raspberry Pi Zero, leaving you with a cable coming out of your frame.
