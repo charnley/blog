@@ -14,6 +14,14 @@ categories: cv
 
  - Why cover letter?
 
+
+ - Easy to scan by recruiter, the will read a lot. For textblocks, highlight/bold keywords/phrases
+ - Use bullet points, easy to scan
+ - What did you do, what was the impact, how did you do?:
+     - Think if this bullet point is relevant to the job posting
+ - You don't need intro text, but if you do, make it clear how your CV is relevant to the job posting
+ - It is okay to have more than one page, but one page is better than two with filler
+
 Extra
 
  - Use overleaf
