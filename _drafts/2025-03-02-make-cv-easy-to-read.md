@@ -22,8 +22,10 @@ categories: cv
  - You don't need intro text, but if you do, make it clear how your CV is relevant to the job posting
  - It is okay to have more than one page, but one page is better than two with filler
 
+ - quantifying impact that is easy to digest
+
 Extra
 
- - Use overleaf
+ - Use overleaf or typst
 
 
