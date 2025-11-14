@@ -5,7 +5,7 @@ date:   2012-08-31
 categories: chemistry gamess
 ---
 
-> **_NOTE 2025 Feb:_** Disclaimer, this guide is very old and most likely setting up GAMESS is way easier.
+> **NOTE 2025 Feb:** Disclaimer, this guide is very old and most likely setting up GAMESS is way easier.
 
 Small guide on how to setup the QM software [GAMESS](http://www.msg.ameslab.gov/gamess/) on a normal Ubuntu computer and work in parallel with multiple nodes (via sockets).
 Loosely this is based on [this guide](http://molecularmodelingbasics.blogspot.dk/2010/08/compiling-gamess-on-linux-pc.html) on how to compile GAMESS.
@@ -168,38 +168,34 @@ Happy GAMESS'ing
 The original blogpost is very old, and moved from blogspot. It got some critique which will be included here
 
 
-> Always select "sockets" and never "MPI"!
-
-*Unknown 17 February 2014 at 09:21*
-
-> Actually, PBS does _not_ work out of the box because the defaults are some obscure and based on a computer cluster at ISU in Ames.
+> > Always select "sockets" and never "MPI"!
 >
-> You should change
-> 
-> if (`uname` == Linux) set NETEXT=".myri"
-> 
-> into
-> 
-> if (`uname` == Linux) set NETEXT=""
-> 
-> because you do most likely not have a myrinet network and similarly you should set the line
-> 
-> set spacer2=":netext="
-> 
-> to
-> 
-> set spacer2=""
-> 
-> That will make it run on PBS.
+> Unknown 17 February 2014 at 09:21
 
-*Unknown 17 February 2014 at 10:44*
+> > Actually, PBS does _not_ work out of the box because the defaults are some obscure and based on a computer cluster at ISU in Ames.
+> >
+> > You should change
+> > 
+> > if (`uname` == Linux) set NETEXT=".myri"
+> >
+> > into
+> >
+> > if (`uname` == Linux) set NETEXT=""
+> > 
+> > because you do most likely not have a myrinet network and similarly you should set the line
+> > 
+> > `set spacer2=":netext="` to `set spacer2=""`
+> > 
+> > That will make it run on PBS.
+> 
+> Unknown 17 February 2014 at 10:44
 
-> Actually, there is more:
-> 
-> 1) For an FMO calculation, the ridiculous amount of memory you have specified (5000 mega words = 40 GB) is a serious waste. Use something more like 256 (which is 2 GB) or even half of that. This memory will be allocated per core depending on your setup and the type of calculation you are running.
-> 
-> 2) if you are not going to make something other than having 10 groups (10 nodes) then it is a waste to actually have the NGRFMO(1)=10 specified. NGRFMO is used to control the number of groups specified for each part of a calculation and if you do not specify anything, then NGRFMO(1)=NGROUP.
-> 
-> 3) in general it is a bad idea to set USERSCRtoSCR when you are running on a cluster. There might be files you are interested in which will be lost when the queue-system cleans up after you.
-
-*Unknown17 February 2014 at 10:50*
+> > Actually, there is more:
+> > 
+> > 1) For an FMO calculation, the ridiculous amount of memory you have specified (5000 mega words = 40 GB) is a serious waste. Use something more like 256 (which is 2 GB) or even half of that. This memory will be allocated per core depending on your setup and the type of calculation you are running.
+> > 
+> > 2) if you are not going to make something other than having 10 groups (10 nodes) then it is a waste to actually have the NGRFMO(1)=10 specified. NGRFMO is used to control the number of groups specified for each part of a calculation and if you do not specify anything, then NGRFMO(1)=NGROUP.
+> > 
+> > 3) in general it is a bad idea to set USERSCRtoSCR when you are running on a cluster. There might be files you are interested in which will be lost when the queue-system cleans up after you.
+>
+> Unknown 17 February 2014 at 10:50
