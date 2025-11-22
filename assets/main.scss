@@ -101,7 +101,7 @@ body {
 
     border:0;
     border-left: 4px solid #1a8917;
-    background-color: #f8f8f8;
+    background-color: #f8f8f8 !important;
 
     code {
       background-color: transparent;
@@ -111,6 +111,12 @@ body {
       line-height: 1.45;
 
 
+      // Mermaid
+      svg {
+        display: block;
+        margin:0 auto;
+
+      }
 
     }
   }
