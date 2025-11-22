@@ -11,9 +11,9 @@ author: Jimmy & Peter
 We built an **e-ink picture frame** using an **ESP32** microprocessor that shows a new daily piece of artwork created by a **local AI diffusion model**.
 Each day brings a random and unique image to enjoy. Everything runs on our local network, keeping everything private and off the cloud. It’s simple to have dynamic, AI-generated art on your walls without compromising privacy. Plus, the whole setup fits into our Home Assistant smart home system, which handles the image server and keeps track of the ESP32s.
 
-![Showing the transition of E-ink screen]({{site.baseurl}}/assets/images/eink_art/video/output2.gif)
-
-**Figure:** The transition of e-ink screen, lasting around 3sec.
+![
+The transition of e-ink screen, lasting around 3sec
+]({{site.baseurl}}/assets/images/eink_art/video/output2.gif)
 
 | a | b |
 | --- | --- |
@@ -200,9 +200,10 @@ The most important one is that if you want the art to look good on a black-and-w
 
 For example, if you prompt for something like "adventurous sci-fi structure, forest, Swiss Alps," the diffusion model will likely default to a photorealistic style, which doesn’t translate well to e-ink. To get better results, you’ll need to add something like "pencil sketch" or "ink droplet style" to guide the model toward a look that fits the e-ink display. Anything related to drawing, painting, or sketching tends to work well.
 
-![Prompt results]({{site.baseurl}}/assets/images/eink_art/prompt_example.png)
+![
+Showing the results of prompting "winter forest in alps", without (a) and with (b) e-ink friendly keywords, and the results after dithering (c and d).
+]({{site.baseurl}}/assets/images/eink_art/prompt_example.png)
 
-**Figure:** Showing the results of prompting "winter forest in alps", without (a) and with (b) e-ink friendly keywords, and the results after dithering (c and d).
 
 Several style libraries are available for inspiration. We found [midlibrary.io](https://midlibrary.io/) to offer a great selection of styles and artists that work well, especially in the black-and-white section. Some styles are more ethical than others, but as a non-commercial home project, we leave you to draw your own lines in the sand.
 
@@ -325,9 +326,10 @@ $$
 
 The result is that the image will have more concentrated pixel areas and higher contrast. This is evident in the following comparison:
 
-![Dithering results]({{site.baseurl}}/assets/images/eink_art/dithering_example.png)
+![
+a) A grayscale image, b) dithering using Floyd-Steinberg, and c) using Atkinson Dithering.
+]({{site.baseurl}}/assets/images/eink_art/dithering_example.png)
 
-**Figure:** a) A grayscale image, b) dithering using Floyd-Steinberg, and c) using Atkinson Dithering.
 
 It might be subtle, but notice how (b) appears more grayish than (c).
 This difference is much more noticeable on an actual, physical, low-res e-ink screen.
@@ -830,17 +832,20 @@ Ultimately, we had to get a custom-cut passepartout, which could be expensive bu
 ## The result
 
 
-![]({{site.baseurl}}/assets/images/eink_art/photos/example_rpi_red.jpg)
+![
+Setup using Raspberry Pi (with power cable), and the black/white/red WaveShare e-ink screen.
+]({{site.baseurl}}/assets/images/eink_art/photos/example_rpi_red.jpg)
 
-**Figure:** Setup using Raspberry Pi (with power cable), and the black/white/red WaveShare e-ink screen.
 
-![]({{site.baseurl}}/assets/images/eink_art/photos/front_404.jpg)
+![
+Setup when the image queue is out of images.
+]({{site.baseurl}}/assets/images/eink_art/photos/front_404.jpg)
 
-**Figure:** Setup when the image queue is out of images.
 
-![]({{site.baseurl}}/assets/images/eink_art/photos/front_triple.jpg)
+![
+Setup of synced prompts.
+]({{site.baseurl}}/assets/images/eink_art/photos/front_triple.jpg)
 
-**Figure:** Setup of synced prompts.
 
 ## Note on the next version
 
