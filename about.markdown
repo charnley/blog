@@ -8,6 +8,6 @@ This blog will contain technical write-ups with very varying contents. We will t
 
 ## Authors
 
-- Jimmy github.com/charnley
-- Peter github.com/pgericson
+[Jimmy](https://jimmy.charnley.dk) [github.com/charnley](https://github.com/charnley)
+and Peter [github.com/pgericson](github.com/pgericson).
 
