@@ -8,7 +8,7 @@ categories: travel digitalnomad
 Are you looking for a traveling office, working abroad, and digital nomad setup?
 As a weekend digital nomad, I have some recommendations for you.
 
-![Home Ofice]({{ site.baseurl }}/assets/images/home_office.jpeg)
+![Home Ofice]({{ site.baseurl }}/assets/images/home_office.jpeg "Home office with height height-adjustable")
 
 ***Figure:** Home office with height-adjustable table*
 

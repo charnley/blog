@@ -1,11 +1,13 @@
 ---
 layout: page
-title: About
+title: Written by
 permalink: /about/
 ---
 
-Authors:
+This blog will contain technical write-ups with very varying contents. We will try to use tags/category as much as possible to avoid mixing everything up. Usually content is about some github project we made.
 
-- github.com/charnley
-- github.com/pgericson
+## Authors
+
+- Jimmy github.com/charnley
+- Peter github.com/pgericson
 
