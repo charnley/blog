@@ -405,27 +405,12 @@ figure {
   transition: all 0.2s ease;
 }
 
-// Responsive design
-/* @media screen and (max-width: 800px) { */
-/*   body { */
-/*     font-size: 18px; */
-/*   } */
-/*    */
-/*   .wrapper { */
-/*     padding: 0 15px; */
-/*   } */
-/*    */
-/*   .post-content { */
-/*     h1 { */
-/*       font-size: 2em; */
-/*     } */
-/*      */
-/*     h2 { */
-/*       font-size: 1.75em; */
-/*     } */
-/*      */
-/*     h3 { */
-/*       font-size: 1.4em; */
-/*     } */
-/*   } */
-/* } */
+
+// Highlight
+em,
+.highlight {
+  font-style: normal;
+  background-color: rgba(255, 255, 0, 0.3); /* soft yellow */
+  padding: 0.1em 0.2em; /* optional, makes it look like a highlighter stroke */
+  border-radius: 0.1em; /* slightly rounded edges */
+}
