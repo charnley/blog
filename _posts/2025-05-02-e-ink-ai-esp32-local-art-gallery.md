@@ -245,8 +245,9 @@ Here’s a setup guide to get started:
 <details markdown="1">
 <summary><b>Setup Linux subsystem linux with CUDA</b></summary>
 
-- Install CUDA on Windows (you probably already have that) [developer.nvidia.com/cuda-downloads](https://developer.nvidia.com/cuda-downloads)
-- Install WSL [learn.microsoft.com/en-us/windows/wsl/install](https://learn.microsoft.com/en-us/windows/wsl/install)
+Install CUDA on Windows (you probably already have that) [developer.nvidia.com/cuda-downloads](https://developer.nvidia.com/cuda-downloads)
+
+Install WSL [learn.microsoft.com/en-us/windows/wsl/install](https://learn.microsoft.com/en-us/windows/wsl/install)
 
 Open PowerShell or Windows Command Prompt in **administrator** mode and install wsl
 
