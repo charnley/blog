@@ -388,11 +388,12 @@ figure {
 .post-content p[data-alt]::after {
   content: attr(data-alt);
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: 0;
+  left: 0;
   background: rgba(0, 0, 0, 0.85);
   color: white;
   padding: 10px 15px;
+  margin:10px;
   border-radius: 4px;
   font-size: 0.85em;
   font-weight: 500;
