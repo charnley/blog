@@ -377,7 +377,7 @@ figure {
 // Image with alt text overlay
 .post-content p:has(img) {
   position: relative;
-  display: inline-block;
+  display: block;
 }
 
 .post-content p:has(img) img {
@@ -414,3 +414,18 @@ em {
   padding: 0.1em 0.2em; /* optional, makes it look like a highlighter stroke */
   border-radius: 0.1em; /* slightly rounded edges */
 }
+
+// Image groups
+// TODO Make sure the images height is the same per-row, or is vertically centered,
+// Otherwise it fucks with the p::after caption
+/*
+.caption-figure-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+}
+.caption-figure-group p {
+  margin: 0;
+  display:block;
+}
+*/

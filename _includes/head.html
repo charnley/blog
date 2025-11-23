@@ -12,13 +12,38 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css">
   <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
 
-  <!-- use img alt teksts as captions -->
   <script>
   document.addEventListener('DOMContentLoaded', () => {
+
+    // Image captions
     document.querySelectorAll('p img').forEach(img => {
       if (!img.alt || img.alt.trim() == '') return
       img.parentElement.setAttribute('data-alt', img.alt);
     });
+
+
+    // Group images
+    let group = null;
+
+    const ps = document.querySelectorAll("p[data-alt]").forEach(p => {
+
+      const next = p.nextElementSibling;
+
+      if (!group) {
+        group = document.createElement("div");
+
+        group.className = "caption-figure-group";
+        p.before(group);
+      }
+      group.appendChild(p);
+
+      if (!next || !next.matches("p[data-alt]")) {
+        group = null; // reset when sequence ends
+      }
+
+    });
+
+
   });
   </script>
 
