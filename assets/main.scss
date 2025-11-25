@@ -93,6 +93,24 @@ body {
 
   }
   
+  kbd {
+    display: inline-block;
+    padding: 0.3em 0.6em;
+    font-size: 0.8em;
+    font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+    line-height: 1;
+    color: #24292e;
+    background-color: #f6f8fa;
+    border: 1px solid #d0d7de;
+    border-bottom-color: #9ca3af;
+    border-radius: 6px;
+    box-shadow: inset 0 -1px 0 #9ca3af;
+    text-align: center;
+    cursor: default;
+    transition: all 0.1s ease;
+  
+  }
+  
   pre {
     border-radius: 0px;
     padding: 16px;
