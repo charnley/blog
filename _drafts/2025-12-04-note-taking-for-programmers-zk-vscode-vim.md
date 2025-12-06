@@ -38,7 +38,7 @@ So I switched to something extremely simple:
 A daily file for meeting notes, tasks, and whatever pops up.
 But, when I switch context $$5\cdot10^6$$ times a day, the daily file became pretty chaotic.
 
-Sönke Ahrens says in How to Take Smart Notes:
+Sönke Ahrens says in his book "How to Take Smart Notes":
 
 > We get distracted by open tasks, not finished tasks.
 > Convince your brain it will be taken care of by writing it down.
@@ -74,7 +74,8 @@ Again, the book above will go deep into the cult... sorry, I mean the details of
 
 Unlike Obsidian, `zk` is a much more light-weight and practical tool.
 The only role it has is to index and search, then the result can be opened in your code editor.
-Because it is a CLI tool, you can very easily customize the workflow with standard GNU tools.
+Because it is a CLI tool, you can very easily customize the workflow with standard GNU tools,
+and [terminal fuzzy-finding](https://github.com/junegunn/fzf) and [ripgrep](https://github.com/BurntSushi/ripgrep).
 I really enjoy building custom commands that work exactly for me.
 For example using GNU `date` you can use releative dates to access todo list for other days.
 
@@ -95,18 +96,19 @@ I know I worked with this before!
 
 ### I don't want to use vim!
 
-Sorry to hear that, but, that is perfectly fine.
+Sorry to hear that, have you heard of [Neovim](https://github.com/neovim/neovim) but, that is perfectly fine.
 The approach is editor agnostic, as `zk` is used to index and search your notes,
 it has nothing to do with the editor.
+`zk` has really good seperation of concern in this regard.
 
 ![
 VSCode using zk in the terminal to search notes
 ]({{site.baseurl}}/assets/images/about_zk/vscode_and_zk_resize.png)
 
-They setup works really great with VSCode as well.
-Just configure `editor = "code -r"`.
+If you are stuck on Microsoft and using VSCode, `zk` works really well with the editor terminal.
+Just configure `editor = "code -r"` as part of the `zk` `config.toml`, and when you select/create new notes they will be open straight in VSCode.
 
-## How I use it at `zk` work
+## How I use `zk` at work
 
 My notes is a folder full of Markdown files that I could be storing on OneDrive,
 but I still like to have the history tracking of my notes, so in the end I use Git to manage my notes, and using OneDrive as a "remote" for backup.
@@ -240,123 +242,115 @@ A template would look something like this
 <details markdown="1">
 <summary><b>default_template.md</b></summary>
 
-```markdown
----
-date: {{ format-date now 'long' }}
-title: {{ title }}
-tags: [Untitled]
----
+    ---
+    date: {{ format-date now 'long' }}
+    title: {{ title }}
+    tags: [Untitled]
+    ---
 
-# Untitled
+    # Untitled
 
-- Untitled
-```
+    - Untitled
 
 </details>
 
 Why have "Untitled" in my template?
 Because I sat op my editor [Neovim](https://github.com/neovim/neovim) to jump through "Untitled"
-so I can quickly <kbd>c</kbd><kbd>w</kbd> (change word).
-
+so I can quickly <kbd>n</kbd><kbd>c</kbd><kbd>w</kbd> (next match, change word).
 
 <details markdown="1">
 <summary><b>config.toml</b></summary>
 
-```toml
-[note]
-language = "en"
-default-title = "Untitled"
-filename = "{{format-date now '%Y-%m-%d'}}-{{id}}"
-extension = "md"
-template = "default.md"
-id-charset = "alphanum"
-id-length = 8
-id-case = "lower"
+    [note]
+    language = "en"
+    default-title = "Untitled"
+    filename = "{{format-date now '%Y-%m-%d'}}-{{id}}"
+    extension = "md"
+    template = "default.md"
+    id-charset = "alphanum"
+    id-length = 8
+    id-case = "lower"
 
-[group]
+    [group]
 
-[group.todo]
-paths = ["todo"]
+    [group.todo]
+    paths = ["todo"]
 
-[group.todo.note]
-filename = "{{format-date now '%Y-%m-%d'}}"
-extension = "md"
-template = "todo.md"
+    [group.todo.note]
+    filename = "{{format-date now '%Y-%m-%d'}}"
+    extension = "md"
+    template = "todo.md"
 
-[group.meeting]
-paths = ["meetings"]
+    [group.meeting]
+    paths = ["meetings"]
 
-[group.meeting.note]
-filename = "{{format-date now '%Y-%m-%d-%H%M'}}-{{id}}"
-extension = "md"
-template = "meeting.md"
+    [group.meeting.note]
+    filename = "{{format-date now '%Y-%m-%d-%H%M'}}-{{id}}"
+    extension = "md"
+    template = "meeting.md"
 
-[format.markdown]
-hashtags = true
+    [format.markdown]
+    hashtags = true
 
-[tool]
-editor = "vim -c \"silent! /Untitled\" -c 'call search(\"Untitled\")' "
-pager = "less -FIRX"
-fzf-preview = "bat -p --color always {-1}"
-fzf-options = "--multi --tiebreak begin --exact --tabstop 4 --height 100% --no-hscroll --color hl:-1,hl+:-1 --preview-window wrap"
+    [tool]
+    editor = "vim -c \"silent! /Untitled\" -c 'call search(\"Untitled\")' "
+    pager = "less -FIRX"
+    fzf-preview = "bat -p --color always {-1}"
+    fzf-options = "--multi --tiebreak begin --exact --tabstop 4 --height 100% --no-hscroll --color hl:-1,hl+:-1 --preview-window wrap"
 
-[alias]
+    [alias]
 
 # Create new note, from templates
-n = 'zk new'
-today = 'zk new --group todo --no-input "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
-meeting = 'zk new --group meeting'
-m = 'zk meeting'
+    n = 'zk new'
+    today = 'zk new --group todo --no-input "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
+    meeting = 'zk new --group meeting'
+    m = 'zk meeting'
 
 # Usage:
 # - zk todo next friday
 # - zk todo tomorrow
 # - zk todo yesterday
-todo = 'zk new --group todo --no-input --date "$(date -d "$*" +%Y-%m-%d)" "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
+    todo = 'zk new --group todo --no-input --date "$(date -d "$*" +%Y-%m-%d)" "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
 
 # Find and edit
-last = "zk edit --limit 1 --sort modified- $argv"
-recent = "zk edit --sort created- --created-after 'last 7 days' --interactive"
-recent-month = "zk edit --sort created- --created-after 'last 30 days' --interactive"
-ls = "zk edit --interactive --sort created"
-t = "zk edit --interactive --tag $(zk tag --quiet | fzf | awk '{print $1}')"
-ta = "zk edit --tag $(zk tag --quiet | fzf | awk '{print $1}')"
+    last = "zk edit --limit 1 --sort modified- $argv"
+    recent = "zk edit --sort created- --created-after 'last 7 days' --interactive"
+    recent-month = "zk edit --sort created- --created-after 'last 30 days' --interactive"
+    ls = "zk edit --interactive --sort created"
+    t = "zk edit --interactive --tag $(zk tag --quiet | fzf | awk '{print $1}')"
+    ta = "zk edit --tag $(zk tag --quiet | fzf | awk '{print $1}')"
 
 # Manage the notes
-update = "cd $ZK_NOTEBOOK_DIR; git add -A; git commit -am 'updating'; git pull; git push; cd -"
-clean = "zk-clean"
-clean-dry = "zk-clean --dry-run"
-sync = "zk update && zk index"
+    update = "cd $ZK_NOTEBOOK_DIR; git add -A; git commit -am 'updating'; git pull; git push; cd -"
+    clean = "zk-clean"
+    clean-dry = "zk-clean --dry-run"
+    sync = "zk update && zk index"
 
 # Find all unresolved tasks within a zk tag
-open-tasks = "cd $ZK_NOTEBOOK_DIR; zk list --tag $(zk tag --quiet | fzf | awk '{print $1}') --format {{path}} --quiet | xargs rg --no-heading --with-filename -F '[ ]'"
-
-```
+    open-tasks = "cd $ZK_NOTEBOOK_DIR; zk list --tag $(zk tag --quiet | fzf | awk '{print $1}') --format {{path}} --quiet | xargs rg --no-heading --with-filename -F '[ ]'"
 
 </details>
 
 Noteable the alias I've setup are
 
-```toml
-# Use GNU date to interpret releative dates for todo lists. For example
-# - zk todo
-# - zk todo tomorrow
-# - zk todo yesterday
-# - zk todo next friday
-# - zk todo 3 months 1 day
-# - zk todo 25 dec
-todo = 'zk new --group todo --no-input --date "$(date -d "$*" +%Y-%m-%d)" "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
-
-# Use fzf to interactively choose the tag I then want to search in
-t = "zk edit --interactive --tag $(zk tag --quiet | fzf | awk '{print $1}')"
-
-# Use git to pull and push, then re-index the zk database
-update = "cd $ZK_NOTEBOOK_DIR; git add -A; git commit -am 'updating'; git pull; git push"
-sync = "zk update && zk index"
-
-# Find all unresolved Markdown tasks within a zk tag, with fzf and ripgrep
-open-tasks = "cd $ZK_NOTEBOOK_DIR; zk list --tag $(zk tag --quiet | fzf | awk '{print $1}') --format {{path}} --quiet | xargs rg --no-heading --with-filename -F '[ ]'"
-```
+    # Use GNU date to interpret releative dates for todo lists. For example
+    # - zk todo
+    # - zk todo tomorrow
+    # - zk todo yesterday
+    # - zk todo next friday
+    # - zk todo 3 months 1 day
+    # - zk todo 25 dec
+    todo = 'zk new --group todo --no-input --date "$(date -d "$*" +%Y-%m-%d)" "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
+    
+    # Use fzf to interactively choose the tag I then want to search in
+    t = "zk edit --interactive --tag $(zk tag --quiet | fzf | awk '{print $1}')"
+    
+    # Use git to pull and push, then re-index the zk database
+    update = "cd $ZK_NOTEBOOK_DIR; git add -A; git commit -am 'updating'; git pull; git push"
+    sync = "zk update && zk index"
+    
+    # Find all unresolved Markdown tasks within a zk tag, with fzf and ripgrep
+    open-tasks = "cd $ZK_NOTEBOOK_DIR; zk list --tag $(zk tag --quiet | fzf | awk '{print $1}') --format {{path}} --quiet | xargs rg --no-heading --with-filename -F '[ ]'"
 
 ## Mobile Compatiable Setup
 
@@ -369,7 +363,7 @@ for a nice search and markdown app, and `GitSync` to sync your private git repo 
 
 For Obsidian Mobile configuration, ensure that "daily" format is the same as with `zk`.
 
-    Settings -> Dailt notes
+    Settings -> Daily notes
     - Change Date format
     - Change "new file locaiton"
     - Check "Open daily note on startup"
