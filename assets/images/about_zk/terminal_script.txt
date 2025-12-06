@@ -1,0 +1,9 @@
+
+clear
+todo today, make terminal gif
+find snippet
+find project
+find recipe
+todo today - mark done
+todo tomorrow
+
