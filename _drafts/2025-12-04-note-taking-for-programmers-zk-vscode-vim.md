@@ -108,6 +108,9 @@ Just configure `editor = "code -r"`.
 
 ## How I use it at `zk` work
 
+My notes is a folder full of Markdown files that I could be storing on OneDrive,
+but I still like to have the history tracking of my notes, so in the end I use Git to manage my notes, and using OneDrive as a "remote" for backup.
+
 ```mermaid
 
 %%{init: {
@@ -129,26 +132,18 @@ flowchart LR
 
 ```
 
+In practise, I 
 
-daily todo
-meeting notes
-- open tasks
+- Set my daily todo list to try to keep me focused
+- Use meeting template, keeping track who was there and what actionable follow is needed
+- Tag everything so I can quickly find a meeting / topic
+- Search for open Markdown tasks `[ ]`, per tag to know if items are forgotten
+- I keep lists of different internal wiki/forum links with my notes, as it is easier to find than a linear bookmark system
+- I keep snippets of how to use our internal infrastructure
 
-tags
-
-used claude sonnet to clean my notes:
-    - or summarize a transcript
-
-sync to onedrive
-
-links
-work examples
-
-confluence guides
-
-snippets
-
-
+Since I am at work I don't mind the licensed AI models are reading my stuff,
+I can copy-paste the transcript from meetings and use Sonnet to re-write it into Markdown and find follow-ups.
+Obviously I use [sst OpenCode](https://github.com/sst/opencode) for my agentic AI work, which works well with our company licensed mondels.
 
 ## How I use `zk` privately
 
@@ -197,17 +192,11 @@ flowchart LR
 
 ```
 
-- capture notes
-- recipies:
-    - I find recipies on my computer and make it into a shopping list
-- project todos
-- collect thoughts
+Having all my notes in one setup, it makes it really easy to navigate my projects/private projects.
+I'm in the supermarket and I need the grocery list for Lasagne? Pow, just load it on my phone.
 
-daily todo
-
-> I'm in bed, I have an idea/see something I should research
-
-
+Overall I really enjoy the connectivity between having searchable indexed notes between my desktop computer, laptop and phone.
+It feels like I can continue whatever I am doing, whenever.
 
 ## Setup, installation and configuration
 
@@ -258,10 +247,9 @@ tags: [Untitled]
 
 </details>
 
-Example 
-config link
-
-why untitled?
+Why have "Untitled" in my template?
+Because I sat op my editor [Neovim](https://github.com/neovim/neovim) to jump through "Untitled"
+so I can quickly <kbd>c</kbd><kbd>w</kbd> (change word).
 
 
 <details markdown="1">
@@ -340,10 +328,6 @@ open-tasks = "cd $ZK_NOTEBOOK_DIR; zk list --tag $(zk tag --quiet | fzf | awk '{
 
 </details>
 
-Note, if you want to use VSCode, you just need to set the configration to
-
-    editor = "code -r"
-
 Noteable the alias I've setup are
 
 ```toml
@@ -367,16 +351,23 @@ sync = "zk update && zk index"
 open-tasks = "cd $ZK_NOTEBOOK_DIR; zk list --tag $(zk tag --quiet | fzf | awk '{print $1}') --format {{path}} --quiet | xargs rg --no-heading --with-filename -F '[ ]'"
 ```
 
-## Setup Compatiable Mobile
+## Mobile Compatiable Setup
 
-Compatible
+On your mobile install
 
-- daily note -> todo format
-- automat open
-- search
+- [obsidian.md/mobile](https://obsidian.md/mobile)
+- [gitsync.viscouspotenti.al](https://gitsync.viscouspotenti.al/)
 
-> We might solve a crucial problem while doing the groceries.
+for a nice search and markdown app, and `GitSync` to sync your private git repo to your phone.
 
+For Obsidian Mobile configuration, ensure that "daily" format is the same as with `zk`.
+
+    Settings -> Dailt notes
+    - Change Date format
+    - Change "new file locaiton"
+    - Check "Open daily note on startup"
+
+Tag and search will work out of the box. 
 
 ## Conclusion
 
@@ -392,6 +383,3 @@ Thanks to Kristoffer for proofreading again.
 - [Obsidian](https://obsidian.md/) - Overkill Zettlekasten-based not taking application
 - [ViscousPot/GitSync](https://github.com/ViscousPot/GitSync) - Sync git repos on your phone
 - [en.wikipedia.org/wiki/Cognitive_load](https://en.wikipedia.org/wiki/Cognitive_load) - Cognitive offloading
-
-
-https://help.obsidian.md/plugins/graph
