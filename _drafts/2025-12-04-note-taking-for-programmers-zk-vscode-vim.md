@@ -387,6 +387,6 @@ Thanks to Kristoffer for proofreading again.
 
 - [github.com/charnley/dotfiles](https://github.com/charnley/dotfiles) - my dotfile configuration
 - [github.com/zk-org/zk.git](https://github.com/zk-org/zk.git) - the main CLI tool to search and index your notes
-- [Obsidian](https://obsidian.md/) - Overkill Zettlekasten-based not taking application
+- [Obsidian](https://obsidian.md/) - Overkill Zettlekasten-based note taking application
 - [ViscousPot/GitSync](https://github.com/ViscousPot/GitSync) - Sync git repos on your phone
 - [en.wikipedia.org/wiki/Cognitive_load](https://en.wikipedia.org/wiki/Cognitive_load) - Cognitive offloading
