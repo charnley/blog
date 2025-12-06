@@ -48,6 +48,7 @@ otherwise… a bit too much.
 But a main point is; use cognitive offloading by writing down your thoughts/todo in a note,
 if you can easily find it again.
 Writing things down frees your brain to work on current task.
+Like when you write things down on sticky notes.
 
 My requirements ended up being simple:
 
@@ -56,27 +57,39 @@ My requirements ended up being simple:
 - Writing a new note for a new context should be fast.
 - Searching and finding notes should feel instant.
 
-## The solution you are looking for is `zk`
+## The solution you are looking for is "zk"
 
 Obviously the solution is, take notes.
+This year I found [zk](https://github.com/zk-org/zk.git),
+and it was exactly what I was looking for.
+A **terminal tool for indexing and searching Markdown files**.
 Having a quick way to write down thoughts/tasks tricks your mind that it will be done later and makes it easier to focus on current task.
-Like when you write things down on sticky notes.
-
-In practise, this year I found [zk](https://github.com/zk-org/zk.git),
-a **terminal tool for indexing and searching Markdown files**.
 
 ![
-]({{site.baseurl}}/assets/images/about_zk/render1765017981323.gif)
+]({{site.baseurl}}/assets/images/about_zk/zk_demo.gif)
 
 Like Obsidian, it is based around [Zettlekasten](https://en.wikipedia.org/wiki/Zettelkasten),
 a note-taking system around making many connected notes.
 Again, the book above will go deep into the cult... sorry, I mean the details of the system.
+
 Unlike Obsidian, `zk` is a much more light-weight and practical tool.
+The only role it has is to index and search, then the result can be opened in your code editor.
 Because it is a CLI tool, you can very easily customize the workflow with standard GNU tools.
+I really enjoy building custom commands that work exactly for me.
+For example using GNU `date` you can use releative dates to access todo list for other days.
 
-externalizing tasks to calm your mental load
+```toml
+todo = 'zk new --group todo --no-input --date "$(date -d "$*" +%Y-%m-%d)" "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
+```
 
-Actually, I get annoyed I didn't start earlier because I remember I worked on something else
+```bash
+zk todo # open today's todo-list
+zk todo tomorrow # open tomorrows todo-list
+zk todo next monday
+zk todo yesterday
+```
+
+For the last months working with `zk` I got annoyed I didn't start earlier because I remember I worked on something else
 years ago, but don't remember the details. Where is my notes??
 I know I worked with this before!
 
@@ -270,10 +283,10 @@ id-case = "lower"
 [group.todo]
 paths = ["todo"]
 
-[group.today.note]
+[group.todo.note]
 filename = "{{format-date now '%Y-%m-%d'}}"
 extension = "md"
-template = "daily.md"
+template = "todo.md"
 
 [group.meeting]
 paths = ["meetings"]
@@ -304,7 +317,7 @@ m = 'zk meeting'
 # - zk todo next friday
 # - zk todo tomorrow
 # - zk todo yesterday
-todo = 'zk new --group today --no-input --date "$(date -d "$*" +%Y-%m-%d)" "$ZK_NOTEBOOK_DIR/todo" --template daily.md'
+todo = 'zk new --group todo --no-input --date "$(date -d "$*" +%Y-%m-%d)" "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
 
 # Find and edit
 last = "zk edit --limit 1 --sort modified- $argv"
@@ -341,7 +354,7 @@ Noteable the alias I've setup are
 # - zk todo next friday
 # - zk todo 3 months 1 day
 # - zk todo 25 dec
-todo = 'zk new --group today --no-input --date "$(date -d "$*" +%Y-%m-%d)" "$ZK_NOTEBOOK_DIR/todo" --template daily.md'
+todo = 'zk new --group todo --no-input --date "$(date -d "$*" +%Y-%m-%d)" "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
 
 # Use fzf to interactively choose the tag I then want to search in
 t = "zk edit --interactive --tag $(zk tag --quiet | fzf | awk '{print $1}')"
