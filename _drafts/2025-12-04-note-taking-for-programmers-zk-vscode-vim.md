@@ -13,49 +13,48 @@ categories: notes, programming
 <!-- ## Context switching is productivity killer -->
 ## Context switching is your problem
 
-Going from meeting to meeting, problem to problem, digitial fire to digital fire made me forget things.
-I need some outlet to focus my thoughts, tasks and lessons.
-I need to search them and find "that one meeting I had last month".
+In my job, I constantly jump between meetings, problems, and digital fires—all while trying to keep everything under control.
+Privately, I’ve always had way too many open projects.
 
-Every time you jump between tasks, projects, or random ideas, your brain has to reload whatever you were doing before—and it never loads as fast as you want.
-You end up feeling busy but not actually getting anywhere.
-Half the stress comes from trying to remember where you left off.
-Without a simple way to dump your thoughts and pick them up later, context switching just turns your day into a messy pile of half-finished tabs—both in your browser and in your brain.
+My brain never seems to reload the last task fast enough, and half the stress comes from trying to remember where I left off.
+**If you feel a little “ADHD-ish” at work, maybe it’s not you.
+Perhaps you need better notes. Or a better note system!**
 
-If you feel ADHD-like at work, maybe you just need better notes?
+For a while, I tried solving this with tools:
 
-Privately I used;
-
-- Trello for recipes and daily todo
+- Trello for recipes and daily todos
 - Notion for project notes
-- Sending myself an email with a link I need to check out later
+- Emailing myself links to “read later”
+- Using [Outlook "To Do"](https://to-do.office.com/tasks/) at work
 
-At work I used
+None of it felt good.
+I don’t want a whole application to manage notes or todos.
+I don’t need backlinks or [graphs of my notes](https://help.obsidian.md/plugins/graph).
+I need something fast, searchable, and in the text/code editor I am already using.
+Hence, not [Obsidian](https://obsidian.md/).
 
-- Outlook To Do
+So I switched to something extremely simple:
+`vim ~/todo/$(date +%Y-%m-%d).md`.
+A daily file for meeting notes, tasks, and whatever pops up.
+But, when I switch context $$5\cdot10^6$$ times a day, the daily file became pretty chaotic.
 
-They didn't feel good.
-The same way I didn't start using [Obsidian](https://obsidian.md/),
-I don't want to have a extra application open jus to manage my notes.
-Also, I don't need a graph 
+Sönke Ahrens says in How to Take Smart Notes:
 
-So I started using `vim todo/$(date +%Y-%m-%d).md` at work for a place to write meeting notes and todos.
+> We get distracted by open tasks, not finished tasks.
+> Convince your brain it will be taken care of by writing it down.
 
-<!-- (Notion, Trello, Obsidian, Google Docs — great tools used the wrong way) -->
-<!-- (Why context switching is killing your productivity, focus, and memory) -->
+The book is great if you enjoy deconstructing the question "What is a note?",
+otherwise… a bit too much.
+But a main point is; use cognitive offloading by writing down your thoughts/todo in a note,
+if you can easily find it again.
+Writing things down frees your brain to work on current task.
 
+My requirements ended up being simple:
 
-Why not use Obsidian?
-I don't need a graph showing my notes, I need a easy fuzzy-find setup that integrates to my editor.
-
-- I have this one idea, but I don't want to ruin my current flow
-- I am in bed/flight and I have this idea
-- Search your recipies, on your phone, in the super market
-
-> "We easily get distracted by open tasks, not finished tasks.
-> Convince our brain that it will be taken care of, by write it down.
-> Calms the brain." - Sönke Ahrens (How to Take Smart Notes)
-
+- Not another app hanging around.
+- Editing notes should happen in my favourite editor.
+- Writing a new note for a new context should be fast.
+- Searching and finding notes should feel instant.
 
 ## The solution you are looking for is `zk`
 
@@ -63,39 +62,23 @@ Obviously the solution is, take notes.
 Having a quick way to write down thoughts/tasks tricks your mind that it will be done later and makes it easier to focus on current task.
 Like when you write things down on sticky notes.
 
-TODO Introduce zk
+In practise, this year I found [zk](https://github.com/zk-org/zk.git),
+a **terminal tool for indexing and searching Markdown files**.
 
 ![
 ]({{site.baseurl}}/assets/images/about_zk/render1765017981323.gif)
 
-<!-- The Psychology: Why Writing Things Down Frees Your Brain -->
-<!-- (From the podcast — externalizing tasks to calm your mental load) -->
-
-TODO Explain zk
-
-TODO Zettlekasten
-
-TODO cognitive offloading
-
-TODO Book mention
-
-If you want to really go desconstrictionist, you can read "How to Take Smart Notes" by Sönke Ahrens,
-but, I really don't recommend the book.
-It is only for people who wants to ask the question "What IS a note?".
-
-    By writing it down, we get it out of our head
-    Don't let your brain get occupied by all the little stuff. 
-    We cannot fix everything RIGHT NOW.
-    Write so it is easy to pick up the task later 
-    Still in the inbox. Check your daily inbox of tasks. Stay focused
+Like Obsidian, it is based around [Zettlekasten](https://en.wikipedia.org/wiki/Zettelkasten),
+a note-taking system around making many connected notes.
+Again, the book above will go deep into the cult... sorry, I mean the details of the system.
+Unlike Obsidian, `zk` is a much more light-weight and practical tool.
+Because it is a CLI tool, you can very easily customize the workflow with standard GNU tools.
 
 externalizing tasks to calm your mental load
 
 Actually, I get annoyed I didn't start earlier because I remember I worked on something else
 years ago, but don't remember the details. Where is my notes??
 I know I worked with this before!
-
-TODO ZK is editor agnostic, and works great with VSCode
 
 ### I don't want to use vim!
 
@@ -387,12 +370,15 @@ Compatible
 Just do it.
 Setup `zk` for a folder of Markdown files, and use your favourite code editor to continue to write notes.
 
-## Thanks
-
-To Kristoffer for proofreading again.
+Thanks to Kristoffer for proofreading again.
 
 ## References
 
 - [github.com/charnley/dotfiles](https://github.com/charnley/dotfiles) - my dotfile configuration
 - [github.com/zk-org/zk.git](https://github.com/zk-org/zk.git) - the main CLI tool to search and index your notes
+- [Obsidian](https://obsidian.md/) - Overkill Zettlekasten-based not taking application
+- [ViscousPot/GitSync](https://github.com/ViscousPot/GitSync) - Sync git repos on your phone
+- [en.wikipedia.org/wiki/Cognitive_load](https://en.wikipedia.org/wiki/Cognitive_load) - Cognitive offloading
 
+
+https://help.obsidian.md/plugins/graph
