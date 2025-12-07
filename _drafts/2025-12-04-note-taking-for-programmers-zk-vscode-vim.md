@@ -5,27 +5,29 @@ date: 2025-12-04
 categories: notes, programming
 ---
 
-> tl;dr. My pitch is,
-> you anyway write your notes in Markdown `.md` files,
-> why not index and search them with [zk-org](https://github.com/zk-org/zk)?
-> And yes, the setup is editor agnostic.
+tl;dr. My pitch is,
+you anyway write your notes in Markdown-like text files;
+why not index and search them with [zk-org](https://github.com/zk-org/zk)?
+And yes, although I use Neovim, the setup is editor agnostic.
+This is not overkill, a hill I will die on.
 
 <!-- ## Context switching is productivity killer -->
 ## Context switching is your problem
 
-In my job, I constantly jump between meetings, problems, and digital fires—all while trying to keep everything under control.
+In my job, I constantly jump between meetings, problems, and digital fires—all while trying to keeping a strategic overview.
 Privately, I’ve always had way too many open projects.
+Some time it is hard to remember all the details.
 
 My brain never seems to reload the last task fast enough, and half the stress comes from trying to remember where I left off.
 **If you feel a little “ADHD-ish” at work, maybe it’s not you.
-Perhaps you need better notes. Or a better note system!**
+Perhaps you need better notes and a better note system!**
 
-For a while, I tried solving this with tools:
+For a while, I tried solving this with tools like;
 
-- Trello for recipes and daily todos
-- Notion for project notes
-- Emailing myself links to “read later”
-- Using [Outlook "To Do"](https://to-do.office.com/tasks/) at work
+- **Trello** for recipes and daily todos
+- **Notion** for project notes
+- Emailing myself links to “read later” using inbox as a todo list
+- and using [Outlook "To Do"](https://to-do.office.com/tasks/) at work
 
 None of it felt good.
 I don’t want a whole application to manage notes or todos.
@@ -45,35 +47,60 @@ Sönke Ahrens says in his book "How to Take Smart Notes":
 
 The book is great if you enjoy deconstructing the question "What is a note?",
 otherwise… a bit too much.
-But a main point is; use cognitive offloading by writing down your thoughts/todo in a note,
-if you can easily find it again.
+But a main point is; **use cognitive offloading by writing down your thoughts/todo note**,
+so **you can easily find it again**.
 Writing things down frees your brain to work on current task.
 Like when you write things down on sticky notes.
+The key point to a good note taking setup is easy to write,
+but **easy to find again**.
+If you cannot find your note again, what is the point, and you won't convince your brain to let go.
 
 My requirements ended up being simple:
 
 - Not another app hanging around.
-- Editing notes should happen in my favourite editor.
-- Writing a new note for a new context should be fast.
+- Editing notes should happen in my favourite code/text editor.
+- Creating a new note/meeting should feel instant.
 - Searching and finding notes should feel instant.
 
 ## The solution you are looking for is "zk"
 
 Obviously the solution is, take notes.
-This year I found [zk](https://github.com/zk-org/zk.git),
+Practically, this year I found **[zk](https://github.com/zk-org/zk.git)**,
 and it was exactly what I was looking for.
-A **terminal tool for indexing and searching Markdown files**.
+**A terminal tool for indexing and searching Markdown files**.
 Having a quick way to write down thoughts/tasks tricks your mind that it will be done later and makes it easier to focus on current task.
 
 ![
 ]({{site.baseurl}}/assets/images/about_zk/zk_demo.gif)
 
-Like Obsidian, it is based around [Zettlekasten](https://en.wikipedia.org/wiki/Zettelkasten),
-a note-taking system around making many connected notes.
+Like Obsidian, it is based around [Zettlekasten](https://en.wikipedia.org/wiki/Zettelkasten) concept,
+a note-taking system/philosophy.
 Again, the book above will go deep into the cult... sorry, I mean the details of the system.
 
+
+In practise my Markdown notes looks like the follow structure, with date, title, tags, content and open tasks.
+
+```markdown
+---
+date: December 05, 2025
+title: Title of my note
+tags: [tag1,tag2,tag3]
+---
+
+Kristoffer, Kim, Jimmy
+
+- This is an example note.
+- Maybe a meeting? Maybe a project?
+
+- [ ] This is an example of a open task
+- [x] This is an example of a close task
+```
+
+All the content is the indexed by `zk` and put in a `.sqlite` database in your note folder.
+I include the name of the people in the meetings so I can easily search for it. 
 Unlike Obsidian, `zk` is a much more light-weight and practical tool.
-The only role it has is to index and search, then the result can be opened in your code editor.
+The only role is to index and search, then the result can be opened in your code editor.
+
 Because it is a CLI tool, you can very easily customize the workflow with standard GNU tools,
 and [terminal fuzzy-finding](https://github.com/junegunn/fzf) and [ripgrep](https://github.com/BurntSushi/ripgrep).
 I really enjoy building custom commands that work exactly for me.
@@ -96,7 +123,7 @@ I know I worked with this before!
 
 ### I don't want to use vim!
 
-Sorry to hear that, have you heard of [Neovim](https://github.com/neovim/neovim) but, that is perfectly fine.
+Sorry to hear that, have you heard of [Neovim](https://github.com/neovim/neovim)? But, that is perfectly fine.
 The approach is editor agnostic, as `zk` is used to index and search your notes,
 it has nothing to do with the editor.
 `zk` has really good seperation of concern in this regard.
@@ -148,7 +175,8 @@ In practise, I
 
 Since I am at work I don't mind the licensed AI models are reading my stuff,
 I can copy-paste the transcript from meetings and use Sonnet to re-write it into Markdown and find follow-ups.
-Obviously I use [sst OpenCode](https://github.com/sst/opencode) for my agentic AI work, which works well with our company licensed mondels.
+Obviously I use [sst OpenCode](https://github.com/sst/opencode) for my agentic AI work, which works well with our company licensed models,
+and fit my `tmux`-based work flow.
 
 ## How I use `zk` privately
 
@@ -209,9 +237,10 @@ It feels like I can continue whatever I am doing, whenever.
 
 ## Setup, installation and configuration
 
+Sold on the idea?
 Following
 [zk-org.github.io/zk](https://zk-org.github.io/zk/)
-easy setup `zk`.
+we can easily set up `zk`.
 You can compile it by clone and `make`-ing it, with [go](https://go.dev).
 
     cd $HOME/opt/
@@ -220,7 +249,7 @@ You can compile it by clone and `make`-ing it, with [go](https://go.dev).
     make build
     ln -s $HOME/opt/zk.git/zk $HOME/bin/zk
 
-or if you are on a Mac, you can;
+or if you are on a Mac, you can simply;
 
     brew install zk
 
@@ -257,6 +286,8 @@ A template would look something like this
 Why have "Untitled" in my template?
 Because I sat op my editor [Neovim](https://github.com/neovim/neovim) to jump through "Untitled"
 so I can quickly <kbd>n</kbd><kbd>c</kbd><kbd>w</kbd> (next match, change word).
+
+My configuration for filename format, and other settings looks like;
 
 <details markdown="1">
 <summary><b>config.toml</b></summary>
@@ -331,7 +362,7 @@ so I can quickly <kbd>n</kbd><kbd>c</kbd><kbd>w</kbd> (next match, change word).
 
 </details>
 
-Noteable the alias I've setup are
+Where noteable the interesting alias I've setup are
 
     # Use GNU date to interpret releative dates for todo lists. For example
     # - zk todo
@@ -359,21 +390,29 @@ On your mobile install
 - [obsidian.md/mobile](https://obsidian.md/mobile)
 - [gitsync.viscouspotenti.al](https://gitsync.viscouspotenti.al/)
 
-for a nice search and markdown app, and `GitSync` to sync your private git repo to your phone.
+The setup is then, use GitSync to clone, pull, push the note git repository.
+Then use Obsidian to search and edit Markdown.
+GitSync can also be set up to auto-sync on Obsidian open/close.
+Personally I found a manual usage worked fine.
 
-For Obsidian Mobile configuration, ensure that "daily" format is the same as with `zk`.
+For Obsidian Mobile configuration, ensure that "daily" format is the same as with `zk`, for both filename and directory.
 
     Settings -> Daily notes
-    - Change Date format
-    - Change "new file locaiton"
-    - Check "Open daily note on startup"
+    - Change "Date format"
+    - Change "New file location"
+    - Check "Open daily note on startup", to auto open today's note
 
-Tag and search will work out of the box. 
+Tag and search will work out of the box.
+The interface is somewhat clunky, but good enough.
 
 ## Conclusion
 
-Just do it.
-Setup `zk` for a folder of Markdown files, and use your favourite code editor to continue to write notes.
+I am going to assume you have either Notepad or VSCode open to write notes in a very Markdown-like syntax anyway.
+So just do it.
+Setup `zk` for a folder of Markdown files, and use your favorite code editor to continue to write notes.
+And then actually find them again.
+
+Happy note-ing.
 
 Thanks to Kristoffer for proofreading again.
 
@@ -381,6 +420,8 @@ Thanks to Kristoffer for proofreading again.
 
 - [github.com/charnley/dotfiles](https://github.com/charnley/dotfiles) - my dotfile configuration
 - [github.com/zk-org/zk.git](https://github.com/zk-org/zk.git) - the main CLI tool to search and index your notes
+- [Getting started with zk](https://zk-org.github.io/zk/tips/getting-started.html)
 - [Obsidian](https://obsidian.md/) - Overkill Zettlekasten-based note taking application
 - [ViscousPot/GitSync](https://github.com/ViscousPot/GitSync) - Sync git repos on your phone
 - [en.wikipedia.org/wiki/Cognitive_load](https://en.wikipedia.org/wiki/Cognitive_load) - Cognitive offloading
+- Sönke Ahren "How to Take Smart Notes" - this is not a recommendation, just a reference
