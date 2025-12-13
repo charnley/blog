@@ -393,10 +393,12 @@ figure {
 .post-content p:has(img) {
   position: relative;
   display: block;
+
+  text-align:center;
 }
 
 .post-content p:has(img) img {
-  display: block;
+  display: inline-block;
   border-radius: 3px;
 }
 
@@ -419,6 +421,10 @@ figure {
   line-height: 1.3;
   opacity: 1;
   transition: all 0.2s ease;
+
+  /* try to center */
+  left: 50%;
+  transform: translate(-50%, 0%);
 }
 
 

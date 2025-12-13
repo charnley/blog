@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Taking notes - Context Switching Without Losing Your Mind"
+title: "Taking notes with CLI - Context Switching Without Losing Your Mind"
 date: 2025-12-04
 categories: notes, programming
 ---
@@ -9,58 +9,46 @@ tl;dr. My pitch is,
 you anyway write your notes in Markdown-like text files;
 why not index and search them with [zk-org](https://github.com/zk-org/zk)?
 And yes, although I use Neovim, the setup is editor agnostic.
-This is not overkill, a hill I will die on.
+I promise this is not overkill!
+
+![
+]({{site.baseurl}}/assets/images/about_zk/zk_demo.gif)
 
 <!-- ## Context switching is productivity killer -->
 ## Context switching is your problem
 
-In my job, I constantly jump between meetings, problems, and digital fires—all while trying to keeping a strategic overview.
-Privately, I’ve always had way too many open projects.
-Some time it is hard to remember all the details.
+I constantly jump between meetings, problems, and digital fires, all while trying to maintain a strategic overview.
+Privately, I juggle too many open projects as well.
+Half my stress isn’t the work itself—it’s trying to remember where I left off.
+My brain never reloads context fast enough.
 
-My brain never seems to reload the last task fast enough, and half the stress comes from trying to remember where I left off.
-**If you feel a little “ADHD-ish” at work, maybe it’s not you.
-Perhaps you need better notes and a better note system!**
+If you feel a little ADHD-ish at work, it might not be you. You might just need a better notes-system.
 
-For a while, I tried solving this with tools like;
+I tried the usual tools:
 
-- **Trello** for recipes and daily todos
-- **Notion** for project notes
-- Emailing myself links to “read later” using inbox as a todo list
+- [Trello](https://trello.com) for recipes and daily todos
+- [Notion](https://www.notion.so/) for project notes
+- Emailing myself links as a "read later" system
 - and using [Outlook "To Do"](https://to-do.office.com/tasks/) at work
 
-None of it felt good.
-I don’t want a whole application to manage notes or todos.
-I don’t need backlinks or [graphs of my notes](https://help.obsidian.md/plugins/graph).
-I need something fast, searchable, and in the text/code editor I am already using.
-Hence, not [Obsidian](https://obsidian.md/).
+None of it felt natural.
+I don’t want another app, dashboards, backlinks, or
+[graphs of my notes](https://help.obsidian.md/plugins/graph).
+I want something fast, searchable, and editable in the text/code editor I already use.
+That rules out tools like
+[Obsidian](https://obsidian.md/).
 
-So I switched to something extremely simple:
+What worked best was keeping everything in a single file per day—meetings, tasks, and stray thoughts.
 `vim ~/todo/$(date +%Y-%m-%d).md`.
-A daily file for meeting notes, tasks, and whatever pops up.
-But, when I switch context $$5\cdot10^6$$ times a day, the daily file became pretty chaotic.
+But when I switch context $$5\cdot10^6$$ times a day, even a simple daily log can turn into a mess.
 
-Sönke Ahrens says in his book "How to Take Smart Notes":
+From Sönke Ahrens in his book "How to Take Smart Notes" we can use [Cognitive offloading](https://en.wikipedia.org/wiki/Cognitive_load) to focus;
 
-> We get distracted by open tasks, not finished tasks.
-> Convince your brain it will be taken care of by writing it down.
+> Writing things down lets your brain focus on other tasks, **but only if you can easily find them again**.
+> If notes are hard to retrieve, your brain won’t trust the system.
 
-The book is great if you enjoy deconstructing the question "What is a note?",
-otherwise… a bit too much.
-But a main point is; **use cognitive offloading by writing down your thoughts/todo note**,
-so **you can easily find it again**.
-Writing things down frees your brain to work on current task.
-Like when you write things down on sticky notes.
-The key point to a good note taking setup is easy to write,
-but **easy to find again**.
-If you cannot find your note again, what is the point, and you won't convince your brain to let go.
-
-My requirements ended up being simple:
-
-- Not another app hanging around.
-- Editing notes should happen in my favourite code/text editor.
-- Creating a new note/meeting should feel instant.
-- Searching and finding notes should feel instant.
+It's an interesting book, if you enjoy deconstructing the concept of a note and the cult-like enthusiasm for [Zettelkasten](https://en.wikipedia.org/wiki/Zettelkasten). I didn't.
+But the point is clear: **I need to find a way to easily navigate my notes, without an external program**.
 
 ## The solution you are looking for is "zk"
 
@@ -71,7 +59,7 @@ and it was exactly what I was looking for.
 Having a quick way to write down thoughts/tasks tricks your mind that it will be done later and makes it easier to focus on current task.
 
 ![
-]({{site.baseurl}}/assets/images/about_zk/zk_demo.gif)
+]({{site.baseurl}}/assets/images/about_zk/zk_search_resize.png)
 
 Like Obsidian, it is based around [Zettlekasten](https://en.wikipedia.org/wiki/Zettelkasten) concept,
 a note-taking system/philosophy.
