@@ -50,49 +50,47 @@ From Sönke Ahrens in his book "How to Take Smart Notes" we can use [Cognitive o
 It's an interesting book, if you enjoy deconstructing the concept of a note and the cult-like enthusiasm for [Zettelkasten](https://en.wikipedia.org/wiki/Zettelkasten). I didn't.
 But the point is clear: **I need to find a way to easily navigate my notes, without an external program**.
 
-## The solution you are looking for is "zk"
+## The solution you are looking for is "[zk](https://zk-org.github.io/zk/)"
 
-Obviously the solution is, take notes.
-Practically, this year I found **[zk](https://github.com/zk-org/zk.git)**,
-and it was exactly what I was looking for.
-**A terminal tool for indexing and searching Markdown files**.
-Having a quick way to write down thoughts/tasks tricks your mind that it will be done later and makes it easier to focus on current task.
+
+The obvious solution is to write things down.
+The practical problem is making those notes fast to create and fast to find.
+
+This year, I found **[zk-org/zk](https://github.com/zk-org/zk.git)**, and it turned out to be exactly what I wanted:
+A small CLI tool that **indexes and searches Markdown files**.
+
+You write notes as plain Markdown in your editor.
+`zk` keeps an index (SQLite) and lets you instantly search by title, tag, content, or date.
+No daemon. No UI. Just open the note in your editor.
 
 ![
 ]({{site.baseurl}}/assets/images/about_zk/zk_search_resize.png)
 
-Like Obsidian, it is based around [Zettlekasten](https://en.wikipedia.org/wiki/Zettelkasten) concept,
-a note-taking system/philosophy.
-Again, the book above will go deep into the cult... sorry, I mean the details of the system.
+Like Obsidian, `zk` is Zettelkasten-based, but unlike Obsidian, it stops at indexing and search.
 
-
-In practise my Markdown notes looks like the follow structure, with date, title, tags, content and open tasks.
+In practice, my notes follow a simple structure:
+Metadata for indexing, free text for thinking, and Markdown tasks for follow-ups.
 
 ```markdown
 ---
 date: December 05, 2025
-title: Title of my note
-tags: [tag1,tag2,tag3]
+title: Title of my Meeting
+tags: [tag1,tag2]
 ---
 
 Kristoffer, Kim, Jimmy
 
-- This is an example note.
-- Maybe a meeting? Maybe a project?
+- This is an example meeting/note.
+- Maybe a meeting? Maybe a project? But interesting things were discussed.
 
 - [ ] This is an example of a open task
 - [x] This is an example of a close task
 ```
 
-All the content is the indexed by `zk` and put in a `.sqlite` database in your note folder.
-I include the name of the people in the meetings so I can easily search for it. 
-Unlike Obsidian, `zk` is a much more light-weight and practical tool.
-The only role is to index and search, then the result can be opened in your code editor.
-
 Because it is a CLI tool, you can very easily customize the workflow with standard GNU tools,
 and [terminal fuzzy-finding](https://github.com/junegunn/fzf) and [ripgrep](https://github.com/BurntSushi/ripgrep).
-I really enjoy building custom commands that work exactly for me.
-For example using GNU `date` you can use releative dates to access todo list for other days.
+This is where `zk` really shines if you enjoy composing small tools.
+For example using GNU `date` you can use relative dates to access todo list for other days.
 
 ```toml
 todo = 'zk new --group todo --no-input --date "$(date -d "$*" +%Y-%m-%d)" "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
@@ -109,35 +107,35 @@ For the last months working with `zk` I got annoyed I didn't start earlier becau
 years ago, but don't remember the details. Where is my notes??
 I know I worked with this before!
 
-### I don't want to use vim!
+### I don't want to use vim
 
-Sorry to hear that, have you heard of [Neovim](https://github.com/neovim/neovim)? But, that is perfectly fine.
-The approach is editor agnostic, as `zk` is used to index and search your notes,
-it has nothing to do with the editor.
-`zk` has really good seperation of concern in this regard.
+But have you heard of [Neovim](https://github.com/neovim/neovim)?
+
+Okay, That’s fine.
+`zk` has nothing to do with your editor.
+It indexes and searches notes.
+Opening and editing is delegated entirely to whatever editor you prefer.
 
 ![
 VSCode using zk in the terminal to search notes
 ]({{site.baseurl}}/assets/images/about_zk/vscode_and_zk_resize.png)
 
-If you are stuck on Microsoft and using VSCode, `zk` works really well with the editor terminal.
-Just configure `editor = "code -r"` as part of the `zk` `config.toml`, and when you select/create new notes they will be open straight in VSCode.
+If you are using VSCode or equivalent, you can configure `zk` `config.toml` to set the editor,
+
+```toml
+editor = "code -r" # Using VSCode
+editor = "idea" # Using IntelliJ
+```
+
+So when you select/create new notes they will be open straight in your editir.
 
 ## How I use `zk` at work
 
+At work, I use `zk` as a searchable work log, meeting archive, and task tracker.
 My notes is a folder full of Markdown files that I could be storing on OneDrive,
 but I still like to have the history tracking of my notes, so in the end I use Git to manage my notes, and using OneDrive as a "remote" for backup.
 
 ```mermaid
-
-%%{init: {
-  "theme": "base",
-  "themeVariables": {
-    "fontFamily": "Mononoki, Monaco, mono",
-    "fontSize": "11px",
-    "lineHeight": "1.2"
-  }
-}}%%
 
 flowchart LR
     Editor["Your Editor<br />(VSCode / Vim)"]
@@ -152,63 +150,58 @@ flowchart LR
 
 ```
 
-In practise, I 
+In practice, this means
 
-- Set my daily todo list to try to keep me focused
-- Use meeting template, keeping track who was there and what actionable follow is needed
-- Tag everything so I can quickly find a meeting / topic
-- Search for open Markdown tasks `[ ]`, per tag to know if items are forgotten
-- I keep lists of different internal wiki/forum links with my notes, as it is easier to find than a linear bookmark system
-- I keep snippets of how to use our internal infrastructure
+- Daily todos to stay focused
+- Meeting notes with attendees and follow-ups
+- Tags for projects and recurring topics
+- Markdown tasks to track unfinished work
+- Searches for open tasks to surface forgotten items
+- A personal wiki for internal links, runbooks, and snippets
 
-Since I am at work I don't mind the licensed AI models are reading my stuff,
-I can copy-paste the transcript from meetings and use Sonnet to re-write it into Markdown and find follow-ups.
-Obviously I use [sst OpenCode](https://github.com/sst/opencode) for my agentic AI work, which works well with our company licensed models,
-and fit my `tmux`-based work flow.
+Since I am at work, I don't mind the in-house licensed AI models reading my notes,
+I can copy-paste meeting transcripts, use Sonnet to convert them to Markdown, and find follow-ups.
+Obviously, I use [sst OpenCode](https://github.com/sst/opencode) for my agentic AI work, which works well with our company-licensed models,
+and fits my `tmux`-based workflow.
 
 ## How I use `zk` privately
 
+For private notes, I care about who can read them (AI or not).
+
 Scenarios that kept happening
 
-- I'm in bed, I see a cool Instagram wood project and want to save it for later
-- I'm in the supermarket and need my shopping list / recipes
-- I'm doing taxes, and forgot what I did last year
+- I'm in bed and see an interesting project I want to revisit later
+- I'm in the supermarket and need a shopping list or recipe
+- I'm doing taxes and can’t remember what I did last year
 
-So I needed a searchable note system, which is also accessible on my mobile.
-In the end I set up a `git` repository at [Linode](https://www.linode.com/) which is then accessible via ssk-key pair.
-This would work fine on a private GitHub project, but I didn't want my private notes to be used as AI training data.
+What I needed was the same thing as at work: searchable notes, but accessible on my phone and under my control.
+
+I keep my private notes in a `Git` repository hosted on [Linode](https://www.linode.com/), accessed over SSH.
+A private GitHub repository would also work, but I prefer not to have personal notes end up as training data for someone else’s models.
+
 
 ```mermaid
-
-%%{init: {
-  "theme": "base",
-  "themeVariables": {
-    "fontFamily": "Mononoki, Monaco, mono",
-    "fontSize": "11px",
-    "lineHeight": "1.2"
-  }
-}}%%
-
 flowchart LR
 
-    subgraph Laptop["Laptop/Desktop"]
+    subgraph Laptop["Laptop / Desktop"]
         LEditor["Editor"]
-        LRepo[".git"]
+        LRepo["Notes (.git)"]
         LEditor --> LRepo
     end
 
-    subgraph Mobile
-        GitSync["Git Sync App"]
+    subgraph Mobile["Mobile"]
+        GitSync["Git Sync"]
         Obsidian["Obsidian"]
-        MRepo[".git"]
+        MRepo["Notes (.git)"]
         GitSync --> MRepo
         Obsidian --> MRepo
     end
 
-    Remote["Remote Repo<br/>(Linode/GitHub)"]
+    Remote["Remote Repo<br/>(Linode)"]
 
     LRepo -- SSH --> Remote
     MRepo -- SSH --> Remote
+
 
     classDef default stroke-width:2px;
     classDef default fill: transparent;
@@ -217,11 +210,12 @@ flowchart LR
 
 ```
 
-Having all my notes in one setup, it makes it really easy to navigate my projects/private projects.
-I'm in the supermarket and I need the grocery list for Lasagne? Pow, just load it on my phone.
+With everything in one system, navigation becomes nice.
+If I'm standing in the supermarket and need the grocery list for lasagne, I open it on my phone.
+The important part isn't mobile editing.
+It's knowing that my notes are searchable and available wherever I am.
+I can pick up the thread and continue, without trying to remember what past-me was thinking.
 
-Overall I really enjoy the connectivity between having searchable indexed notes between my desktop computer, laptop and phone.
-It feels like I can continue whatever I am doing, whenever.
 
 ## Setup, installation and configuration
 
@@ -352,7 +346,7 @@ My configuration for filename format, and other settings looks like;
 
 Where noteable the interesting alias I've setup are
 
-    # Use GNU date to interpret releative dates for todo lists. For example
+    # Use GNU date to interpret relative dates for todo lists. For example
     # - zk todo
     # - zk todo tomorrow
     # - zk todo yesterday
@@ -371,7 +365,7 @@ Where noteable the interesting alias I've setup are
     # Find all unresolved Markdown tasks within a zk tag, with fzf and ripgrep
     open-tasks = "cd $ZK_NOTEBOOK_DIR; zk list --tag $(zk tag --quiet | fzf | awk '{print $1}') --format {{path}} --quiet | xargs rg --no-heading --with-filename -F '[ ]'"
 
-## Mobile Compatiable Setup
+## Mobile Compatible Setup
 
 On your mobile install
 
@@ -409,7 +403,7 @@ Thanks to Kristoffer for proofreading again.
 - [github.com/charnley/dotfiles](https://github.com/charnley/dotfiles) - my dotfile configuration
 - [github.com/zk-org/zk.git](https://github.com/zk-org/zk.git) - the main CLI tool to search and index your notes
 - [Getting started with zk](https://zk-org.github.io/zk/tips/getting-started.html)
-- [Obsidian](https://obsidian.md/) - Overkill Zettlekasten-based note taking application
+- [Obsidian](https://obsidian.md/) - Overkill Zettelkasten-based note taking application
 - [ViscousPot/GitSync](https://github.com/ViscousPot/GitSync) - Sync git repos on your phone
 - [en.wikipedia.org/wiki/Cognitive_load](https://en.wikipedia.org/wiki/Cognitive_load) - Cognitive offloading
 - Sönke Ahren "How to Take Smart Notes" - this is not a recommendation, just a reference
