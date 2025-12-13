@@ -8,8 +8,8 @@ categories: notes, programming
 tl;dr. My pitch is,
 you anyway write your notes in Markdown-like text files;
 why not index and search them with [zk-org](https://github.com/zk-org/zk)?
-And yes, although I use Neovim, the setup is editor agnostic.
-I promise this is not overkill!
+I use Neovim, but the setup is editor agnostic.
+This is not overkill.
 
 ![
 ]({{site.baseurl}}/assets/images/about_zk/zk_demo.gif)
@@ -22,7 +22,7 @@ Privately, I juggle too many open projects as well.
 Half my stress isn’t the work itself—it’s trying to remember where I left off.
 My brain never reloads context fast enough.
 
-If you feel a little ADHD-ish at work, it might not be you. You might just need a better notes-system.
+If you feel a little ADHD-ish at work, it might not be you. You might just need a better notes system.
 
 I tried the usual tools:
 
@@ -84,7 +84,7 @@ Kristoffer, Kim, Jimmy
 - Maybe a meeting? Maybe a project? But interesting things were discussed.
 
 - [ ] This is an example of a open task
-- [x] This is an example of a close task
+- [x] This is an example of a closed task
 ```
 
 Because it is a CLI tool, you can very easily customize the workflow with standard GNU tools,
@@ -104,7 +104,7 @@ zk todo yesterday
 ```
 
 For the last months working with `zk` I got annoyed I didn't start earlier because I remember I worked on something else
-years ago, but don't remember the details. Where is my notes??
+years ago, but don't remember the details. Where are my notes??
 I know I worked with this before!
 
 ### I don't want to use vim
@@ -127,12 +127,12 @@ editor = "code -r" # Using VSCode
 editor = "idea" # Using IntelliJ
 ```
 
-So when you select/create new notes they will be open straight in your editir.
+So when you select/create new notes they will be open straight in your editor.
 
 ## How I use `zk` at work
 
 At work, I use `zk` as a searchable work log, meeting archive, and task tracker.
-My notes is a folder full of Markdown files that I could be storing on OneDrive,
+My notes is are a folder full of Markdown files that I could be storing on OneDrive,
 but I still like to have the history tracking of my notes, so in the end I use Git to manage my notes, and using OneDrive as a "remote" for backup.
 
 ```mermaid
