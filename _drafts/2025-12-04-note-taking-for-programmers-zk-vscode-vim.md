@@ -216,8 +216,17 @@ The important part isn't mobile editing.
 It's knowing that my notes are searchable and available wherever I am.
 I can pick up the thread and continue, without trying to remember what past-me was thinking.
 
+## Conclusion
 
-## Setup, installation and configuration
+- You already have an editor open.
+- You already write Markdown-like notes.
+
+So stop searching for the perfect app.
+Put your notes in plain files.
+Index them and search them with `zk`,
+And make sure you can find them again.
+
+### Appendix: Setup Details
 
 Sold on the idea?
 Following
@@ -313,19 +322,19 @@ My configuration for filename format, and other settings looks like;
 
     [alias]
 
-# Create new note, from templates
+    # Create new note, from templates
     n = 'zk new'
     today = 'zk new --group todo --no-input "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
     meeting = 'zk new --group meeting'
     m = 'zk meeting'
 
-# Usage:
-# - zk todo next friday
-# - zk todo tomorrow
-# - zk todo yesterday
+    # Usage:
+    # - zk todo next friday
+    # - zk todo tomorrow
+    # - zk todo yesterday
     todo = 'zk new --group todo --no-input --date "$(date -d "$*" +%Y-%m-%d)" "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
 
-# Find and edit
+    # Find and edit
     last = "zk edit --limit 1 --sort modified- $argv"
     recent = "zk edit --sort created- --created-after 'last 7 days' --interactive"
     recent-month = "zk edit --sort created- --created-after 'last 30 days' --interactive"
@@ -333,18 +342,18 @@ My configuration for filename format, and other settings looks like;
     t = "zk edit --interactive --tag $(zk tag --quiet | fzf | awk '{print $1}')"
     ta = "zk edit --tag $(zk tag --quiet | fzf | awk '{print $1}')"
 
-# Manage the notes
+    # Manage the notes
     update = "cd $ZK_NOTEBOOK_DIR; git add -A; git commit -am 'updating'; git pull; git push; cd -"
     clean = "zk-clean"
     clean-dry = "zk-clean --dry-run"
     sync = "zk update && zk index"
 
-# Find all unresolved tasks within a zk tag
+    # Find all unresolved tasks within a zk tag
     open-tasks = "cd $ZK_NOTEBOOK_DIR; zk list --tag $(zk tag --quiet | fzf | awk '{print $1}') --format {{path}} --quiet | xargs rg --no-heading --with-filename -F '[ ]'"
 
 </details>
 
-Where noteable the interesting alias I've setup are
+Where noteable alias I've setup are
 
     # Use GNU date to interpret relative dates for todo lists. For example
     # - zk todo
@@ -354,18 +363,18 @@ Where noteable the interesting alias I've setup are
     # - zk todo 3 months 1 day
     # - zk todo 25 dec
     todo = 'zk new --group todo --no-input --date "$(date -d "$*" +%Y-%m-%d)" "$ZK_NOTEBOOK_DIR/todo" --template todo.md'
-    
+
     # Use fzf to interactively choose the tag I then want to search in
     t = "zk edit --interactive --tag $(zk tag --quiet | fzf | awk '{print $1}')"
-    
+
     # Use git to pull and push, then re-index the zk database
     update = "cd $ZK_NOTEBOOK_DIR; git add -A; git commit -am 'updating'; git pull; git push"
     sync = "zk update && zk index"
-    
+
     # Find all unresolved Markdown tasks within a zk tag, with fzf and ripgrep
     open-tasks = "cd $ZK_NOTEBOOK_DIR; zk list --tag $(zk tag --quiet | fzf | awk '{print $1}') --format {{path}} --quiet | xargs rg --no-heading --with-filename -F '[ ]'"
 
-## Mobile Compatible Setup
+### Mobile Compatible Setup
 
 On your mobile install
 
@@ -386,17 +395,6 @@ For Obsidian Mobile configuration, ensure that "daily" format is the same as wit
 
 Tag and search will work out of the box.
 The interface is somewhat clunky, but good enough.
-
-## Conclusion
-
-I am going to assume you have either Notepad or VSCode open to write notes in a very Markdown-like syntax anyway.
-So just do it.
-Setup `zk` for a folder of Markdown files, and use your favorite code editor to continue to write notes.
-And then actually find them again.
-
-Happy note-ing.
-
-Thanks to Kristoffer for proofreading again.
 
 ## References
 
