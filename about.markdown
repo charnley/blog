@@ -11,3 +11,10 @@ This blog will contain technical write-ups with very varying contents. We will t
 [Jimmy](https://jimmy.charnley.dk) [github.com/charnley](https://github.com/charnley)
 and Peter [github.com/pgericson](github.com/pgericson).
 
+## Other blogs you might like
+
+- [andersx.dk](https://andersx.dk/)
+- [kplauritzen.dk](https://kplauritzen.dk)
+- [proteinsandwavefunctions](https://proteinsandwavefunctions.blogspot.com/)
+- [Steinmann Group](https://steinmanngroup.github.io/)
+
