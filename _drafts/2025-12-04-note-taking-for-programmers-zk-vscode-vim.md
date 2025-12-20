@@ -22,12 +22,14 @@ Privately, I juggle too many open projects as well.
 Half my stress isn’t the work itself—it’s trying to remember where I left off.
 My brain never reloads context fast enough.
 
-If you feel a little ADHD-ish at work, it might not be you. You might just need a better notes system.
+If you feel a little ADHD-ish at work, it might not be you.
+You might just need a better todo/notes system.
+[Our brains are for having ideas, not holding them](https://www.youtube.com/watch?v=oO9GLC2iKy8).
 
 I tried the usual tools:
 
 - [Trello](https://trello.com) for recipes and daily todos
-- [Notion](https://www.notion.so/) for project notes
+- [Notion](https://www.notion.so/) / [Google Tasks](https://tasksboard.com) for project notes
 - Emailing myself links as a "read later" system
 - and using [Outlook "To Do"](https://to-do.office.com/tasks/) at work
 
@@ -42,16 +44,15 @@ What worked best was keeping everything in a single file per day—meetings, tas
 `vim ~/todo/$(date +%Y-%m-%d).md`.
 But when I switch context $$5\cdot10^6$$ times a day, even a simple daily log can turn into a mess.
 
-From Sönke Ahrens in his book "How to Take Smart Notes" we can use [Cognitive offloading](https://en.wikipedia.org/wiki/Cognitive_load) to focus;
+From Sönke Ahrens in his book "[How to Take Smart Notes](https://www.soenkeahrens.de/en/takesmartnotes)" we can use [Cognitive offloading](https://en.wikipedia.org/wiki/Cognitive_load) to focus;
 
 > Writing things down lets your brain focus on other tasks, **but only if you can easily find them again**.
 > If notes are hard to retrieve, your brain won’t trust the system.
 
 It's an interesting book, if you enjoy deconstructing the concept of a note and the cult-like enthusiasm for [Zettelkasten](https://en.wikipedia.org/wiki/Zettelkasten). I didn't.
-But the point is clear: **I need to find a way to easily navigate my notes, without an external program**.
+But the point is clear: **I need to find a way to quickly write down notes AND search my notes, without a specialized window open**.
 
 ## The solution you are looking for is "[zk](https://zk-org.github.io/zk/)"
-
 
 The obvious solution is to write things down.
 The practical problem is making those notes fast to create and fast to find.
@@ -404,4 +405,5 @@ The interface is somewhat clunky, but good enough.
 - [Obsidian](https://obsidian.md/) - Overkill Zettelkasten-based note taking application
 - [ViscousPot/GitSync](https://github.com/ViscousPot/GitSync) - Sync git repos on your phone
 - [en.wikipedia.org/wiki/Cognitive_load](https://en.wikipedia.org/wiki/Cognitive_load) - Cognitive offloading
-- Sönke Ahren "How to Take Smart Notes" - this is not a recommendation, just a reference
+- Sönke Ahren - [How to Take Smart Notes](https://www.soenkeahrens.de/en/takesmartnotes) - this is not a recommendation, just a reference
+- Jeff Su - [Productivity System](https://www.youtube.com/watch?v=oO9GLC2iKy8) - Capture quickly, Organize clearly, Review frequently, Engange effectively
