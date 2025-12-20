@@ -56,7 +56,6 @@ But the point is clear: **I need to find a way to quickly write down notes AND s
 
 The obvious solution is to write things down.
 The practical problem is making those notes fast to create and fast to find.
-
 This year, I found **[zk-org/zk](https://github.com/zk-org/zk.git)**, and it turned out to be exactly what I wanted:
 A small CLI tool that **indexes and searches Markdown files**.
 
