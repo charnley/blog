@@ -9,7 +9,7 @@ config:
 	bundle config set --local path '${HOME}/.local/share/gem'
 
 dev:
-	bundle exec jekyll serve --host 0.0.0.0 --port ${port} --drafts
+	JEKYLL_ENV=development bundle exec jekyll serve --host 0.0.0.0 --port ${port} --drafts
 
 start:
 	bundle exec jekyll serve --host 0.0.0.0 --port ${port}
