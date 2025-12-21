@@ -5,7 +5,7 @@ date: 2025-12-04
 categories: notes, programming
 ---
 
-tl;dr. My pitch is,
+tl;dr: My pitch is,
 you anyway write your notes in Markdown-like text files;
 why not index and search them with [zk-org](https://github.com/zk-org/zk)?
 I use Neovim, but the setup is editor agnostic.
@@ -19,7 +19,7 @@ This is not overkill.
 
 I constantly jump between meetings, problems, and digital fires, all while trying to maintain a strategic overview.
 Privately, I juggle too many open projects as well.
-Half my stress isn’t the work itself—it’s trying to remember where I left off.
+Half my stress isn’t the work itself — it’s trying to remember where I left off.
 My brain never reloads context fast enough.
 
 If you feel a little ADHD-ish at work, it might not be you.
@@ -28,10 +28,10 @@ You might just need a better todo/notes system.
 
 I tried the usual tools:
 
-- [Trello](https://trello.com) for recipes and daily todos
-- [Notion](https://www.notion.so/) / [Google Tasks](https://tasksboard.com) for project notes
-- Emailing myself links as a "read later" system
-- and using [Outlook "To Do"](https://to-do.office.com/tasks/) at work
+- [Trello](https://trello.com) for recipes and daily todos.
+- [Notion](https://www.notion.so/) / [Google Tasks](https://tasksboard.com) for project notes.
+- Emailing myself links as a "read later" system.
+- [Outlook "To Do"](https://to-do.office.com/tasks/) at work.
 
 None of it felt natural.
 I don’t want another app, dashboards, backlinks, or
@@ -44,13 +44,13 @@ What worked best was keeping everything in a single file per day—meetings, tas
 `vim ~/todo/$(date +%Y-%m-%d).md`.
 But when I switch context $$5\cdot10^6$$ times a day, even a simple daily log can turn into a mess.
 
-From Sönke Ahrens in his book "[How to Take Smart Notes](https://www.soenkeahrens.de/en/takesmartnotes)" we can use [Cognitive offloading](https://en.wikipedia.org/wiki/Cognitive_load) to focus;
+From Sönke Ahrens in his book "[How to Take Smart Notes](https://www.soenkeahrens.de/en/takesmartnotes)" we can use [Cognitive offloading](https://en.wikipedia.org/wiki/Cognitive_load) to focus:
 
 > Writing things down lets your brain focus on other tasks, **but only if you can easily find them again**.
 > If notes are hard to retrieve, your brain won’t trust the system.
 
-It's an interesting book, if you enjoy deconstructing the concept of a note and the cult-like enthusiasm for [Zettelkasten](https://en.wikipedia.org/wiki/Zettelkasten). I didn't.
-But the point is clear: **I need to find a way to quickly write down notes AND search my notes, without a specialized window open**.
+It's an interesting book if you enjoy deconstructing the concept of a note and the cult-like enthusiasm for [Zettelkasten](https://en.wikipedia.org/wiki/Zettelkasten). I didn't.
+But the point is clear: **I need to find a way to quickly write down AND search my notes, without a specialized window open**.
 
 ## The solution you are looking for is "[zk](https://zk-org.github.io/zk/)"
 
@@ -103,8 +103,8 @@ zk todo next monday
 zk todo yesterday
 ```
 
-For the last months working with `zk` I got annoyed I didn't start earlier because I remember I worked on something else
-years ago, but don't remember the details. Where are my notes??
+For the last months working with `zk` I got annoyed I didn't start earlier. I remember working on something else
+years ago, but not the the details. Where are my notes??
 I know I worked with this before!
 
 ### I don't want to use vim
@@ -152,12 +152,12 @@ flowchart LR
 
 In practice, this means
 
-- Daily todos to stay focused
-- Meeting notes with attendees and follow-ups
-- Tags for projects and recurring topics
-- Markdown tasks to track unfinished work
-- Searches for open tasks to surface forgotten items
-- A personal wiki for internal links, runbooks, and snippets
+- Daily todos to stay focused.
+- Meeting notes with attendees and follow-ups.
+- Tags for projects and recurring topics.
+- Markdown tasks to track unfinished work.
+- Searches for open tasks to surface forgotten items.
+- A personal wiki for internal links, runbooks, and snippets.
 
 Since I am at work, I don't mind the in-house licensed AI models reading my notes,
 I can copy-paste meeting transcripts, use Sonnet to convert them to Markdown, and find follow-ups.
@@ -170,9 +170,9 @@ For private notes, I care about who can read them (AI or not).
 
 Scenarios that kept happening
 
-- I'm in bed and see an interesting project I want to revisit later
-- I'm in the supermarket and need a shopping list or recipe
-- I'm doing taxes and can’t remember what I did last year
+- I'm in bed and see an interesting project I want to revisit later.
+- I'm in the supermarket and need a shopping list or recipe.
+- I'm doing taxes and can’t remember what I did last year.
 
 What I needed was the same thing as at work: searchable notes, but accessible on my phone and under my control.
 
@@ -210,10 +210,9 @@ flowchart LR
 
 ```
 
-With everything in one system, navigation becomes nice.
+With everything interconnected, the challenge of finding relevant information has largely become moot.
 If I'm standing in the supermarket and need the grocery list for lasagne, I open it on my phone.
-The important part isn't mobile editing.
-It's knowing that my notes are searchable and available wherever I am.
+The important part isn't mobile editing - It's knowing that my notes are searchable and available wherever I am.
 I can pick up the thread and continue, without trying to remember what past-me was thinking.
 
 ## Conclusion
