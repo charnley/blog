@@ -21,10 +21,8 @@ I constantly jump between meetings, problems, and digital fires, all while tryin
 Privately, I juggle too many open projects as well.
 Half my stress isn’t the work itself — it’s trying to remember where I left off.
 My brain never reloads context fast enough.
-
 If you feel a little ADHD-ish at work, it might not be you.
 You might just need a better todo/notes system.
-[Our brains are for having ideas, not holding them](https://www.youtube.com/watch?v=oO9GLC2iKy8).
 
 I tried the usual tools:
 
@@ -44,7 +42,8 @@ What worked best was keeping everything in a single file per day—meetings, tas
 `vim ~/todo/$(date +%Y-%m-%d).md`.
 But when I switch context $$5\cdot10^6$$ times a day, even a simple daily log can turn into a mess.
 
-From Sönke Ahrens in his book "[How to Take Smart Notes](https://www.soenkeahrens.de/en/takesmartnotes)" we can use [Cognitive offloading](https://en.wikipedia.org/wiki/Cognitive_load) to focus:
+From Sönke Ahrens in his book "[How to Take Smart Notes](https://www.soenkeahrens.de/en/takesmartnotes)" we can use [Cognitive offloading](https://en.wikipedia.org/wiki/Cognitive_load) to focus.
+Our brains are for having ideas, not holding them.
 
 > Writing things down lets your brain focus on other tasks, **but only if you can easily find them again**.
 > If notes are hard to retrieve, your brain won’t trust the system.
@@ -128,6 +127,7 @@ editor = "idea" # Using IntelliJ
 ```
 
 So when you select/create new notes they will be open straight in your editor.
+Note there is also a VSCode plugin [github.com/zk-org/zk-vscode](https://github.com/zk-org/zk-vscode).
 
 ## How I use `zk` at work
 
@@ -398,10 +398,8 @@ The interface is somewhat clunky, but good enough.
 ## References
 
 - [github.com/charnley/dotfiles](https://github.com/charnley/dotfiles) - my dotfile configuration
-- [github.com/zk-org/zk.git](https://github.com/zk-org/zk.git) - the main CLI tool to search and index your notes
-- [Getting started with zk](https://zk-org.github.io/zk/tips/getting-started.html)
+- [github.com/zk-org/zk.git](https://github.com/zk-org/zk.git) - the main tool to search your notes. [Getting started with zk](https://zk-org.github.io/zk/tips/getting-started.html).
 - [Obsidian](https://obsidian.md/) - Overkill Zettelkasten-based note taking application
-- [ViscousPot/GitSync](https://github.com/ViscousPot/GitSync) - Sync git repos on your phone
-- [en.wikipedia.org/wiki/Cognitive_load](https://en.wikipedia.org/wiki/Cognitive_load) - Cognitive offloading
-- Sönke Ahren - [How to Take Smart Notes](https://www.soenkeahrens.de/en/takesmartnotes) - this is not a recommendation, just a reference
-- Jeff Su - [Productivity System](https://www.youtube.com/watch?v=oO9GLC2iKy8) - Capture quickly, Organize clearly, Review frequently, Engange effectively
+- [ViscousPot/GitSync](https://github.com/ViscousPot/GitSync) - Sync git repos on your phone.
+- Sönke Ahren - [How to Take Smart Notes](https://www.soenkeahrens.de/en/takesmartnotes) - this is not a recommendation, just a reference.
+- Jeff Su - [Productivity System](https://www.youtube.com/watch?v=oO9GLC2iKy8) - Video about doing todo-lists. Capture quickly, Organize clearly, Review frequently, Engange effectively.
