@@ -104,7 +104,6 @@ body {
     box-shadow: inset 0 -1px 0 #9ca3af;
     text-align: center;
     cursor: default;
-    transition: all 0.1s ease;
   
   }
   
@@ -415,16 +414,14 @@ figure {
   font-size: 0.85em;
   font-weight: 500;
   text-align: left;
-  backdrop-filter: blur(3px);
-  max-width: calc(100% - 40px);
   word-wrap: break-word;
   line-height: 1.3;
   opacity: 1;
-  transition: all 0.2s ease;
 
-  /* try to center */
-  left: 50%;
-  transform: translate(-50%, 0%);
+
+  /* Center makes it too small on mobile phones */
+  /* left: 50%; */
+  /* transform: translate(-50%, 0%); */
 }
 
 
