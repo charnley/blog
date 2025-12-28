@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "Taking notes with CLI - Context Switching Without Losing Your Mind"
-date: 2025-12-04
-categories: notes, programming
+date: 2025-12-28
+categories: notes, programming, zettelkasten
 ---
 
 tl;dr: My pitch is,
@@ -127,20 +127,22 @@ editor = "idea" # Using IntelliJ
 ```
 
 So when you select/create new notes they will be open straight in your editor.
-Note there is also a VSCode plugin [github.com/zk-org/zk-vscode](https://github.com/zk-org/zk-vscode).
+Note there is also a optional VSCode plugin [github.com/zk-org/zk-vscode](https://github.com/zk-org/zk-vscode),
+however it is not needed.
+Just use the VSCode terminal to search notes.
 
 ## How I use `zk` at work
 
 At work, I use `zk` as a searchable work log, meeting archive, and task tracker.
 My notes is are a folder full of Markdown files that I could be storing on OneDrive,
-but I still like to have the history tracking of my notes, so in the end I use Git to manage my notes, and using OneDrive as a "remote" for backup.
+but I still like to have the history tracking of my notes, so in the end I use Git to manage my notes, and using OneDrive as a `git --bare` server ([setup git bare server](https://git-scm.com/book/en/v2/Git-on-the-Server-Getting-Git-on-a-Server)) for backup.
 
 ```mermaid
 
 flowchart LR
     Editor["Your Editor<br />(VSCode / Vim)"]
     Notes["~/notes<br />(Git Repo)"]
-    OneDrive["~/OneDrive<br/>(Remote Backup)"]
+    OneDrive["~/OneDrive/notes.git<br/>(Remote --bare Backup)"]
 
     Editor --> Notes
     Notes -->|git push| OneDrive
@@ -225,13 +227,25 @@ Put your notes in plain files.
 Index them and search them with `zk`,
 And make sure you can find them again.
 
-### Appendix: Setup Details
+### Appendix: How to get started
 
 Sold on the idea?
 Following
 [zk-org.github.io/zk](https://zk-org.github.io/zk/)
 we can easily set up `zk`.
-You can compile it by clone and `make`-ing it, with [go](https://go.dev).
+
+#### Install
+
+If you are on a mac, you can simply use brew.
+
+    brew install zk fzf ripgrep
+
+If you are on linux or windows WSL2, you need to install the three dependencies with:
+
+- [How to install fzf](https://junegunn.github.io/fzf/installation/)
+- [How to install ripgrep](https://github.com/BurntSushi/ripgrep?tab=readme-ov-file#installation)
+
+You can then compile `zk` by clone and `make`-ing it, with [go](https://go.dev).
 
     cd $HOME/opt/
     git clone https://github.com/zk-org/zk.git zk.git --depth 1
@@ -239,9 +253,7 @@ You can compile it by clone and `make`-ing it, with [go](https://go.dev).
     make build
     ln -s $HOME/opt/zk.git/zk $HOME/bin/zk
 
-or if you are on a Mac, you can simply;
-
-    brew install zk
+#### Setup
 
 With the executable installed, create a note folder `~/notes/` and `git init`.
 Inside the folder create a `.zk` for your configuration and templates.
@@ -254,7 +266,6 @@ For me the setup is
     .zk/templates/meeting.md
     .zk/config.toml
     .zk/.gitignore # ignore .sqlite
-
 
 A template would look something like this
 
@@ -276,6 +287,8 @@ A template would look something like this
 Why have "Untitled" in my template?
 Because I sat op my editor [Neovim](https://github.com/neovim/neovim) to jump through "Untitled"
 so I can quickly <kbd>n</kbd><kbd>c</kbd><kbd>w</kbd> (next match, change word).
+
+#### Configuration
 
 My configuration for filename format, and other settings looks like;
 
