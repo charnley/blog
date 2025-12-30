@@ -146,10 +146,6 @@ flowchart LR
 
     Editor --> Notes
     Notes -->|git push| OneDrive
-
-    classDef default stroke-width:2px;
-    classDef default fill: transparent;
-
 ```
 
 In practice, this means
@@ -203,12 +199,6 @@ flowchart LR
 
     LRepo -- SSH --> Remote
     MRepo -- SSH --> Remote
-
-
-    classDef default stroke-width:2px;
-    classDef default fill: transparent;
-    classDef ParentGraph fill: transparent, stroke-width:2px;
-    class Laptop,Mobile ParentGraph
 
 ```
 

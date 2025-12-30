@@ -128,11 +128,6 @@ graph LR
 
     gpucron -- "GET status" --> canvasserver
     gpucron -- POST image(s) --> canvasserver
-   
-    classDef default stroke-width:2px;
-    classDef default fill: transparent;
-    classDef ParentGraph fill: transparent, stroke-width:2px;
-    class pictures,HA,Desktop,esp32,rpi ParentGraph
 ```
 
 The workflow works like this:
