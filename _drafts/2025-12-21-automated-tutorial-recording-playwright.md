@@ -15,73 +15,105 @@ categories: tutorial, documentation, programming
 <!-- - Stop Recording Tutorials. Start Testing Them. -->
 
 <!-- title: "Video Tutorial and Documentation Automation (Tutorials as code)" -->
-tldr: Treat tutorial as code.
-Using `playwright` end-to-end testing, and `Piper` text-to-speech,
-we can use create automated tutorials, every time the UI changes.
+tldr:
+tutorials-as-code.
+We can use `playwright` end-to-end testing, and `Piper` text-to-speech,
+to create automated tutorials, every time the UI changes.
 
-<video style="max-width:100%" controls playsinline src="https://user-images.githubusercontent.com/126239/151127893-5c98ba8d-c431-4a25-bb1f-e0b33645a2b6.mp4"></video>
+> <video style="max-width:100%" controls playsinline src="https://user-images.githubusercontent.com/126239/151127893-5c98ba8d-c431-4a25-bb1f-e0b33645a2b6.mp4"></video>
+> Play with sound
 
-# We want to help new users use internal software
+# Recording Tutorials is Expensive
 
+I work in a small team.
+Like most small teams, documentation are always on the backlog.
 
-Most companies/teams don’t have the resources to produce video tutorials.
-There’s no video crew, no narrator, no editor, and no time to re-record when the UI changes.
-So tutorials get recorded once, shipped late, and quietly get deprecated with application changes.
+I got the idea from a champion user 
+We don’t have the budget for a video crew, voice actors or time to update every time UI updates, so tutorials are out of the question.
+Someone has to plan, record, narrate, edit, and redo them when flows change.
+The result I usually see are usually one-off recordings that can quickly become obsolete.
 
-I work in a small team, we definetly cannot afford to make video tutorials,
-and often rely on our champion users to generate the content.
-
-This isn’t a process failure, it’s an economics problem.
-If tutorials require humans to record and edit them, they won’t scale.
-
-The only tutorials that survive are the ones that are cheap to regenerate.
+The only tutorials that survive are cheap to produce and cheap to update.
 That means treating them like software artifacts, not media files.
 
-Most teams don’t have a video crew.
+> Infrastructure is code. Deployments are code. Tests are code. Tutorials should also be.
 
-They don’t have a script writer, a narrator, a screen recorder, a video editor, or time blocked out to re-record tutorials every time the UI changes.
+What really clicked for me was when a champion of our users recorded himself using an application,
+then adding speech using Microsoft text-to-speech.
+My first thought was "but, I can just automate the recording?"
 
-So tutorials become a one-off effort:
-recorded once, slightly outdated immediately, and quietly abandoned the moment something breaks.
+<!-- Most companies/teams don’t have the resources to produce video tutorials. -->
+<!-- There’s no video crew, no narrator, no editor, and no time to re-record when the UI changes. -->
+<!-- So tutorials get recorded once, shipped late, and quietly get deprecated with application changes. -->
 
-This isn’t a discipline problem.
-It’s a resourcing problem.
+<!-- I work in a small team, we definetly cannot afford to make video tutorials, -->
+<!-- and often rely on our champion users to generate the content. -->
 
-The only way tutorials survive in real organizations is if they’re cheap to produce, cheap to update, and boring to maintain.
+<!-- This isn’t a process failure, it’s an economics problem. -->
+<!-- If tutorials require humans to record and edit them, they won’t scale. -->
 
-This post is about treating tutorials like end-to-end tests:
-scripted, reproducible, and automated — using Playwright and text-to-speech.
+<!-- The only tutorials that survive are the ones that are cheap to regenerate. -->
+<!-- That means treating them like software artifacts, not media files. -->
+
+<!-- Most teams don’t have a video crew. -->
+
+<!-- They don’t have a script writer, a narrator, a screen recorder, a video editor, or time blocked out to re-record tutorials every time the UI changes. -->
+
+<!-- So tutorials become a one-off effort: -->
+<!-- recorded once, slightly outdated immediately, and quietly abandoned the moment something breaks. -->
+
+<!-- This isn’t a discipline problem. -->
+<!-- It’s a resourcing problem. -->
+
+<!-- The only way tutorials survive in real organizations is if they’re cheap to produce, cheap to update, and boring to maintain. -->
+
+<!-- This post is about treating tutorials like end-to-end tests: -->
+<!-- scripted, reproducible, and automated — using Playwright and text-to-speech. -->
 
 
-We already treat infrastructure as code.
-We treat deployments as code.
-We treat tests as code.
-But tutorials?
-Those are still recorded by hand, narrated live, and silently rot the moment the UI changes.
+<!-- We already treat infrastructure as code. -->
+<!-- We treat deployments as code. -->
+<!-- We treat tests as code. -->
+<!-- But tutorials? -->
+<!-- Those are still recorded by hand, narrated live, and silently rot the moment the UI changes. -->
 
-So videos get recorded once, shipped late, and never updated again.
+<!-- So videos get recorded once, shipped late, and never updated again. -->
 
-If tutorials require human recording, they will not scale.
+<!-- If tutorials require human recording, they will not scale. -->
 
-Small teams doesn't always write the best test suite
-unit tests is possible
-but if user actions are required and especially user auth
-this can be tricky to program, hence playwright
+<!-- Small teams doesn't always write the best test suite -->
+<!-- unit tests is possible -->
+<!-- but if user actions are required and especially user auth -->
+<!-- this can be tricky to program, hence playwright -->
 
-Since we anyway will want to test
-what we want to test and what we want to document is usually the same thing
-might as well do a multi-kill here
-or as managers would say, do more with less
+<!-- Since we anyway will want to test -->
+<!-- what we want to test and what we want to document is usually the same thing -->
+<!-- might as well do a multi-kill here -->
+<!-- or as managers would say, do more with less -->
 
-I got the idea from a champion user who recorded his actions
-then he used microsoft to do text-to-speech.
+<!-- I got the idea from a champion user who recorded his actions -->
+<!-- then he used microsoft to do text-to-speech. -->
 
-But wait, I can automate the actions?
+<!-- But wait, I can automate the actions? -->
 
-# Treating Video Tutorials Like Infrastructure (tutorials-as-code)
+What we test and what we want to document is usually the same thing.
+User flows, edge cases, authentication—Playwright already automates them.
+Add text-to-speech, and suddenly we can turn scripts into reproducible, maintainable tutorial videos without a crew.
+
+# Treating Video Tutorials Like Infrastructure
+
+The two components we need are simply
+
+## Playwright
 
 TODO Sell playwright
+
+## Piper
+
 TODO Sell piper tts
+
+## Together
+
 
 ```mermaid
 flowchart LR
