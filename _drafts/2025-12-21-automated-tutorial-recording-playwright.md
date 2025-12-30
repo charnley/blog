@@ -63,6 +63,16 @@ So videos get recorded once, shipped late, and never updated again.
 
 If tutorials require human recording, they will not scale.
 
+Small teams doesn't always write the best test suite
+unit tests is possible
+but if user actions are required and especially user auth
+this can be tricky to program, hence playwright
+
+Since we anyway will want to test
+what we want to test and what we want to document is usually the same thing
+might as well do a multi-kill here
+or as managers would say, do more with less
+
 I got the idea from a champion user who recorded his actions
 then he used microsoft to do text-to-speech.
 
