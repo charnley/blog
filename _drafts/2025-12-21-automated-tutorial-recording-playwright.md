@@ -5,16 +5,17 @@ date: 2025-12-21
 categories: tutorial, documentation, programming
 ---
 
-<!--     Tutorials as Code: End-to-End Video Automation with Playwright -->
-<!--     What Terraform Did for Infrastructure, Playwright Can Do for Tutorials -->
+<!-- Tutorials as Code: End-to-End Video Automation with Playwright -->
+<!-- What Terraform Did for Infrastructure, Playwright Can Do for Tutorials -->
 
-<!-- - Relevant for internal tools, where user interface changes -->
-<!-- - What Puppet/Ansible/Terraform do for infrastructure, I want Playwright to do for Tutorials -->
-<!-- - End-to-End Testing, but for Tutorials -->
-<!-- - Treat Tutorials Like Infrastructure -->
-<!-- - Stop Recording Tutorials. Start Testing Them. -->
+<!-- Relevant for internal tools, where user interface changes -->
+<!-- What Puppet/Ansible/Terraform do for infrastructure, I want Playwright to do for Tutorials -->
+<!-- End-to-End Testing, but for Tutorials -->
+<!-- Treat Tutorials Like Infrastructure -->
+<!-- Stop Recording Tutorials. Start Testing Them. -->
 
 <!-- title: "Video Tutorial and Documentation Automation (Tutorials as code)" -->
+
 tldr:
 tutorials-as-code.
 We can use `playwright` end-to-end testing, and `Piper` text-to-speech,
@@ -27,8 +28,8 @@ to create automated tutorials, every time the UI changes.
 
 I work in a small team.
 Like most small teams, documentation are always on the backlog.
+Not the highest priority with constant digital fires, so documentation and especially videos.
 
-I got the idea from a champion user 
 We don’t have the budget for a video crew, voice actors or time to update every time UI updates, so tutorials are out of the question.
 Someone has to plan, record, narrate, edit, and redo them when flows change.
 The result I usually see are usually one-off recordings that can quickly become obsolete.
@@ -106,11 +107,67 @@ The two components we need are simply
 
 ## Playwright
 
-TODO Sell playwright
+If you don't know [playwright](https://playwright),
+it is a automation / testing tool for both JavaScript and Python
+used for 
+
+For this example we can setup a end-to-end test where we pretend we are a user
+and run a full workflow, testing.
+
+by default playwright fill instantaneously input
+To make it human-like we just add pauses and human-like typing speed
+
+to create the action movie script 
+
+```bash
+python -m playwright codegen https://website.name
+```
+
+to help us coordinate it
+basically you press buttons and your actions appear in the action box
+quite helpful, espcially if you are new to playwright
 
 ## Piper
 
-TODO Sell piper tts
+Playwright doesn't have any sound
+
+Looking at different text-to-speech I found
+
+- festival
+
+```bash
+festival --tts --voice awb script.txt
+```
+
+TODO Insert link to piper example voices
+
+which sounds very robotic, but with slighly more googling
+(a fantastic tool when chatgpt doesn't know shit)
+
+piper is open-source text-to-speech library picked up by smarthome guys
+
+since I am already a fan of them
+
+I love it. I sounds really good.
+Which is important if you don't want people just close down your tutorial
+if you are annoyed by the voice,
+your colleagues are will also be
+
+```bash
+python -m piper -m en_US-amy-medium -i ./script.txt -f ./hello.mp3
+```
+
+I like Amy
+
+```text
+Hi this is Amy speaking, presenting the MolCalc App.
+Let's try to make a calculation. Press the search, type in Propanol, press enter.
+The molecule loads from Cactus.
+Then we press "Calculate", and whoop, we have properties.
+```
+
+does it sound robotic? still yes slightly, but I still find it impressive.
+
 
 ## Together
 
@@ -229,12 +286,10 @@ Cover benefits:
 * Tutorials tied to releases
 * One source of truth
 
-Optional callout:
-
 # Conclusion
 
-
-*(Strong, opinionated wrap-up)*
+Stop Recording Tutorials. Start Testing Them. Start coding them.
+Damn that's catchy.
 
 * Stop treating tutorials as recordings
 * Treat them as **artifacts**
