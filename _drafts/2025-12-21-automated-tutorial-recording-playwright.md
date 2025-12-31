@@ -103,7 +103,10 @@ Add text-to-speech, and suddenly we can turn scripts into reproducible, maintain
 
 # Treating Video Tutorials Like Infrastructure
 
-The two components we need are simply
+The two components we need are simply 
+[playwright]() to record actions and 
+[Piper](https://github.com/OHF-Voice/piper1-gpl)
+to record voice overs.
 
 ## Playwright
 
@@ -131,6 +134,7 @@ quite helpful, espcially if you are new to playwright
 
 Playwright doesn't have any sound
 
+
 Looking at different text-to-speech I found
 
 - festival
@@ -141,33 +145,42 @@ festival --tts --voice awb script.txt
 
 TODO Insert link to piper example voices
 
+A fast and local 
+
 which sounds very robotic, but with slighly more googling
 (a fantastic tool when chatgpt doesn't know shit)
 
 piper is open-source text-to-speech library picked up by smarthome guys
 
+Library from Open Home Foundation
+https://www.openhomefoundation.org
+https://newsletter.openhomefoundation.org/piper-is-our-new-voice-for-the-open-home/
+
 since I am already a fan of them
+
 
 I love it. I sounds really good.
 Which is important if you don't want people just close down your tutorial
 if you are annoyed by the voice,
 your colleagues are will also be
 
-```bash
-python -m piper -m en_US-amy-medium -i ./script.txt -f ./hello.mp3
-```
 
 I like Amy
 
 ```text
-Hi this is Amy speaking, presenting the MolCalc App.
-Let's try to make a calculation. Press the search, type in Propanol, press enter.
-The molecule loads from Cactus.
+Hi. This is Amy speaking, presenting MolCalc.
+Let's try to make a quantum calculation. Press the search, type in "Pro-pa-nol", then enter.
+The molecule is loaded from Cactus.
 Then we press "Calculate", and whoop, we have properties.
 ```
 
-does it sound robotic? still yes slightly, but I still find it impressive.
+```bash
+python -m piper -m en_US-amy-medium -i ./how_to.txt -f ./how_to.mp3
+```
 
+> <audio style="max-width:100%" controls playsinline src="{{site.baseurl}}/assets/images/about_tutorial/amy_hello_molcalc.mp3"></audio>
+
+does it sound robotic? still yes slightly, but I still find it impressive.
 
 ## Together
 
