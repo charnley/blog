@@ -123,8 +123,12 @@ To make it human-like we just add pauses and human-like typing speed
 to create the action movie script 
 
 ```bash
-python -m playwright codegen https://website.name
+python -m playwright codegen https://molcalc.org/
 ```
+
+> ![
+Using Playwright Codegen to navigate a website
+]({{site.baseurl}}/assets/images/about_tutorial/playwright_codegen_molcalc_resize.png)
 
 to help us coordinate it
 basically you press buttons and your actions appear in the action box
@@ -172,6 +176,11 @@ Hi. This is Amy speaking, presenting MolCalc.
 Let's try to make a quantum calculation. Press the search, type in "Pro-pa-nol", then enter.
 The molecule is loaded from Cactus.
 Then we press "Calculate", and whoop, we have properties.
+
+Hi. This is Amy speaking. Presenting MolCalc.
+Let us try to make a quantum calculation. In the searchbar. Type in "Pro-pa-nol". Then press Enter.
+The molecule structure is fetched from Cactus.
+Then we press "Calculate". Aaaaaaaand whoop. We have properties.
 ```
 
 ```bash
@@ -182,16 +191,19 @@ python -m piper -m en_US-amy-medium -i ./how_to.txt -f ./how_to.mp3
 
 does it sound robotic? still yes slightly, but I still find it impressive.
 
+You can even train your own voice
+https://github.com/OHF-Voice/piper1-gpl/blob/main/docs/TRAINING.md
+
 ## Together
 
 
 ```mermaid
 flowchart LR
-    
+
     actions[Section<br /> Page actions] --> Playwright[Playwright<br/>Record actions]
     text[Section <br/> Speech Text] --> TTS[Piper<br/>Text-to-Speech]
 
-    Playwright -->|video + timestamps| Combine[Combine by time<br />and compress]
+    Playwright -->|video + timestamps| Combine[Merge on timestamps<br />and compress]
     TTS -->|voice clips| Combine
 
     Combine --> Final[Final video]
