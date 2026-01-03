@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Taking notes with CLI - Context Switching Without Losing Your Mind"
+title: "Taking Notes With The Terminal - Context Switching Without Losing Your Mind"
 date: 2026-01-03
 categories: notes programming zettelkasten
 tags: notes programming zettelkasten
