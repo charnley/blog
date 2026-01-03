@@ -2,7 +2,8 @@
 layout: post
 title: "Taking notes with CLI - Context Switching Without Losing Your Mind"
 date: 2026-01-03
-categories: notes, programming, zettelkasten
+categories: notes programming zettelkasten
+author: Jimmy
 ---
 
 tl;dr: My pitch is,
