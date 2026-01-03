@@ -5,7 +5,6 @@ date: 2026-01-03
 categories: notes programming zettelkasten
 tags: notes programming zettelkasten
 author: Jimmy
-description: tl;dr: My pitch is, you anyway write your notes in Markdown-like text files; why not index and search them with [zk-org](https://github.com/zk-org/zk)? I use Neovim, but the setup is editor agnostic. This is not overkill.
 ---
 
 tl;dr: My pitch is,
