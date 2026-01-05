@@ -277,7 +277,7 @@ A template would look something like this
 </details>
 
 Why have "Untitled" in my template?
-Because I sat op my editor [Neovim](https://github.com/neovim/neovim) to jump through "Untitled"
+Because I sat up my editor [Neovim](https://github.com/neovim/neovim) to jump through "Untitled"
 so I can quickly <kbd>n</kbd><kbd>c</kbd><kbd>w</kbd> (next match, change word).
 
 #### Configuration
