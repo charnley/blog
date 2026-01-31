@@ -408,4 +408,4 @@ The interface is somewhat clunky, but good enough.
 - [ViscousPot/GitSync](https://github.com/ViscousPot/GitSync) - Sync git repos on your phone.
 - Sönke Ahren - [How to Take Smart Notes](https://www.soenkeahrens.de/en/takesmartnotes) - this is not a recommendation, just a reference.
 - Jeff Su - [Productivity System](https://www.youtube.com/watch?v=oO9GLC2iKy8) - Video about doing todo-lists. Capture quickly, Organize clearly, Review frequently, Engange effectively.
-- [Setting Up Obsidian Git on iOS](https://forum.obsidian.md/t/setting-up-obsidian-git-on-ios-without-ish-or-working-copy/97800) - alternative when having problem setting up Obsidian + Git Sync on iPhone
+- [Setting Up Obsidian Git on iOS](https://forum.obsidian.md/t/setting-up-obsidian-git-on-ios-without-ish-or-working-copy/97800) - alternative when having problem setting up Obsidian + Git Sync on iPhone 
