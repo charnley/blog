@@ -29,7 +29,7 @@ we can create automated tutorials, every time the user-interface/application cha
 Example code: [github.com/charnley/example-training-as-code](github.com/charnley/example-training-as-code).
 
 > **Play with sound**
-> <video style="max-width:100%" controls playsinline src="{{site.baseurl}}/assets/images/about_tutorial/localhost_recording_compressed.webm"></video>
+> <video style="max-width:100%" controls playsinline src="{{site.baseurl}}/assets/images/about_tutorial/localhost_recording_compressed.mp4"></video>
 
 # Recording Tutorials are Expensive
 
@@ -192,7 +192,6 @@ blur
 > **Update:** I chose Piper TTS at point of writing, but [Kitten TTS](https://github.com/KittenML/KittenTTS) looks very promising. Thanks Patrick.
 
 The browser emulation doesn't contain any sound, so we need to generate a overlay narration that goes with each action.
-
 First I looked at `festival` which is `apt`-installable and pretty universal.
 
 ```bash
@@ -200,7 +199,6 @@ festival --tts --voice awb script.txt
 ```
 
 However, this is more robotic than Microsoft Sam. Very distracting.
-
 Instead I found **Piper TTS**, which seems to be a project that has moved owner quite a few times, but has now landed under the ownership of [Open Home Foundation](https://www.openhomefoundation.org).
 
 - [newsletter.openhomefoundation.org/piper-is-our-new-voice-for-the-open-home](https://newsletter.openhomefoundation.org/piper-is-our-new-voice-for-the-open-home/).
@@ -219,15 +217,10 @@ Hi. This is Amy speaking, presenting MolCalc.
 Let's try to make a quantum calculation. Press the search, type in "Pro-pa-nol", then enter.
 The molecule is loaded from Cactus.
 Then we press "Calculate", and whoop, we have properties.
-
-Hi. This is Amy speaking. Presenting MolCalc.
-Let us try to make a quantum calculation. In the searchbar. Type in "Pro-pa-nol". Then press Enter.
-The molecule structure is fetched from Cactus.
-Then we press "Calculate". Aaaaaaaand whoop. We have properties.
 ```
 
 ```bash
-python -m piper -m en_US-amy-medium -i ./how_to.txt -f ./how_to.mp3
+python -m piper -m en_US-amy-medium -i ./how_to_molcalc.txt -f ./how_to_molcalc.mp3
 ```
 
 > <audio style="max-width:100%" controls playsinline src="{{site.baseurl}}/assets/images/about_tutorial/amy_hello_molcalc.mp3"></audio>
@@ -238,9 +231,16 @@ does it sound robotic? still yes slightly, but I still find it impressive.
 
 # Together
 
-smaller steps to keep sound and actions together without it feeling unnatural
+The tutorial is written as a list of sections.
+Each section is a pair: what the browser does, and what is narrated.
+Practically in my example I use a decorator to link them together into two lists.
 
-sleep if voice is longer than action
+```python
+@add_section("Narration Text")
+def section_name(page: Page):
+    page.do_action()
+    ...
+```
 
 ```mermaid
 flowchart LR
@@ -255,67 +255,15 @@ flowchart LR
 
 ```
 
-Think Infrastructure as Code, but for tutorials.
+The tricky part is timing.
+Browser actions often finish faster than the narration.
+If you don't account for that, the next section starts while Amy is still talking.
 
-Most teams don’t make video tutorials.
+The fix: after each section, wait for however long the audio still needs.
+That keeps narration and actions in sync without any manual editing.
 
-Not because they don’t want to — but because they don’t have:
-a narrator, an editor, a studio, or the budget to re-record everything after every release.
-
-This post is about a different approach:
-tutorials as code — generated the same way we already run end-to-end tests, using Playwright and text-to-speech.
-
-Video tutorials are treated as media assets, but they need to behave like software artifacts.
-
-Most organizations cannot afford:
-
-Manual re-recording
-
-Narration updates
-
-Video editing cycles
-
-So the only viable solution is automation.
-
-> If a tutorial can’t be regenerated from source, it’s already outdated.
-
-TODO Show piper example
-
-This post is about treating tutorials like end-to-end tests: scripted, reproducible, and boring in the best possible way.
-Using Playwright, text-to-speech, and a browser, we can generate video tutorials automatically — the same way we already validate our apps.
-
-Because it is playwright, the tutorial will also fail to compile if the application change too much from the last compilation.
-Which forces the maintainer to look into it.
-
-Tutorials Are Just End-to-End Tests with a Voice
-
-* Docs, onboarding, demos, internal training
-
-* Playwright already:
-
-  * Drives the browser
-  * Waits for state
-  * Replays flows deterministically
-
-* A tutorial is:
-
-  * A scripted user journey
-  * With narration
-  * And a visual output
-
-Draw the explicit parallel:
-
-* Terraform:
-
-  * Declarative
-  * Versioned
-  * Reproducible
-
-* Tutorial scripts:
-
-  * Declarative flows
-  * Versioned narration
-  * Reproducible videos
+The bonus: if the application changes and a button disappears or a flow breaks, the script fails.
+Which forces the maintainer to look at it.
 
 # Example: A svelte application with corresponding video tutorial
 
@@ -414,11 +362,27 @@ so generate "micro" tutorials for your software.
 
 Actually AI models are quite good to splitting up `codegen` steps into human-timed execution.
 
+Maybe the tutorials need some elevator music
+
 ## Appendix: How to setup
 
 Go see github link [github.com/charnley/example-training-as-code]()
 
+The example uses a small [SvelteKit](https://svelte.dev/) app with [TailwindCSS](https://tailwindcss.com/) and [shadcn-svelte](https://shadcn-svelte.com) components.
+Which I very much prefer over React.
+The stack doesn't matter much.
+Any web application Playwright can drive will work.
+Svelte just happens to be fast to spin up for a demo.
+
 ## References
 
+- [github.com/charnley/example-training-as-code](https://github.com/charnley/example-training-as-code)
+- [playwright.dev](https://playwright.dev/)
+- [github.com/OHF-Voice/piper1-gpl](https://github.com/OHF-Voice/piper1-gpl)
+- [rhasspy.github.io/piper-samples](https://rhasspy.github.io/piper-samples/)
+- [newsletter.openhomefoundation.org — Piper is our new voice for the open home](https://newsletter.openhomefoundation.org/piper-is-our-new-voice-for-the-open-home/)
 - [github.com/KittenML/KittenTTS](https://github.com/KittenML/KittenTTS)
+- [svelte.dev](https://svelte.dev/)
+- [tailwindcss.com](https://tailwindcss.com/)
+- [shadcn-svelte.com](https://shadcn-svelte.com)
 
