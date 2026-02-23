@@ -176,16 +176,13 @@ path  = page.video.path()
 
 ## Make it slower and human like
 
-put lots of sleep
+I add lots of `page.wait_for_timeout` for the narration and actions to keep up, and space it out more.
 
-enumerate element functions
+I added some functions to make it feel more human-like
 
-human-like typing
-
-highlight
-
-blur
-
+- `slow_writing` adding random delays to the typing `random.uniform(0.2, 0.5)` and random typing errors `random.choice("abcdef")`.
+- `highlight` adds a css class to an element to highlight it with a blue color `element.evaluate(f"el => el.classList.add('highlight')")`.
+- `blur` sometimes I need to remove focus from element, which is pretty easy with `page.mouse.click(0, 0)`.
 
 # Emulating voice-over e.i. Piper TTS
 
@@ -265,57 +262,45 @@ That keeps narration and actions in sync without any manual editing.
 The bonus: if the application changes and a button disappears or a flow breaks, the script fails.
 Which forces the maintainer to look at it.
 
-# Example: A svelte application with corresponding video tutorial
+<!-- # Example: A svelte application with corresponding video tutorial -->
 
 
-The Problem
-- Writing tutorial videos by hand is tedious and hard to update
-- Keeping narration in sync with screen actions is the core challenge
-The Idea
-- Use a headless browser to record interactions programmatically
-- Generate narration from text with a local TTS model
-- Merge them in post — no manual editing
-The Tools
-- Playwright for browser automation and built-in video recording
-- Piper TTS for offline, local speech synthesis
-- MoviePy for audio/video composition
-Authoring Experience — The SectionList Pattern
-- The naive approach: two parallel lists that drift out of sync
-- Introducing the decorator pattern — text lives next to the code it describes
-- Why named functions matter for debugging (appear in logs)
-Recording the Video
-- How Playwright's record_video_dir works
-- Timing sections with wall-clock timestamps
-- The overlap problem: browser actions finish before narration does
-- Fix: sleep after each section for max(0, audio_duration - action_duration)
-Generating the Audio
-- Piper TTS runs fully offline — no API keys, no latency
-- One MP3 file per section
-- Reading audio duration to drive the video pause logic
-Synchronising Audio and Video
-- Shifting timestamps: each audio clip starts at the beginning of its section, not the end
-- Using CompositeAudioClip to overlay all clips in one pass
-- Optionally trimming the first section (silent intro)
-The Demo App
-- Why a real SvelteKit app instead of a mock
-- Makes the tutorial look credible and tests real interactions
-Limitations and What's Next
-- No highlight CSS injected into the app yet (class is added but styles not guaranteed)
-- Single voice — swapping Piper models for different accents/styles
-- Could extend to non-browser recordings (terminal, desktop apps)
+<!-- The Problem -->
+<!-- - Writing tutorial videos by hand is tedious and hard to update -->
+<!-- - Keeping narration in sync with screen actions is the core challenge -->
+<!-- The Idea -->
+<!-- - Use a headless browser to record interactions programmatically -->
+<!-- - Generate narration from text with a local TTS model -->
+<!-- - Merge them in post — no manual editing -->
+<!-- The Tools -->
+<!-- - Playwright for browser automation and built-in video recording -->
+<!-- - Piper TTS for offline, local speech synthesis -->
+<!-- - MoviePy for audio/video composition -->
+<!-- Authoring Experience — The SectionList Pattern -->
+<!-- - The naive approach: two parallel lists that drift out of sync -->
+<!-- - Introducing the decorator pattern — text lives next to the code it describes -->
+<!-- - Why named functions matter for debugging (appear in logs) -->
+<!-- Recording the Video -->
+<!-- - How Playwright's record_video_dir works -->
+<!-- - Timing sections with wall-clock timestamps -->
+<!-- - The overlap problem: browser actions finish before narration does -->
+<!-- - Fix: sleep after each section for max(0, audio_duration - action_duration) -->
+<!-- Generating the Audio -->
+<!-- - Piper TTS runs fully offline — no API keys, no latency -->
+<!-- - One MP3 file per section -->
+<!-- - Reading audio duration to drive the video pause logic -->
+<!-- Synchronising Audio and Video -->
+<!-- - Shifting timestamps: each audio clip starts at the beginning of its section, not the end -->
+<!-- - Using CompositeAudioClip to overlay all clips in one pass -->
+<!-- - Optionally trimming the first section (silent intro) -->
+<!-- The Demo App -->
+<!-- - Why a real SvelteKit app instead of a mock -->
+<!-- - Makes the tutorial look credible and tests real interactions -->
+<!-- Limitations and What's Next -->
+<!-- - No highlight CSS injected into the app yet (class is added but styles not guaranteed) -->
+<!-- - Single voice — swapping Piper models for different accents/styles -->
+<!-- - Could extend to non-browser recordings (terminal, desktop apps) -->
 
-
-
-github link
-this is not a package, just a proof-of-concept
-
-TODO Explain svelte and why
-
-TODO Show screencast of recording usage of the website
-TODO Show piper example
-TODO Show playwright video
-TODO Show playwright highlight css
-TODO Show playwright page action example
 
 ```bash
 python -m playwright codegen https://molcalc.org
