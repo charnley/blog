@@ -97,7 +97,7 @@ For convience I created some Playwright specific functions that makes interactio
 
 - **Human typing:** adding random delays to the typing `random.uniform(0.2, 0.5)` as well as random typing errors `random.choice("abcdef")` followed by <kbd>backspace</kbd>.
 - **Element highlight:** Add CSS class to an element to highlight it with a blue color `element.evaluate(f"el => el.classList.add('highlight')")`.
-- **Remove focus:** Also know as [blur]([https://rhasspy.github.io/piper-samples/](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/blur), which is pretty easy with `page.mouse.click(0, 0)`.
+- **Remove focus:** Also know as [blur](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/blur), which is pretty easy with `page.mouse.click(0, 0)`.
 
 And with that we can pretty naturally navigate through a interface, and output a video.
 If something goes wrong you can disable the headless mode and debug it with a `codegen` session.
