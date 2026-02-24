@@ -7,7 +7,7 @@ categories: tutorial, documentation, programming
 
 tldr:
 tutorials-as-code.
-Using `playwright` for end-to-end browser testing, and overlaying text-to-speech using `Piper`',
+Using `playwright` for end-to-end browser testing, and overlaying text-to-speech using `Piper`,
 we can create automated tutorials, every time the user interface or application changes.
 Example code: [github.com/charnley/example-tutorial-as-code](https://github.com/charnley/example-tutorial-as-code).
 
