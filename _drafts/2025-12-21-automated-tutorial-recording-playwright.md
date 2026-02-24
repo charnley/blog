@@ -23,7 +23,7 @@ Constant digital fires and reactive, leaves little time for user documentation, 
 
 We don’t have the budget for a video crew, voice actors or time to update every time UI updates, so tutorials are out of the question.
 Someone has to plan, record, narrate, edit, and redo them when flows change.
-For larger teams who do though, the result I usually see are usually one-off recordings that are quickly obsolete.
+Even larger teams with resources tend to produce one-off recordings that go stale quickly.
 
 > "Oh no, don't press that button. Did you watch the tutorial? You shouldn't, sorry, that is outdated now" - Manual Tutorial User
 
@@ -32,7 +32,7 @@ That means treating them like software artifacts, not media files.
 Infrastructure is code. Deployments are code. Tests are code. Tutorials should also be.
 
 What really clicked for me was when a super user of ours recorded himself using an application,
-then added speech using Microsoft text-to-speech (Very cool Thierry).
+then added speech using Microsoft text-to-speech — thanks Thierry.
 My first thought was: "but, I can just automate the recording!".
 
 What we test and what we want to document is usually the same thing.
@@ -41,6 +41,8 @@ Add text-to-speech, and suddenly we can turn scripts into reproducible, maintain
 
 > Treating Video Tutorials Like Infrastructure. Tutorial-as-code.
 
+Especially since I almost only see web-based applications being developed internally in companies now.
+No desktop applications.
 The two components we need are simply 
 [playwright](https://playwright.dev/) to record actions and 
 [Piper](https://github.com/OHF-Voice/piper1-gpl)
@@ -65,12 +67,13 @@ Using Playwright Codegen to navigate a website
 
 You interact with the browser and your actions appear as generated code in a side panel.
 It is especially helpful to generate a longer workflow.
+To run a workflow it you initialize a browser with a `page` and run actions on it, then get the actions in a video. As seen in this snippet.
 
 ```python
 from playwright.sync_api import sync_playwright
 # Init the browser, with defined outpout video path and browser dimensions.
-playwright = sync_playwright().start()
-browser = playwright.chromium.launch(headless=True)
+playwright_obj = sync_playwright().start()
+browser = playwright_obj.chromium.launch(headless=True)
 viewpoint = {"width": browser_width, "height": browser_height}
 context = browser.new_context(record_video_dir=work_dir, viewport=viewpoint, record_video_size=viewpoint)
 
@@ -87,46 +90,42 @@ path  = page.video.path()
 ...
 ```
 
-By default Playwright fills inputs instantaneously, so to make it feel human-like we add pauses and realistic typing speed.
-Make it slower and human like
+By default Playwright fills inputs instantaneously — to make it feel human-like, we need to add pauses and realistic typing speed.
+Also good usage of just sleep with `page.wait_for_timeout` for the narration and actions to keep up, and space it out more.
 
-I add lots of `page.wait_for_timeout` for the narration and actions to keep up, and space it out more.
+For convience I created some Playwright specific functions that makes interactions more natural looking.
 
-I added some functions to make it feel more human-like
+- **Human typing:** adding random delays to the typing `random.uniform(0.2, 0.5)` and random typing errors `random.choice("abcdef")` and <kbd>backspace</kbd>.
+- **Element highlight:** Add CSS class to an element to highlight it with a blue color `element.evaluate(f"el => el.classList.add('highlight')")`.
+- **Remove focus:** also known as blur, as sometimes I need to remove focus from element, which is pretty easy with `page.mouse.click(0, 0)`.
 
-- `slow_writing` adding random delays to the typing `random.uniform(0.2, 0.5)` and random typing errors `random.choice("abcdef")`.
-- `highlight` adds a css class to an element to highlight it with a blue color `element.evaluate(f"el => el.classList.add('highlight')")`.
-- `blur` sometimes I need to remove focus from element, which is pretty easy with `page.mouse.click(0, 0)`.
+And with that we can pretty naturally navigate through a interface, and output a video.
+If something goes wrong you can disable the headless mode and debug it with a `codegen` session.
 
-> **Note:** Playwright works way better in headless mode for recording. If not you get a weird white border.
+> **Note:** Playwright works way better in headless mode for recordings.
+> If not in headless mode, you will get whitespace around your viewpoint.
 
 > **Note:** Because it can run headless, that also means it works great in a docker-based run.
+> Making it very CI/CD-pipeline friendly.
 
 # Emulating voice-over, i.e. Piper TTS
 
 > **Edit:** I chose Piper TTS at point of writing, but [Kitten TTS](https://github.com/KittenML/KittenTTS) looks very promising. Thanks Patrick.
 
 The browser emulation doesn't contain any sound, so we need to generate a overlay narration that goes with each action.
-First I looked at `festival` which is `apt`-installable and pretty universal.
-
-```bash
-festival --tts --voice awb script.txt
-```
-
-However, this is more robotic than Microsoft Sam. Very distracting.
+First I looked at `festival` — familiar, `apt`-installable, but the output is more robotic than Microsoft Sam.
 Instead I found **Piper TTS**, which seems to be a project that has moved owner quite a few times, but has now landed under the ownership of [Open Home Foundation](https://www.openhomefoundation.org).
 
 <!-- [newsletter.openhomefoundation.org/piper-is-our-new-voice-for-the-open-home](https://newsletter.openhomefoundation.org/piper-is-our-new-voice-for-the-open-home/). -->
 
 Which is great, as I am already quite a big fan of Home Assistant and the foundation behind it.
 Piper TTS is a fast, local and open-source model for TTS with a big variety of voices and languages.
-Even the most romantic european language; Danish.
+Even the most romantic European language: Danish.
 See [Piper Samples](https://rhasspy.github.io/piper-samples/).
 
 At times it still sounds a bit robotic, but not really distractingly so.
 I have found the English voice "Amy" to be a good choice — natural enough that listeners focus on the content rather than the voice.
-There is a slight issue with un-natural short breaks between sentences, but that could possible be configured.
-I fixed some pauses by splitting out the conversation into multiple sound files.
+There is a slight issue with unnatural short breaks between sentences, which I fixed by splitting the narration into one audio file per sentence.
 
 Example:
 
@@ -148,7 +147,7 @@ For extra point in your tutorial, you can even [train your own voice](https://gi
 
 # Together
 
-The tutorials is written as a list of sections/scenes.
+The tutorial is written as a list of sections/scenes.
 Each section is a pair: what the browser does, and what is narrated.
 
 ```mermaid
@@ -166,9 +165,11 @@ flowchart TD
 It is a question of timing.
 Browser actions often finish faster than the narration.
 If you don't account for that, the next section starts while Amy is still talking.
-This is fixed to just have the browser sleep while Amy is talking.
+The fix is simple: pause the browser until the audio finishes.
 
-Practically in my example I use a decorator to link them together into two lists.
+In the example repo, I use a decorator to link them together into two lists.
+The main reason for the decorator is just to keep narration and actions physically together in the code.
+A side affect is that I just comment out the `@decorator` and that removes the section from the tutorial.
 
 ```python
 @add_section("Narration Text")
@@ -186,10 +187,12 @@ That means your application changed and the tutorial needs updating — which is
 Because Playwright is a testing framework, a broken tutorial script is just a failing test.
 It forces the maintainer to revisit it, which is far better than a silently outdated video.
 
-- Stop treating tutorials as recordings, treat them as **artifacts**. If it matters, automate it. If it can't be regenerated, it's already broken/outdated.
-- **Keep videos slow.** Viewers can always watch at 1.5x speed, but can't rewind what they missed. Err on the side of too slow.
-- **Use AI to help with timing.** LLMs are surprisingly good at splitting `codegen` output into human-paced steps with sensible wait times.
-- **Prefer micro-tutorials.** Short, focused walkthroughs of a single flow teach better than long all-in-one recordings.
+- Stop treating tutorials as recordings, treat them as **software artifacts**. If it matters, automate it. If it can't be regenerated, it's already broken/outdated.
+- **Keep videos slow.** Viewers can always watch at 1.5x speed, but can't easily be slowed down if a section is unclear.
+- **Use AI to help with timing.** LLMs are surprisingly good at splitting `codegen` output into human-paced steps with sensible wait times. Especially given examples. Even generate the text.
+- **Prefer micro-tutorials.** Short, focused walkthroughs of a single flow teach better than long all-in-one recordings. See the tutorials as integration test for a certain use-case.
+
+Happy tutorial-ing.
 
 ## Appendix: How to setup
 
@@ -197,8 +200,8 @@ Go see the example code at [github.com/charnley/example-tutorial-as-code](https:
 
 The example uses a small [SvelteKit](https://svelte.dev/) app with [TailwindCSS](https://tailwindcss.com/) and [shadcn-svelte](https://shadcn-svelte.com) components.
 Which I very much prefer over React.
-The stack doesn't matter much.
-Any web application Playwright can drive will work.
+Obviously the web stack doesn't matter, as
+any web application will work with Playwright.
 Svelte just happens to be fast to spin up for a demo.
 
 ## References
@@ -209,6 +212,7 @@ Svelte just happens to be fast to spin up for a demo.
 - [rhasspy.github.io/piper-samples](https://rhasspy.github.io/piper-samples/)
 - [newsletter.openhomefoundation.org — Piper is our new voice for the open home](https://newsletter.openhomefoundation.org/piper-is-our-new-voice-for-the-open-home/)
 - [github.com/KittenML/KittenTTS](https://github.com/KittenML/KittenTTS)
+- [github.com/Zulko/moviepy](https://github.com/Zulko/moviepy)
 - [svelte.dev](https://svelte.dev/)
 - [tailwindcss.com](https://tailwindcss.com/)
 - [shadcn-svelte.com](https://shadcn-svelte.com)
