@@ -67,7 +67,7 @@ Using Playwright Codegen to navigate a website
 
 You interact with the browser and your actions appear as generated code in a side panel.
 It is especially helpful to generate a longer workflow.
-To run a workflow it you initialize a browser with a `page` and run actions on it, then get the actions in a video. As seen in this snippet.
+To run a workflow you initialize a browser with a `page` and run actions on it, then get the actions in a video. As seen in this snippet.
 
 ```python
 from playwright.sync_api import sync_playwright
@@ -169,7 +169,7 @@ The fix is simple: pause the browser until the audio finishes.
 
 In the example repo, I use a decorator to link them together into two lists.
 The main reason for the decorator is just to keep narration and actions physically together in the code.
-A side affect is that I just comment out the `@decorator` and that removes the section from the tutorial.
+A side effect is that I just comment out the `@decorator` and that removes the section from the tutorial.
 
 ```python
 @add_section("Narration Text")
