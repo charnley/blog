@@ -1,3 +1,5 @@
+.PHONY: build
+
 port=5000
 env=./env
 python=./${env}/bin/python
@@ -13,6 +15,11 @@ dev:
 
 start:
 	bundle exec jekyll serve --host 0.0.0.0 --port ${port}
+
+start-python:
+	@# Needed for when you need to test with embedded media
+	JEKYLL_ENV=development bundle exec jekyll build --drafts --baseurl ""
+	python -m http.server ${port} --directory _site/
 
 format:
 	prettier
