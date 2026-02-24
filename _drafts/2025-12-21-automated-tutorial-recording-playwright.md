@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Building Tutorial-as-code, using Playwright and Piper"
+title: "Building Tutorials as-code, using Playwright and Piper"
 date: 2025-12-21
 categories: tutorial, documentation, programming
 ---
@@ -9,7 +9,7 @@ tldr:
 tutorials-as-code.
 Using `playwright` end-to-end browser testing, and `Piper` text-to-speech,
 we can create automated tutorials, every time the user-interface/application changes.
-Example code: [github.com/charnley/example-training-as-code](https://github.com/charnley/example-training-as-code).
+Example code: [github.com/charnley/example-tutorial-as-code](https://github.com/charnley/example-tutorial-as-code).
 
 > **Play with sound**
 > <video style="max-width:100%" controls playsinline src="{{site.baseurl}}/assets/images/about_tutorial/localhost_recording_compressed.mp4"></video>
@@ -18,25 +18,26 @@ Example code: [github.com/charnley/example-training-as-code](https://github.com/
 
 I work in a small team.
 Like most small teams, documentation is always on the backlog.
-Not the highest priority with constant digital fires, so documentation and especially videos.
+Far into the backlog.
+Constant digital fires and reactive, leaves little time for user documentation, let alone tutorial videos.
 
 We don’t have the budget for a video crew, voice actors or time to update every time UI updates, so tutorials are out of the question.
 Someone has to plan, record, narrate, edit, and redo them when flows change.
-The result I usually see are usually one-off recordings that are always obsolete.
+For larger teams who do though, the result I usually see are usually one-off recordings that are quickly obsolete.
 
 > "Oh no, don't press that button. Did you watch the tutorial? You shouldn't, sorry, that is outdated now" - Manual Tutorial User
 
-The only tutorials that survive are cheap to produce and cheap to update.
+The only tutorials that survive are the ones which are cheap to produce and cheaper to update.
 That means treating them like software artifacts, not media files.
 Infrastructure is code. Deployments are code. Tests are code. Tutorials should also be.
 
-What really clicked for me was when a champion of our users recorded himself using an application,
+What really clicked for me was when a super user of ours recorded himself using an application,
 then added speech using Microsoft text-to-speech (Very cool Thierry).
-My first thought was: "I can just automate the recording."
+My first thought was: "but, I can just automate the recording!".
 
 What we test and what we want to document is usually the same thing.
-User flows, edge cases, authentication—Playwright already automates them.
 Add text-to-speech, and suddenly we can turn scripts into reproducible, maintainable tutorial videos without a crew.
+"Do more with less", is a sentence I've heard.
 
 > Treating Video Tutorials Like Infrastructure. Tutorial-as-code.
 
@@ -52,8 +53,6 @@ it is a browser automation and end-to-end testing tool for both JavaScript and P
 It lets you script real browser interactions — clicks, form fills, navigation — and run them headlessly or with a visible browser window.
 
 For our purposes, we set up a script that pretends to be a user running through a full workflow.
-By default Playwright fills inputs instantaneously, so to make it feel human-like we add pauses and realistic typing speed.
-
 A great starting point is the `codegen` command, which records your manual interactions and outputs the equivalent Playwright code:
 
 ```bash
@@ -65,7 +64,7 @@ Using Playwright Codegen to navigate a website
 ]({{site.baseurl}}/assets/images/about_tutorial/playwright-codegen-localhost_resize.png)
 
 You interact with the browser and your actions appear as generated code in a side panel.
-It is especially helpful if you are new to Playwright's API.
+It is especially helpful to generate a longer workflow.
 
 ```python
 from playwright.sync_api import sync_playwright
@@ -88,6 +87,7 @@ path  = page.video.path()
 ...
 ```
 
+By default Playwright fills inputs instantaneously, so to make it feel human-like we add pauses and realistic typing speed.
 Make it slower and human like
 
 I add lots of `page.wait_for_timeout` for the narration and actions to keep up, and space it out more.
@@ -116,10 +116,12 @@ festival --tts --voice awb script.txt
 However, this is more robotic than Microsoft Sam. Very distracting.
 Instead I found **Piper TTS**, which seems to be a project that has moved owner quite a few times, but has now landed under the ownership of [Open Home Foundation](https://www.openhomefoundation.org).
 
-- [newsletter.openhomefoundation.org/piper-is-our-new-voice-for-the-open-home](https://newsletter.openhomefoundation.org/piper-is-our-new-voice-for-the-open-home/).
+<!-- [newsletter.openhomefoundation.org/piper-is-our-new-voice-for-the-open-home](https://newsletter.openhomefoundation.org/piper-is-our-new-voice-for-the-open-home/). -->
 
 Which is great, as I am already quite a big fan of Home Assistant and the foundation behind it.
-Piper TTS is a fast, local and open-source model for TTS with a big variety of voices and languages. Even Danish. See [Piper Samples](https://rhasspy.github.io/piper-samples/).
+Piper TTS is a fast, local and open-source model for TTS with a big variety of voices and languages.
+Even the most romantic european language; Danish.
+See [Piper Samples](https://rhasspy.github.io/piper-samples/).
 
 At times it still sounds a bit robotic, but not really distractingly so.
 I have found the English voice "Amy" to be a good choice — natural enough that listeners focus on the content rather than the voice.
@@ -150,17 +152,16 @@ The tutorials is written as a list of sections/scenes.
 Each section is a pair: what the browser does, and what is narrated.
 
 ```mermaid
-flowchart LR
-
-    actions[Section<br /> Page actions] --> Playwright[Playwright<br/>Record actions]
-    text[Section <br/> Speech Text] --> TTS[Piper<br/>Text-to-Speech]
-
-    Playwright -->|video + timestamps| Combine[Merge on timestamps<br />and compress]
-    TTS -->|voice clips| Combine
-
-    Combine --> Final[Final video]
-
+flowchart TD
+    A[Tutorial script] --> B[Synthesise narration audio]
+    A --> C[Record browser session]
+    C --> C2[Pause if audio is longer than action]
+    B --> D[Synchronise audio to video timestamps]
+    C2 --> D
+    D --> E[Export merged video]
 ```
+
+
 
 It is a question of timing.
 Browser actions often finish faster than the narration.
@@ -180,27 +181,19 @@ Then stitch it together using `moviepy`.
 
 # Conclusion / Closing thoughts
 
-> Stop Recording Tutorials. Start Testing Them. Start coding them.
-
 What if the app changes and the tutorial script stops working? Good.
 That means your application changed and the tutorial needs updating — which is exactly the point.
 Because Playwright is a testing framework, a broken tutorial script is just a failing test.
 It forces the maintainer to revisit it, which is far better than a silently outdated video.
 
-- Stop treating tutorials as recordings
-- Treat them as **artifacts**
-- If it matters, automate it
-- If it can't be regenerated, it's already broken
-
-A few practical tips from experience:
-
+- Stop treating tutorials as recordings, treat them as **artifacts**. If it matters, automate it. If it can't be regenerated, it's already broken/outdated.
 - **Keep videos slow.** Viewers can always watch at 1.5x speed, but can't rewind what they missed. Err on the side of too slow.
 - **Use AI to help with timing.** LLMs are surprisingly good at splitting `codegen` output into human-paced steps with sensible wait times.
 - **Prefer micro-tutorials.** Short, focused walkthroughs of a single flow teach better than long all-in-one recordings.
 
 ## Appendix: How to setup
 
-Go see the example code at [github.com/charnley/example-training-as-code](https://github.com/charnley/example-training-as-code).
+Go see the example code at [github.com/charnley/example-tutorial-as-code](https://github.com/charnley/example-tutorial-as-code).
 
 The example uses a small [SvelteKit](https://svelte.dev/) app with [TailwindCSS](https://tailwindcss.com/) and [shadcn-svelte](https://shadcn-svelte.com) components.
 Which I very much prefer over React.
@@ -210,7 +203,7 @@ Svelte just happens to be fast to spin up for a demo.
 
 ## References
 
-- [github.com/charnley/example-training-as-code](https://github.com/charnley/example-training-as-code)
+- [github.com/charnley/example-tutorial-as-code](https://github.com/charnley/example-tutorial-as-code)
 - [playwright.dev](https://playwright.dev/)
 - [github.com/OHF-Voice/piper1-gpl](https://github.com/OHF-Voice/piper1-gpl)
 - [rhasspy.github.io/piper-samples](https://rhasspy.github.io/piper-samples/)
