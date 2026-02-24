@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Building Tutorials as-code, using Playwright and Piper"
-date: 2025-12-21
+date: 2026-02-24
 categories: tutorial, documentation, programming
 ---
 
