@@ -12,7 +12,8 @@ we can create automated tutorials, every time the user interface or application 
 Example code: [github.com/charnley/example-tutorial-as-code](https://github.com/charnley/example-tutorial-as-code).
 
 > **Play with sound**
-> <video style="max-width:100%" controls playsinline src="{{site.baseurl}}/assets/images/about_tutorial/localhost_recording_compressed.mp4"></video>
+<!-- > <video style="max-width:100%" controls playsinline src="{{site.baseurl}}/assets/images/about_tutorial/localhost_recording_compressed.mp4"></video> -->
+> <video style="max-width:100%" controls playsinline src="https://github.com/charnley/blog/raw/refs/heads/main/assets/images/about_tutorial/localhost_recording_compressed.mp4"></video>
 
 # Recording Tutorials are Expensive
 
