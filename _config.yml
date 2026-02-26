@@ -24,7 +24,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   This blog will contain technical write-ups with very varying contents. We will try to use tags/category as much as possible to avoid mixing everything up. Usually content is about some github project we made.
 
 baseurl: "/blog" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://charnley.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
 theme: minima
