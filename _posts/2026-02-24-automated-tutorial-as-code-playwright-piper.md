@@ -24,7 +24,7 @@ Constantly fighting proverbial fires and reacting to ad-hoc requests, leaves lit
 
 We don’t have the budget for a video crew and voice actors or time to update every time UI updates, so the conventional video tutorials are out of the question.
 Someone has to plan, record, narrate, edit, and redo them when flows change.
-Even larger teams with dedicated "e-learning" resources tend to produce one-off recordings that go stale quickly.
+Even larger teams with dedicated "e-learning" resources tend to produce one-off recordings that quickly go stale.
 
 > "Oh no, don't press that button. Did you watch the tutorial? You shouldn't, sorry, that is outdated now" - Manual Tutorial User
 
@@ -41,6 +41,8 @@ Add text-to-speech, and suddenly we can turn scripts into reproducible, maintain
 "Do more with less", is a fitting sentence I've heard.
 
 > Treating Video Tutorials Like Infrastructure. Tutorial-as-code.
+
+> "VDD - Video Driven Development" - Denis
 
 Here's my hot take: Internally developed desktop applications are basically a relic. From what I see, everything is web-based now.
 [Playwright](https://playwright.dev/) to record actions plus 
