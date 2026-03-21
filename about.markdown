@@ -15,6 +15,13 @@ This blog will contain technical write-ups with very varying contents. We will t
 
 - [andersx.dk](https://andersx.dk/)
 - [kplauritzen.dk](https://kplauritzen.dk)
+
+### Chemistry and Science
+
 - [proteinsandwavefunctions](https://proteinsandwavefunctions.blogspot.com/)
 - [Steinmann Group](https://steinmanngroup.github.io/)
+- [Greg's RDKit blog](https://greglandrum.github.io/rdkit-blog/)
+- [Computational Chemistry Highlights](http://www.compchemhighlights.org/)
+- [Is life worth living?](https://iwatobipen.wordpress.com/)
+- [Practical Cheminfomatics](https://patwalters.github.io/)
 
