@@ -24,4 +24,6 @@ This blog will contain technical write-ups with very varying contents. We will t
 - [Computational Chemistry Highlights](http://www.compchemhighlights.org/)
 - [Is life worth living?](https://iwatobipen.wordpress.com/)
 - [Practical Cheminfomatics](https://patwalters.github.io/)
+- [Noel O'Blog](https://baoilleach.blogspot.com/)
+
 
