@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://charnley.github.io/blog/sitemap.xml
+Sitemap: https://charnley.github.io/blog/sitemap.txt
