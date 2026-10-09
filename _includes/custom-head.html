@@ -48,8 +48,12 @@
         
         // Fonts
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-        fontSize: '13px'
+        fontSize: '13px',
+
+        // No drop shadows (added by default in mermaid v12)
+        dropShadow: 'none'
       },
+      themeCSS: '* { filter: none !important; }',
       flowchart: {
         useMaxWidth: true,
         htmlLabels: true,
