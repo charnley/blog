@@ -47,7 +47,7 @@ I am using Logitech G915 TKL keyboard and Logitech Pro Wireless mouse.
 
 ## USB Hub
 
-I use a UNI USB-C hub that can handle a USB-C charger, so I can use it as a hub and charge my laptop simultaneously.
+I use a UNI USB-C hub (UNI8IN101 (UA27)) that can handle a USB-C charger, so I can use it as a hub and charge my laptop simultaneously.
 
 ## Webcam, microphone and sound
 
@@ -77,7 +77,7 @@ There are many options, in varying price ranges. Here are some notes to look out
 - M4 Screw pack [https://amzn.to/41sayxK](https://amzn.to/41sayxK)
 - NEBULA Capsule Tripod [https://amzn.to/41qPaJn](https://amzn.to/41qPaJn)
 - VVGAOGES Aluminium Laptop Stand [https://amzn.to/41tNLlp](https://amzn.to/41tNLlp)
-- UNI USB-C Hub (can't remember where I bought it)
+- UNI USB-C Hub UNI8IN101 (UA27)
 
 Total price for my setup: ~250 EUR, excluding work laptop.
 
